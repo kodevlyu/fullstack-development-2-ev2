@@ -1,0 +1,17 @@
+.pie-pagina {
+  background-color: #854a37;
+  color: white;
+  padding: 24px 0;
+  text-align: center;
+}
+
+.pie-pagina-nombre {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.pie-pagina-texto {
+  font-size: 16px;
+  margin-bottom: 0;
+}

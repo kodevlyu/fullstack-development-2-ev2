@@ -1,0 +1,43 @@
+.tarjeta-producto {
+  height: 100%;
+  border: 1px solid #e5cfc1;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.tarjeta-producto-categoria {
+  color: #705d52;
+  font-size: 14px;
+}
+
+.tarjeta-producto-nombre {
+  color: #854a37;
+  font-size: 22px;
+}
+
+.tarjeta-producto-precio {
+  color: #4b3028;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.tarjeta-producto-disponibilidad {
+  color: #4b3028;
+  margin-bottom: 0;
+}
+.tarjeta-producto-imagen {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  background-color: white;
+}
+.tarjeta-producto-boton {
+  background-color: #854a37;
+  border-color: #854a37;
+  width: 100%;
+}
+
+.tarjeta-producto-boton:hover {
+  background-color: #683a2b;
+  border-color: #683a2b;
+}
