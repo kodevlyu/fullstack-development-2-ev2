@@ -1,0 +1,16 @@
+.portada {
+  padding: 48px 0;
+  text-align: center;
+  background-color: #fff5ed;
+}
+
+.portada-titulo {
+  color: #854a37;
+  font-size: 36px;
+}
+
+.portada-descripcion {
+  color: #4b3028;
+  font-size: 18px;
+  line-height: 1.6;
+}

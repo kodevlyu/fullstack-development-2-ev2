@@ -1,0 +1,22 @@
+.encabezado {
+  background-color: #854a37;
+  padding: 16px 0;
+}
+
+.encabezado .encabezado-marca {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  white-space: normal;
+}
+
+.encabezado .encabezado-marca:hover {
+  color: #ffe2cc;
+}
+.encabezado .nav-link {
+  color: white;
+}
+
+.encabezado .nav-link:hover {
+  color: #ffe2cc;
+}
