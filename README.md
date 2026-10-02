@@ -1,11 +1,11 @@
-# 🧁 Pastelería 1000 Sabores — React + Vite
+# Pastelería 1000 Sabores — React + Vite
 
 **Desarrollo Fullstack II · DSY1104**
 **EA2 — Migración a React + Pruebas Unitarias con Jasmine/Karma**
 
 ---
 
-## 📌 Descripción del proyecto
+## Descripción del proyecto
 
 **Pastelería 1000 Sabores** es una aplicación web desarrollada originalmente en **HTML, CSS y JavaScript** durante EA1.
 
@@ -31,7 +31,7 @@ EA2 incorpora además:
 
 ---
 
-## 🧩 Tecnologías utilizadas
+## Tecnologías utilizadas
 
 | Tecnología          | Uso                                     |
 | ------------------- | --------------------------------------- |
@@ -48,7 +48,7 @@ EA2 incorpora además:
 
 ---
 
-## 🏗️ Estructura del proyecto
+## Estructura del proyecto
 
 ```text
 tienda-react/
@@ -173,7 +173,7 @@ tienda-react/
 
 ---
 
-## 🔐 Reglas de validación
+## Reglas de validación
 
 Las reglas de validación implementadas durante EA1 se mantienen y se integran progresivamente en la migración a React.
 
@@ -232,9 +232,9 @@ Las reglas de validación implementadas durante EA1 se mantienen y se integran p
 
 ---
 
-## 👥 Responsabilidades por integrante
+## Responsabilidades por integrante
 
-### 🟦 Christian Quiroz Roa
+### Christian Quiroz Roa
 
 * Inicio.
 * Nosotros.
@@ -249,7 +249,7 @@ Las reglas de validación implementadas durante EA1 se mantienen y se integran p
 * Pruebas de sus componentes.
 * CSS de sus módulos.
 
-### 🟩 Rimsky Farías Soto
+### Rimsky Farías Soto
 
 * Catálogo.
 * DetalleProducto.
@@ -260,7 +260,7 @@ Las reglas de validación implementadas durante EA1 se mantienen y se integran p
 * Pruebas de catálogo y administración.
 * CSS de sus módulos.
 
-### 🟪 Lucía Salazar Delgado
+### Lucía Salazar Delgado
 
 * Registro.
 * Login.
@@ -272,7 +272,7 @@ Las reglas de validación implementadas durante EA1 se mantienen y se integran p
 
 ---
 
-## 🔀 Flujo de trabajo con Git
+## Flujo de trabajo con Git
 
 El proyecto utiliza ramas independientes para facilitar el desarrollo e integración de los módulos.
 
@@ -362,7 +362,7 @@ La aplicación se revisa mediante:
 
 ---
 
-## 🚀 Instalación y ejecución
+## Instalación y ejecución
 
 ### 1. Clonar el repositorio
 
@@ -409,7 +409,7 @@ npm test
 
 ---
 
-## 📚 Documentación
+## Documentación
 
 La carpeta `docs/` contiene documentación complementaria del proyecto:
 
@@ -423,7 +423,7 @@ docs/
 
 ---
 
-## 🧁 Créditos
+## Créditos
 
 Proyecto desarrollado por:
 
