@@ -1,39 +1,40 @@
-import { Card, Button } from "react-bootstrap";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./TarjetaProducto.css";
+import { formatoPrecio } from "../utils/formatoPrecio";
 
 function TarjetaProducto({ producto }) {
+  const navigate = useNavigate();
+
+  const {
+    codigo,
+    nombre,
+    categoria,
+    precio,
+    descripcion,
+    disponible,
+    imagen,
+  } = producto;
+
+  const handleVerDetalle = () => {
+    navigate(`/producto/${codigo}`);
+  };
+
   return (
-    <Card className="tarjeta-producto">
-      <Card.Img
-        variant="top"
-        src={producto.imagen}
-        alt={producto.nombre}
-        className="tarjeta-producto-imagen"
-      />
-      <Button
-        className="tarjeta-producto-boton"
-        disabled={!producto.disponible}
-      >
-        Agregar al carrito
-      </Button>
-      <Card.Body>
-        <p className="tarjeta-producto-categoria">{producto.categoria}</p>
+    <article className={`tarjeta-producto ${disponible ? "" : "no-disponible"}`}>
+      <img src={imagen} alt={nombre} />
+      <h3>{nombre}</h3>
+      <p className="categoria">{categoria}</p>
+      <p className="precio">{formatoPrecio(precio)}</p>
+      <p className="descripcion">{descripcion}</p>
+      {!disponible && <p className="estado">No disponible</p>}
 
-        <Card.Title as="h3" className="tarjeta-producto-nombre">
-          {producto.nombre}
-        </Card.Title>
-
-        <Card.Text>{producto.descripcion}</Card.Text>
-
-        <p className="tarjeta-producto-precio">
-          ${producto.precio.toLocaleString("es-CL")}
-        </p>
-
-        <p className="tarjeta-producto-disponibilidad">
-          {producto.disponible ? "Disponible" : "No disponible"}
-        </p>
-      </Card.Body>
-    </Card>
+      <div className="acciones">
+        <button type="button" onClick={handleVerDetalle}>
+          Ver detalle
+        </button>
+      </div>
+    </article>
   );
 }
 
