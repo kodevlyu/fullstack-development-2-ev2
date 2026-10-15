@@ -1,21 +1,16 @@
+import { useState } from "react";
 import "./App.css";
-import Encabezado from "./components/Encabezado";
-import Portada from "./components/Portada";
-import Catalogo from "./components/Catalogo";
-import PiePagina from "./components/PiePagina";
-import productos from "./data/productos";
+
+import productosData from "./data/productos";
+import Router from "./router";
 
 function App() {
+  // Estado global del catálogo
+  const [productos, setProductos] = useState(productosData);
+
   return (
     <>
-      <Encabezado />
-
-      <main>
-        <Portada />
-        <Catalogo productos={productos} />
-      </main>
-
-      <PiePagina />
+      <Router productos={productos} />
     </>
   );
 }
