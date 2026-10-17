@@ -1,8 +1,13 @@
+import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import TarjetaProducto from "./TarjetaProducto";
 import "./Catalogo.css";
 
 function Catalogo({ productos }) {
+  if (!productos || productos.length === 0) {
+    return <p className="catalogo-vacio">No hay productos para mostrar.</p>;
+  }
+
   return (
     <section id="productos" className="catalogo">
       <Container>

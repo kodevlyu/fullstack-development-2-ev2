@@ -1,1 +1,33 @@
+/* Estilos globales de la aplicación */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  background-color: #fafafa;
+  color: #333;
+}
+
+/* Contenedor principal */
+main {
+  padding: 2rem 1rem;
+  min-height: 70vh;
+}
+
+/* Encabezado y pie de página coherentes */
+header, footer {
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+/* Links del router */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Reset básico */
+* {
+  box-sizing: border-box;
+}
 /* Aquí agregaremos los estilos de distribución general de la aplicación. */

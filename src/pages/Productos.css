@@ -1,0 +1,55 @@
+/* Contenedor de filtros */
+.filtros {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;   /* IMPORTANTE: alinea por arriba */
+  gap: 40px;                 /* separación elegante */
+  margin: 20px 0 40px;
+}
+
+/* Cada filtro es un bloque vertical */
+.filtro-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Labels arriba, en negrita y café */
+.filtro-item label {
+  font-size: 15px;
+  font-weight: bold;
+  color: #8B4513;            /* café pastelero */
+  margin-bottom: 8px;        /* separación uniforme */
+}
+
+/* Input y Select iguales */
+.filtro-item input,
+.filtro-item select {
+  width: 260px;
+  height: 42px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #c9c9c9;
+  border-radius: 6px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+/* Select centrado verticalmente */
+.filtro-item select {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+/* Hover */
+.filtro-item input:hover,
+.filtro-item select:hover {
+  border-color: #a67c52;
+}
+
+/* Focus */
+.filtro-item input:focus,
+.filtro-item select:focus {
+  border-color: #d35400;
+  box-shadow: 0 0 4px rgba(211, 84, 0, 0.4);
+}
