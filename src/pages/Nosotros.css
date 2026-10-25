@@ -1,0 +1,173 @@
+/* Contenedor de Nosotros.jsx: centra el contenido y limita su ancho. */
+.nosotros {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  color: #3d2920;
+}
+
+/* Presentación: coloca el texto y la imagen en dos columnas. */
+.nosotros-presentacion {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 56px;
+}
+
+/* Títulos de esta página: mantienen el color de la pastelería. */
+.nosotros h1,
+.nosotros h2,
+.nosotros h3 {
+  color: #854a37;
+}
+
+.nosotros h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+.nosotros h2 {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.nosotros h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+/* Párrafos: dejan espacio entre las líneas para facilitar la lectura. */
+.nosotros p {
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+/* Etiquetas pequeñas que presentan cada sección. */
+.nosotros .nosotros-etiqueta {
+  color: #854a37;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Imagen de public/img: se muestra completa y sin deformarse. */
+.nosotros-visual {
+  margin: 0;
+  text-align: center;
+}
+
+.nosotros-imagen {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 16px;
+}
+
+.nosotros-visual figcaption {
+  margin-top: 12px;
+  color: #854a37;
+  font-style: italic;
+}
+
+/* Enlace al catálogo y botón de contacto de Nosotros.jsx. */
+.nosotros-boton {
+  display: inline-block;
+  padding: 12px 22px;
+  border: 1px solid #854a37;
+  border-radius: 8px;
+  background-color: #854a37;
+  color: #ffffff;
+  font: inherit;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nosotros-boton:hover {
+  background-color: #653725;
+  color: #ffffff;
+}
+
+/* Resalta el enlace o botón cuando se navega con el teclado. */
+.nosotros-boton:focus-visible {
+  outline: 3px solid #854a37;
+  outline-offset: 4px;
+}
+
+/* Contacto permanece deshabilitado hasta conectar su página. */
+.nosotros-boton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.nosotros-boton:disabled:hover {
+  background-color: #854a37;
+}
+
+/* Introducción a las tarjetas de misión, visión y valores. */
+.nosotros-principios {
+  margin-bottom: 56px;
+}
+
+.nosotros-introduccion {
+  max-width: 700px;
+  margin: 0 auto 28px;
+  text-align: center;
+}
+
+/* Distribuye las tres tarjetas en columnas del mismo ancho. */
+.nosotros-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.nosotros-tarjeta {
+  padding: 24px;
+  background-color: #ffffff;
+  border: 1px solid #e6cfc3;
+  border-radius: 14px;
+}
+
+.nosotros-numero {
+  display: block;
+  margin-bottom: 12px;
+  color: #854a37;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Sección final con la invitación a contactar a la pastelería. */
+.nosotros-contacto {
+  padding: 32px 24px;
+  border-radius: 14px;
+  background-color: #f3e3d8;
+  text-align: center;
+}
+
+/* En celulares y tabletas pequeñas, organiza todo en una columna. */
+@media (max-width: 768px) {
+  .nosotros {
+    padding: 28px 16px;
+  }
+
+  .nosotros-presentacion {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .nosotros-tarjetas {
+    grid-template-columns: 1fr;
+  }
+
+  .nosotros h1 {
+    font-size: 32px;
+  }
+
+  .nosotros h2 {
+    font-size: 25px;
+  }
+}
