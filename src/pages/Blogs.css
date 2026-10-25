@@ -1,0 +1,131 @@
+/* Contenedor de Blogs.jsx: centra la página y limita su ancho. */
+.blogs {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  color: #3d2920;
+}
+
+/* Presentación del listado de artículos. */
+.blogs-presentacion {
+  max-width: 700px;
+  margin: 0 auto 32px;
+  text-align: center;
+}
+
+.blogs-etiqueta {
+  color: #854a37;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.blogs-presentacion h1 {
+  margin-bottom: 16px;
+  color: #854a37;
+  font-size: 36px;
+}
+
+.blogs p {
+  line-height: 1.7;
+}
+
+/* Distribuye los artículos de blogs.js en dos columnas. */
+.blogs-listado {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Cada tarjeta agrupa la imagen, el resumen y el botón. */
+.blogs-tarjeta {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #ffffff;
+  border: 1px solid #e6cfc3;
+  border-radius: 14px;
+}
+
+/* Muestra la imagen completa, sin deformarla ni recortarla. */
+.blogs-imagen {
+  display: block;
+  width: 100%;
+  height: 240px;
+  object-fit: contain;
+  background-color: #fff5ed;
+}
+
+/* Mantiene los botones alineados aunque los textos tengan distinta altura. */
+.blogs-contenido {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: flex-start;
+  padding: 24px;
+}
+
+.blogs-contenido h2 {
+  margin-bottom: 16px;
+  color: #854a37;
+  font-size: 24px;
+}
+
+.blogs-contenido p {
+  margin-bottom: 24px;
+}
+
+/* Estilo del botón que después conectaremos con DetalleBlog.jsx. */
+.blogs-boton {
+  display: inline-block;
+  margin-top: auto;
+  padding: 12px 20px;
+  border: 1px solid #854a37;
+  border-radius: 8px;
+  background-color: #854a37;
+  color: #ffffff;
+  font: inherit;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.blogs-boton:hover {
+  background-color: #653725;
+  color: #ffffff;
+}
+
+/* Permite reconocer el enlace al navegar con el teclado. */
+.blogs-boton:focus-visible {
+  outline: 3px solid #854a37;
+  outline-offset: 4px;
+}
+
+/* Estado temporal mientras la página de detalle no esté conectada. */
+.blogs-boton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.blogs-boton:disabled:hover {
+  background-color: #854a37;
+}
+
+/* En pantallas pequeñas, muestra una tarjeta debajo de la otra. */
+@media (max-width: 768px) {
+  .blogs {
+    padding: 28px 16px;
+  }
+
+  .blogs-listado {
+    grid-template-columns: 1fr;
+  }
+
+  .blogs-presentacion h1 {
+    font-size: 30px;
+  }
+
+  .blogs-contenido {
+    padding: 20px;
+  }
+}

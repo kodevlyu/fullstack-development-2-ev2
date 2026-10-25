@@ -1,0 +1,101 @@
+/* Contenedor de DetalleBlog.jsx: limita el ancho para facilitar la lectura. */
+.detalle-blog {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  color: #3d2920;
+}
+
+/* Presentación con la etiqueta, el título y la introducción del artículo. */
+.detalle-blog-presentacion {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.detalle-blog-etiqueta {
+  color: #854a37;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detalle-blog h1 {
+  margin-bottom: 20px;
+  color: #854a37;
+  font-size: 36px;
+}
+
+.detalle-blog p {
+  margin-bottom: 16px;
+  line-height: 1.8;
+}
+
+/* Muestra completa la imagen indicada en data/blogs.js. */
+.detalle-blog-imagen {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  margin: 0 auto 36px;
+  border-radius: 14px;
+}
+
+/* Separa las secciones que DetalleBlog.jsx obtiene desde blogs.js. */
+.detalle-blog-contenido section {
+  margin-bottom: 32px;
+}
+
+.detalle-blog-contenido h2 {
+  margin-bottom: 14px;
+  color: #854a37;
+  font-size: 25px;
+}
+
+/* Separa los enlaces de navegación del contenido del artículo. */
+.detalle-blog-navegacion {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid #e6cfc3;
+}
+
+/* Enlace para regresar al listado de Blogs. */
+.detalle-blog-boton {
+  display: inline-block;
+  padding: 12px 20px;
+  border: 1px solid #854a37;
+  border-radius: 8px;
+  background-color: #854a37;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.detalle-blog-boton:hover {
+  background-color: #653725;
+  color: #ffffff;
+}
+
+/* Identifica el enlace cuando se selecciona usando el teclado. */
+.detalle-blog-boton:focus-visible {
+  outline: 3px solid #854a37;
+  outline-offset: 4px;
+}
+
+/* Ajusta espacios y títulos para pantallas pequeñas. */
+@media (max-width: 768px) {
+  .detalle-blog {
+    padding: 28px 16px;
+  }
+
+  .detalle-blog h1 {
+    font-size: 30px;
+  }
+
+  .detalle-blog-contenido h2 {
+    font-size: 23px;
+  }
+}
