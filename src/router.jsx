@@ -9,6 +9,7 @@ import Inicio from "./pages/Inicio";
 import Nosotros from "./pages/Nosotros";
 import Blogs from "./pages/Blogs";
 import DetalleBlog from "./pages/DetalleBlog";
+import Contacto from "./pages/Contacto";
 import Productos from "./pages/Productos";
 import DetalleProducto from "./pages/DetalleProducto";
 
@@ -21,20 +22,21 @@ import EditarProducto from "./pages/admin/EditarProducto";
 function Router({ productos }) {
   return (
     <BrowserRouter>
-      {/* Menú compartido para navegar entre páginas. */}
+      {/* Menú compartido para navegar entre las páginas. */}
       <Encabezado />
 
       <main>
         <Routes>
-          {/* Páginas de bienvenida e información de la pastelería. */}
+          {/* Presentación e historia de la pastelería. */}
           <Route path="/" element={<Inicio />} />
           <Route path="/nosotros" element={<Nosotros />} />
 
-          {/* Listado de artículos guardados en data/blogs.js. */}
+          {/* Listado de artículos y detalle identificado por su id. */}
           <Route path="/blogs" element={<Blogs />} />
-
-          {/* DetalleBlog lee :id para elegir qué artículo mostrar. */}
           <Route path="/blogs/:id" element={<DetalleBlog />} />
+
+          {/* Conecta /contacto con el formulario de Contacto.jsx. */}
+          <Route path="/contacto" element={<Contacto />} />
 
           {/* Catálogo y detalle reciben la lista desde App.jsx. */}
           <Route
@@ -46,7 +48,7 @@ function Router({ productos }) {
             element={<DetalleProducto productos={productos} />}
           />
 
-          {/* Se conservan las rutas de administración de productos. */}
+          {/* Se conservan las rutas de administración existentes. */}
           <Route
             path="/admin/productos"
             element={<ProductosAdmin productos={productos} />}
