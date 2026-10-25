@@ -1,0 +1,81 @@
+/* Contenedor de NoEncontrado.jsx: centra el mensaje y sus enlaces. */
+.no-encontrado {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 64px 24px;
+  text-align: center;
+  color: #3d2920;
+}
+
+/* Número que identifica la página no encontrada. */
+.no-encontrado-codigo {
+  margin: 0;
+  color: #854a37;
+  font-size: 80px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+/* Título y explicación del problema. */
+.no-encontrado h1 {
+  margin: 20px 0;
+  color: #854a37;
+  font-size: 36px;
+}
+
+.no-encontrado-descripcion {
+  margin-bottom: 28px;
+  line-height: 1.7;
+}
+
+/* Agrupa los enlaces y permite que se acomoden en varias filas. */
+.no-encontrado-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+/* Enlace principal para volver al inicio. */
+.no-encontrado-boton {
+  display: inline-block;
+  padding: 12px 22px;
+  border: 1px solid #854a37;
+  border-radius: 8px;
+  background-color: #854a37;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.no-encontrado-boton:hover {
+  background-color: #653725;
+  color: #ffffff;
+}
+
+/* Diferencia visualmente el enlace hacia el catálogo. */
+.no-encontrado-boton-secundario {
+  background-color: #ffffff;
+  color: #854a37;
+}
+
+/* Resalta el enlace al seleccionarlo con el teclado. */
+.no-encontrado-boton:focus-visible {
+  outline: 3px solid #854a37;
+  outline-offset: 4px;
+}
+
+/* Ajusta el tamaño del contenido en pantallas pequeñas. */
+@media (max-width: 768px) {
+  .no-encontrado {
+    padding: 40px 16px;
+  }
+
+  .no-encontrado-codigo {
+    font-size: 64px;
+  }
+
+  .no-encontrado h1 {
+    font-size: 28px;
+  }
+}

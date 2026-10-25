@@ -10,6 +10,7 @@ import Nosotros from "./pages/Nosotros";
 import Blogs from "./pages/Blogs";
 import DetalleBlog from "./pages/DetalleBlog";
 import Contacto from "./pages/Contacto";
+import NoEncontrado from "./pages/NoEncontrado";
 import Productos from "./pages/Productos";
 import DetalleProducto from "./pages/DetalleProducto";
 
@@ -31,11 +32,11 @@ function Router({ productos }) {
           <Route path="/" element={<Inicio />} />
           <Route path="/nosotros" element={<Nosotros />} />
 
-          {/* Listado de artículos y detalle identificado por su id. */}
+          {/* Artículos: el id identifica qué detalle se muestra. */}
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<DetalleBlog />} />
 
-          {/* Conecta /contacto con el formulario de Contacto.jsx. */}
+          {/* Formulario de contacto. */}
           <Route path="/contacto" element={<Contacto />} />
 
           {/* Catálogo y detalle reciben la lista desde App.jsx. */}
@@ -48,7 +49,7 @@ function Router({ productos }) {
             element={<DetalleProducto productos={productos} />}
           />
 
-          {/* Se conservan las rutas de administración existentes. */}
+          {/* Se conservan las rutas existentes de administración. */}
           <Route
             path="/admin/productos"
             element={<ProductosAdmin productos={productos} />}
@@ -65,6 +66,9 @@ function Router({ productos }) {
             path="/admin/producto/:codigo/editar"
             element={<EditarProducto productos={productos} />}
           />
+
+          {/* Muestra NoEncontrado.jsx si ninguna ruta coincide. */}
+          <Route path="*" element={<NoEncontrado />} />
         </Routes>
       </main>
 
