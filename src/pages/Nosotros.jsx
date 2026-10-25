@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-// Aplica los estilos exclusivos de esta página.
+// Estilos exclusivos de esta página.
 import "./Nosotros.css";
 
 function Nosotros() {
@@ -53,7 +53,7 @@ function Nosotros() {
           </p>
         </div>
 
-        {/* Nosotros.css organiza estas tarjetas según el tamaño de pantalla. */}
+        {/* Nosotros.css adapta las tarjetas al tamaño de pantalla. */}
         <div className="nosotros-tarjetas">
           <article className="nosotros-tarjeta">
             <span className="nosotros-numero">01</span>
@@ -85,7 +85,7 @@ function Nosotros() {
         </div>
       </section>
 
-      {/* Conectaremos esta invitación cuando creemos la página Contacto. */}
+      {/* Invitación que conecta con el formulario de Contacto.jsx. */}
       <section className="nosotros-contacto">
         <p className="nosotros-etiqueta">Queremos conocerte</p>
         <h2>Tu próxima celebración comienza aquí</h2>
@@ -94,9 +94,10 @@ function Nosotros() {
           momento.
         </p>
 
-        <button type="button" className="nosotros-boton" disabled>
-          Contáctanos (próximamente)
-        </button>
+        {/* Usa la ruta /contacto definida en router.jsx. */}
+        <Link to="/contacto" className="nosotros-boton">
+          Contáctanos
+        </Link>
       </section>
     </div>
   );

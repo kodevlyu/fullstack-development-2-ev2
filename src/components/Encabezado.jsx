@@ -18,7 +18,7 @@ function Encabezado() {
           Pastelería Mil Sabores
         </Navbar.Brand>
 
-        {/* Abre y cierra el menú en pantallas pequeñas. */}
+        {/* Controla el menú desplegable en pantallas pequeñas. */}
         <Navbar.Toggle
           aria-controls="menu-principal"
           aria-label="Abrir o cerrar menú"
@@ -26,28 +26,27 @@ function Encabezado() {
 
         <Navbar.Collapse id="menu-principal">
           <Nav className="ms-auto">
-            {/* Conecta con la ruta / definida en router.jsx. */}
+            {/* Cada enlace utiliza una dirección definida en router.jsx. */}
             <Nav.Link as={NavLink} to="/" end eventKey="inicio">
               Inicio
             </Nav.Link>
 
-            {/* Abre el catálogo de productos. */}
             <Nav.Link as={NavLink} to="/productos" eventKey="productos">
               Productos
             </Nav.Link>
 
-            {/* Abre la página de historia, misión, visión y valores. */}
             <Nav.Link as={NavLink} to="/nosotros" eventKey="nosotros">
               Nosotros
             </Nav.Link>
 
-            {/* Conecta /blogs con la página Blogs.jsx mediante router.jsx. */}
             <Nav.Link as={NavLink} to="/blogs" eventKey="blogs">
               Blogs
             </Nav.Link>
 
-            {/* Pendiente de conectar cuando creemos la página Contacto. */}
-            <Nav.Link href="#contacto">Contacto</Nav.Link>
+            {/* Abre Contacto.jsx mediante la ruta /contacto. */}
+            <Nav.Link as={NavLink} to="/contacto" eventKey="contacto">
+              Contacto
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

@@ -1,0 +1,118 @@
+/* Contenedor de Contacto.jsx: centra y limita el ancho del formulario. */
+.contacto {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  color: #3d2920;
+}
+
+/* Título e introducción de la página. */
+.contacto-presentacion {
+  margin-bottom: 28px;
+  text-align: center;
+}
+
+.contacto-presentacion h1 {
+  color: #854a37;
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.contacto p {
+  line-height: 1.7;
+}
+
+/* Superficie que agrupa todos los campos del formulario. */
+.contacto-formulario {
+  padding: 28px;
+  background-color: #ffffff;
+  border: 1px solid #e6cfc3;
+  border-radius: 14px;
+}
+
+/* Coloca la etiqueta, el campo y su ayuda uno debajo del otro. */
+.contacto-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.contacto-campo label {
+  font-weight: bold;
+}
+
+/* Aspecto compartido por los campos de texto y el comentario. */
+.contacto-campo input,
+.contacto-campo textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #a88776;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #3d2920;
+  font: inherit;
+}
+
+/* Permite ampliar el comentario verticalmente sin romper el ancho. */
+.contacto-campo textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+/* Señala el campo seleccionado mediante el teclado o el ratón. */
+.contacto-campo input:focus,
+.contacto-campo textarea:focus {
+  outline: 2px solid #854a37;
+  outline-offset: 2px;
+}
+
+.contacto-campo small {
+  color: #66544b;
+  font-size: 14px;
+}
+
+/* Botón que se habilitará cuando conectemos la validación. */
+.contacto-boton {
+  padding: 12px 22px;
+  border: 1px solid #854a37;
+  border-radius: 8px;
+  background-color: #854a37;
+  color: #ffffff;
+  font: inherit;
+  font-weight: bold;
+}
+
+.contacto-boton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Mensajes sobre el estado y alcance del formulario. */
+.contacto-aviso {
+  margin-top: 12px;
+  color: #854a37;
+}
+
+.contacto-aclaracion {
+  margin-top: 20px;
+  margin-bottom: 0;
+  color: #66544b;
+  font-size: 14px;
+}
+
+/* Reduce espacios para que el formulario se adapte al celular. */
+@media (max-width: 768px) {
+  .contacto {
+    padding: 28px 16px;
+  }
+
+  .contacto-presentacion h1 {
+    font-size: 30px;
+  }
+
+  .contacto-formulario {
+    padding: 20px;
+  }
+}
