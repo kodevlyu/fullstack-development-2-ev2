@@ -1,0 +1,50 @@
+/* Barra de navegación de MenuAdmin.jsx. */
+.menu-admin {
+  padding: 16px 0;
+  background-color: #653725;
+}
+
+/* Nombre del panel: permite ajustar el texto en pantallas pequeñas. */
+.menu-admin .menu-admin-marca {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  white-space: normal;
+}
+
+/* Enlaces disponibles del menú administrativo. */
+.menu-admin .nav-link {
+  color: #ffffff;
+}
+
+.menu-admin .nav-link:hover,
+.menu-admin .nav-link:focus {
+  color: #f5d7bd;
+}
+
+/* Identifica la página actual mediante NavLink de React Router. */
+.menu-admin .nav-link.active {
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+/* Distingue el acceso a Usuarios, todavía pendiente de integración. */
+.menu-admin .nav-link.disabled {
+  color: #d8c4b8;
+}
+
+/* Resalta los enlaces cuando se navega usando el teclado. */
+.menu-admin a:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+}
+
+/* Reduce el tamaño de la marca en celulares. */
+@media (max-width: 576px) {
+  .menu-admin .menu-admin-marca {
+    max-width: 70%;
+    font-size: 17px;
+  }
+}

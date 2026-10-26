@@ -1,0 +1,128 @@
+/* Contenedor de InicioAdmin.jsx: centra el contenido del panel. */
+.admin-inicio {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  color: #3d2920;
+}
+
+/* Presentación del área administrativa. */
+.admin-presentacion {
+  max-width: 700px;
+  margin: 0 auto 32px;
+  text-align: center;
+}
+
+.admin-etiqueta {
+  color: #854a37;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.admin-presentacion h1 {
+  margin-bottom: 16px;
+  color: #854a37;
+  font-size: 36px;
+}
+
+.admin-inicio p {
+  line-height: 1.7;
+}
+
+/* Distribuye los tres accesos en columnas del mismo ancho. */
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Organiza cada tarjeta y mantiene los botones hacia la parte inferior. */
+.admin-tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  border: 1px solid #e6cfc3;
+  border-radius: 14px;
+  background-color: #ffffff;
+}
+
+.admin-numero {
+  margin-bottom: 12px;
+  color: #854a37;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.admin-tarjeta h2 {
+  margin-bottom: 16px;
+  color: #854a37;
+  font-size: 24px;
+}
+
+.admin-tarjeta p {
+  margin-bottom: 24px;
+}
+
+/* Enlaces hacia las rutas de productos y del sitio público. */
+.admin-boton {
+  display: inline-block;
+  margin-top: auto;
+  padding: 12px 20px;
+  border: 1px solid #854a37;
+  border-radius: 8px;
+  background-color: #854a37;
+  color: #ffffff;
+  font: inherit;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+}
+
+.admin-boton:hover {
+  background-color: #653725;
+  color: #ffffff;
+}
+
+.admin-boton-secundario {
+  background-color: #ffffff;
+  color: #854a37;
+}
+
+/* Identifica el enlace seleccionado al navegar con el teclado. */
+.admin-boton:focus-visible {
+  outline: 3px solid #854a37;
+  outline-offset: 4px;
+}
+
+/* Estado temporal del acceso al módulo de usuarios. */
+.admin-boton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-boton:disabled:hover {
+  background-color: #854a37;
+}
+
+.admin-tarjeta small {
+  margin-top: 12px;
+  color: #66544b;
+}
+
+/* En pantallas pequeñas, coloca las tarjetas una debajo de otra. */
+@media (max-width: 768px) {
+  .admin-inicio {
+    padding: 28px 16px;
+  }
+
+  .admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-presentacion h1 {
+    font-size: 30px;
+  }
+}
