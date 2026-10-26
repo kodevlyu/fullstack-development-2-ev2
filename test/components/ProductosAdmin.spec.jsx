@@ -1,15 +1,24 @@
-import { render, screen } from "@testing-library/react";
+import React, { act } from "react";
+import { createRoot } from "react-dom/client";
+import { MemoryRouter } from "react-router-dom";
 import ProductosAdmin from "../../src/pages/admin/ProductosAdmin";
-import * as storage from "../../src/utils/guardarProductos";
-
+import { productosMock } from "../mocks/productos";
 describe("ProductosAdmin", () => {
-  it("muestra listado de productos", () => {
-    jest.spyOn(storage, "cargarProductos").mockReturnValue([
-      { codigo: "P001", nombre: "Torta", categoria: "tortas", precio: 1000 },
-    ]);
-
-    render(<ProductosAdmin />);
-
-    expect(screen.getByText("Torta")).toBeInTheDocument();
+  it("muestra productos y elimina tras confirmar", async () => {
+    const nodo = document.createElement("div"); document.body.appendChild(nodo);
+    const raiz = createRoot(nodo);
+    let nuevos = null;
+    const confirmacionAnterior = window.confirm;
+    window.confirm = () => true;
+    try {
+      await act(async () => raiz.render(<MemoryRouter><ProductosAdmin productos={productosMock} actualizarProductos={(lista) => { nuevos = lista; }} /></MemoryRouter>));
+      expect(nodo.textContent).toContain(productosMock[0].nombre);
+      const boton = nodo.querySelector(`button[aria-label="Eliminar ${productosMock[0].nombre}"]`);
+      await act(async () => boton.click());
+      expect(nuevos.length).toBe(productosMock.length - 1);
+    } finally {
+      window.confirm = confirmacionAnterior;
+      await act(async () => raiz.unmount());
+    }
   });
 });

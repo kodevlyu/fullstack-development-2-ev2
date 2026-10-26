@@ -1,21 +1,17 @@
 import { filtrarProductos } from "../../src/utils/filtrarProductos";
 import { productosMock } from "../mocks/productos";
-
 describe("filtrarProductos", () => {
-  it("filtra por texto en nombre", () => {
-    const resultado = filtrarProductos(productosMock, "chocolate", "");
-    expect(resultado).toHaveLength(1);
-    expect(resultado[0].nombre).toMatch(/chocolate/i);
+  it("busca por nombre sin distinguir mayúsculas", () => {
+    expect(filtrarProductos(productosMock, "CHOCOLATE", "").length).toBe(1);
   });
-
-  it("filtra por categoría", () => {
-    const resultado = filtrarProductos(productosMock, "", "pies");
-    expect(resultado).toHaveLength(1);
-    expect(resultado[0].categoria).toBe("pies");
+  it("combina categoría y texto", () => {
+    const encontrados = filtrarProductos(productosMock, "limón", "pies");
+    expect(encontrados.length).toBe(1);
   });
-
-  it("retorna todos si texto y categoría están vacíos", () => {
-    const resultado = filtrarProductos(productosMock, "", "");
-    expect(resultado).toHaveLength(productosMock.length);
+  it("devuelve vacío si no hay coincidencias", () => {
+    expect(filtrarProductos(productosMock, "producto inexistente", "")).toEqual([]);
+  });
+  it("sin filtros devuelve todos", () => {
+    expect(filtrarProductos(productosMock, "", "").length).toBe(productosMock.length);
   });
 });
