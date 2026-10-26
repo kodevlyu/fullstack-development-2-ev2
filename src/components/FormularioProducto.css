@@ -1,0 +1,11 @@
+.formulario-producto-pagina { max-width: 740px; margin: 2rem auto; padding: 1.5rem; }
+.formulario-producto-pagina form { display: grid; gap: 1rem; }
+.campo-producto { display: grid; gap: .35rem; }
+.campo-producto label { font-weight: 600; }
+.campo-producto input, .campo-producto textarea, .campo-producto select { width: 100%; padding: .65rem; border: 1px solid #aaa; border-radius: 6px; background: white; color: #222; }
+.campo-producto [aria-invalid="true"] { border: 2px solid #b42318; }
+.error-producto { color: #b42318; }
+.opcion-producto { display: flex; align-items: center; gap: .5rem; }
+.acciones-formulario { display: flex; flex-wrap: wrap; gap: .75rem; }
+.acciones-formulario button { padding: .65rem 1rem; cursor: pointer; }
+@media(max-width: 600px) { .formulario-producto-pagina { padding: 1rem; } }

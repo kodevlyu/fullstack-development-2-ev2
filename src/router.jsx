@@ -37,7 +37,7 @@ function MenuActual() {
   return <Encabezado />;
 }
 
-function Router({ productos }) {
+function Router({ productos, actualizarProductos }) {
   return (
     <BrowserRouter>
       {/* MenuActual debe estar dentro de BrowserRouter para leer la ruta. */}
@@ -72,11 +72,11 @@ function Router({ productos }) {
           {/* Se conservan las rutas de administración de Rimsky. */}
           <Route
             path="/admin/productos"
-            element={<ProductosAdmin productos={productos} />}
+            element={<ProductosAdmin productos={productos} actualizarProductos={actualizarProductos} />}
           />
           <Route
             path="/admin/producto/nuevo"
-            element={<NuevoProducto productos={productos} />}
+            element={<NuevoProducto productos={productos} actualizarProductos={actualizarProductos} />}
           />
           <Route
             path="/admin/producto/:codigo"
@@ -84,7 +84,7 @@ function Router({ productos }) {
           />
           <Route
             path="/admin/producto/:codigo/editar"
-            element={<EditarProducto productos={productos} />}
+            element={<EditarProducto productos={productos} actualizarProductos={actualizarProductos} />}
           />
 
           {/* Direcciones que no corresponden a ninguna página. */}

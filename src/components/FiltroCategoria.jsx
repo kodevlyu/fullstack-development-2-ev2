@@ -1,40 +1,14 @@
-// src/components/FiltroCategoria.jsx
-import React from "react";
 import "./FiltroCategoria.css";
+import { CATEGORIAS_PRODUCTO } from "../utils/validarDatosProducto";
 
-const CATEGORIAS = [
-  "Tortas Cuadradas",
-  "Tortas Circulares",
-  "Postres Individuales",
-  "Productos Sin Azúcar",
-  "Pastelería Tradicional",
-  "Productos Veganos",
-  "Productos Sin Gluten",
-  "Tortas Especiales",
-];
-
-function FiltroCategoria({ valor, onFiltrar }) {
-  const handleChange = (e) => {
-    onFiltrar(e.target.value);
-  };
-
+export default function FiltroCategoria({ valor, onFiltrar }) {
   return (
     <div className="filtro-item">
       <label htmlFor="categoria-select">Categoría</label>
-      <select
-        id="categoria-select"
-        value={valor}
-        onChange={handleChange}
-      >
+      <select id="categoria-select" value={valor} onChange={(e) => onFiltrar(e.target.value)}>
         <option value="">Todas</option>
-        {CATEGORIAS.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
-          </option>
-        ))}
+        {CATEGORIAS_PRODUCTO.map((categoria) => <option key={categoria} value={categoria}>{categoria}</option>)}
       </select>
     </div>
   );
 }
-
-export default FiltroCategoria;
