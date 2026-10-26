@@ -1,15 +1,15 @@
-/* src/components/TarjetaProducto.css */
-
+/* Contenedor utilizado por TarjetaProducto.jsx. */
 .tarjeta-producto {
   background: #fff;
   border-radius: 10px;
   padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   text-align: center;
 }
 
+/* Conserva el tamaño y presentación actuales de las imágenes. */
 .tarjeta-producto img {
   width: 100%;
   height: 200px;
@@ -17,6 +17,7 @@
   border-radius: 8px;
 }
 
+/* Información del producto. */
 .tarjeta-producto h3 {
   margin: 1rem 0 0.5rem;
   font-size: 1.2rem;
@@ -39,6 +40,7 @@
   margin-bottom: 1rem;
 }
 
+/* Mantiene los botones alineados al final de la tarjeta. */
 .tarjeta-producto .acciones {
   display: flex;
   justify-content: space-between;
@@ -56,10 +58,18 @@
   cursor: pointer;
 }
 
-.tarjeta-producto button:hover {
+/* Solo cambia el color al pasar sobre un botón habilitado. */
+.tarjeta-producto button:hover:not(:disabled) {
   background: #e73370;
 }
 
-.no-disponible {
+/* Hace visible el bloqueo que establece TarjetaProducto.jsx. */
+.tarjeta-producto button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Conserva el estilo existente para productos no disponibles. */
+.tarjeta-producto.no-disponible {
   opacity: 0.6;
 }

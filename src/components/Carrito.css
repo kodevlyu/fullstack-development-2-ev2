@@ -174,4 +174,9 @@
     width: 65px;
     height: 65px;
   }
+  /* Identifica los controles bloqueados por cantidad o stock. */
+  .carrito-panel .carrito-control:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }

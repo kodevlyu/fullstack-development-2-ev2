@@ -1,24 +1,56 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./TarjetaProducto.css";
 import { formatoPrecio } from "../utils/formatoPrecio";
+import { permiteCantidad } from "../utils/stockCarrito";
 
 function TarjetaProducto({ producto, agregarAlCarrito }) {
   const navigate = useNavigate();
 
-  // Datos del producto que muestra esta tarjeta.
-  const { codigo, nombre, categoria, precio, descripcion, disponible, imagen } =
-    producto;
+  // Datos que recibe desde Catalogo.jsx.
+  const {
+    codigo,
+    nombre,
+    categoria,
+    precio,
+    descripcion,
+    disponible,
+    imagen,
+    stock,
+  } = producto;
 
-  // Conserva la navegación existente hacia el detalle.
-  const handleVerDetalle = () => {
+  // Comprueba si el catálogo permite solicitar al menos una unidad.
+  // useCarrito.js también comprueba las unidades que ya están agregadas.
+  const puedeAgregar = permiteCantidad(producto, 1);
+  const stockValido = Number.isInteger(stock) && stock >= 0;
+
+  // Explica por qué el botón está deshabilitado.
+  let textoBoton = "Agregar al carrito";
+
+  if (!stockValido) {
+    textoBoton = "Stock pendiente";
+  } else if (stock === 0) {
+    textoBoton = "Sin stock";
+  } else if (!disponible) {
+    textoBoton = "No disponible";
+  }
+
+  // Conserva la conexión con la página de detalle de Rimsky.
+  function verDetalle() {
     navigate(`/producto/${codigo}`);
-  };
+  }
+
+  // Envía el producto al carrito compartido mediante App.jsx.
+  function agregarProducto() {
+    if (puedeAgregar) {
+      agregarAlCarrito(producto);
+    }
+  }
 
   return (
     <article
       className={`tarjeta-producto ${disponible ? "" : "no-disponible"}`}
     >
+      {/* Imagen y descripción del producto. */}
       <img src={imagen} alt={nombre} />
       <h3>{nombre}</h3>
       <p className="categoria">{categoria}</p>
@@ -27,19 +59,24 @@ function TarjetaProducto({ producto, agregarAlCarrito }) {
 
       {!disponible && <p className="estado">No disponible</p>}
 
+      {/* Ver detalle sigue disponible aunque el producto esté agotado. */}
       <div className="acciones">
-        <button type="button" onClick={handleVerDetalle}>
+        <button type="button" onClick={verDetalle}>
           Ver detalle
         </button>
 
-        {/* Llama al carrito compartido de App con este producto. */}
+        {/* El atributo disabled impide pulsarlo con mouse o teclado. */}
         <button
           type="button"
-          onClick={() => agregarAlCarrito(producto)}
-          disabled={!disponible}
-          aria-label={`Agregar ${nombre} al carrito`}
+          onClick={agregarProducto}
+          disabled={!puedeAgregar}
+          aria-label={
+            puedeAgregar
+              ? `Agregar ${nombre} al carrito`
+              : `${textoBoton}: ${nombre}`
+          }
         >
-          Agregar al carrito
+          {textoBoton}
         </button>
       </div>
     </article>

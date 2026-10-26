@@ -1,7 +1,5 @@
 import { act } from "react";
 import { createRoot } from "react-dom/client";
-
-// Panel real del carrito.
 import Carrito from "../../src/components/Carrito";
 
 describe("Carrito", () => {
@@ -12,13 +10,23 @@ describe("Carrito", () => {
   let quitarDelCarrito;
   let vaciarCarrito;
 
-  // Producto ficticio utilizado en las pruebas del panel.
+  // Producto guardado en el carrito con dos unidades.
   const producto = {
     codigo: "PRUEBA01",
     nombre: "Torta de prueba",
     precio: 10000,
     imagen: "/img/tc001.jpg",
     cantidad: 2,
+  };
+
+  // El catálogo informa la disponibilidad y el stock actual.
+  const productoCatalogo = {
+    codigo: "PRUEBA01",
+    nombre: "Torta de prueba",
+    precio: 10000,
+    imagen: "/img/tc001.jpg",
+    disponible: true,
+    stock: 3,
   };
 
   beforeEach(() => {
@@ -34,7 +42,7 @@ describe("Carrito", () => {
   });
 
   afterEach(async () => {
-    // Desmontar React también retira el panel lateral y su fondo.
+    // Retira el componente y el fondo del panel lateral.
     await act(async () => {
       raiz.unmount();
     });
@@ -42,11 +50,12 @@ describe("Carrito", () => {
     nodo.remove();
   });
 
-  // Abre el panel con los datos indicados por cada prueba.
-  async function mostrarCarrito(lista, total) {
+  // Entrega al panel el carrito y el catálogo, como hace App.jsx.
+  async function mostrarCarrito(lista, total, catalogo = [productoCatalogo]) {
     await act(async () => {
       raiz.render(
         <Carrito
+          productos={catalogo}
           mostrar={true}
           cerrar={cerrar}
           carrito={lista}
@@ -59,26 +68,22 @@ describe("Carrito", () => {
       );
     });
 
-    // Offcanvas coloca el panel en document.body, fuera de nodo.
+    // Offcanvas muestra el panel fuera del nodo original.
     return document.querySelector(".carrito-panel");
   }
 
-  // 1. Comprueba el mensaje inicial y el botón para cerrar.
   it("muestra el carrito vacío y permite solicitar su cierre", async () => {
     const panel = await mostrarCarrito([], 0);
 
     expect(panel.textContent).toContain("Tu carrito está vacío.");
 
-    const boton = panel.querySelector(".carrito-vacio button");
-
     await act(async () => {
-      boton.click();
+      panel.querySelector(".carrito-vacio button").click();
     });
 
     expect(cerrar).toHaveBeenCalledTimes(1);
   });
 
-  // 2. Comprueba el producto, sus unidades, subtotal y total recibido.
   it("muestra las cantidades y los importes del carrito", async () => {
     const panel = await mostrarCarrito([producto], 20000);
 
@@ -92,8 +97,7 @@ describe("Carrito", () => {
     );
   });
 
-  // 3. Comprueba el código y la cantidad enviados al pulsar + y −.
-  it("solicita aumentar y disminuir la cantidad del producto", async () => {
+  it("solicita aumentar y disminuir dentro del stock", async () => {
     const panel = await mostrarCarrito([producto], 20000);
 
     const sumar = panel.querySelector(
@@ -102,6 +106,9 @@ describe("Carrito", () => {
     const restar = panel.querySelector(
       'button[aria-label="Restar una unidad de Torta de prueba"]',
     );
+
+    expect(sumar.disabled).toBeFalse();
+    expect(restar.disabled).toBeFalse();
 
     await act(async () => {
       sumar.click();
@@ -113,11 +120,10 @@ describe("Carrito", () => {
       restar.click();
     });
 
-    // El espía registra llamadas; no cambia las dos unidades recibidas.
+    // El espía registra acciones; no modifica las unidades recibidas.
     expect(actualizarCantidad).toHaveBeenCalledWith("PRUEBA01", 1);
   });
 
-  // 4. Impide que el usuario reste por debajo de una unidad.
   it("deshabilita restar cuando queda una unidad", async () => {
     const panel = await mostrarCarrito([{ ...producto, cantidad: 1 }], 10000);
 
@@ -125,7 +131,7 @@ describe("Carrito", () => {
       'button[aria-label="Restar una unidad de Torta de prueba"]',
     );
 
-    expect(restar.disabled).toBe(true);
+    expect(restar.disabled).toBeTrue();
 
     await act(async () => {
       restar.click();
@@ -134,27 +140,64 @@ describe("Carrito", () => {
     expect(actualizarCantidad).not.toHaveBeenCalled();
   });
 
-  // 5. Eliminar debe informar el código del producto seleccionado.
   it("solicita eliminar el producto seleccionado", async () => {
     const panel = await mostrarCarrito([producto], 20000);
-    const boton = panel.querySelector(".carrito-eliminar");
 
     await act(async () => {
-      boton.click();
+      panel.querySelector(".carrito-eliminar").click();
     });
 
     expect(quitarDelCarrito).toHaveBeenCalledOnceWith("PRUEBA01");
   });
 
-  // 6. El botón de vaciar debe llamar a la operación correspondiente.
   it("solicita vaciar el carrito", async () => {
     const panel = await mostrarCarrito([producto], 20000);
-    const boton = panel.querySelector(".carrito-boton-secundario");
 
     await act(async () => {
-      boton.click();
+      panel.querySelector(".carrito-boton-secundario").click();
     });
 
     expect(vaciarCarrito).toHaveBeenCalledTimes(1);
+  });
+
+  // Con tres unidades y stock tres, no permite solicitar una cuarta.
+  it("bloquea sumar cuando se alcanza el stock disponible", async () => {
+    const panel = await mostrarCarrito([{ ...producto, cantidad: 3 }], 30000);
+
+    const sumar = panel.querySelector(
+      'button[aria-label="Sumar una unidad de Torta de prueba"]',
+    );
+
+    expect(sumar.disabled).toBeTrue();
+    expect(panel.textContent).toContain("Alcanzaste el stock disponible.");
+
+    await act(async () => {
+      sumar.click();
+    });
+
+    expect(actualizarCantidad).not.toHaveBeenCalled();
+  });
+
+  // Simula que un producto guardado se agotó en el catálogo.
+  it("bloquea sumar con stock cero y permite eliminar el producto", async () => {
+    const panel = await mostrarCarrito([producto], 20000, [
+      { ...productoCatalogo, stock: 0 },
+    ]);
+
+    const sumar = panel.querySelector(
+      'button[aria-label="Sumar una unidad de Torta de prueba"]',
+    );
+    const eliminar = panel.querySelector(".carrito-eliminar");
+
+    expect(sumar.disabled).toBeTrue();
+    expect(eliminar.disabled).toBeFalse();
+
+    await act(async () => {
+      sumar.click();
+      eliminar.click();
+    });
+
+    expect(actualizarCantidad).not.toHaveBeenCalled();
+    expect(quitarDelCarrito).toHaveBeenCalledOnceWith("PRUEBA01");
   });
 });
