@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-// Operaciones del carrito: agregar, cambiar, eliminar y calcular.
+// Operaciones que construyen la nueva lista y calculan sus totales.
 import {
   agregarProducto,
   cambiarCantidad,
@@ -9,17 +9,18 @@ import {
   contarProductos,
 } from "../utils/operacionesCarrito";
 
-// Lectura y guardado en el almacenamiento del navegador.
+// Comprueban las cantidades contra el stock actual del catálogo.
+import { permiteAgregar, permiteCantidad } from "../utils/stockCarrito";
+
+// Recupera y guarda el carrito en el navegador.
 import { cargarCarrito, guardarCarrito } from "../utils/guardarCarrito";
 
-function useCarrito() {
-  // Recupera la lista guardada cuando se inicia el carrito.
+function useCarrito(productos) {
+  // Recupera las compras guardadas al iniciar la aplicación.
   const [carrito, setCarrito] = useState(cargarCarrito);
-
-  // Mensaje que Carrito.jsx muestra si no se pueden guardar los cambios.
   const [errorGuardado, setErrorGuardado] = useState("");
 
-  // Centraliza la actualización de pantalla y el guardado.
+  // Actualiza la pantalla y conserva la lista en el navegador.
   function actualizarCarrito(nuevoCarrito) {
     setCarrito(nuevoCarrito);
 
@@ -34,34 +35,54 @@ function useCarrito() {
     }
   }
 
-  // Agrega una unidad y guarda la lista resultante.
+  // Consulta el catálogo recibido desde App, no un stock guardado antiguo.
   function agregarAlCarrito(producto) {
-    const nuevoCarrito = agregarProducto(carrito, producto);
+    if (!producto) {
+      return;
+    }
+
+    const productoActual = productos.find(
+      (elemento) => elemento.codigo === producto.codigo,
+    );
+
+    // Considera también las unidades que ya existen en el carrito.
+    if (!permiteAgregar(carrito, productoActual)) {
+      return;
+    }
+
+    const nuevoCarrito = agregarProducto(carrito, productoActual);
     actualizarCarrito(nuevoCarrito);
   }
 
-  // Cambia la cantidad y guarda la lista resultante.
+  // Valida el stock antes de aceptar una nueva cantidad.
   function actualizarCantidad(codigo, cantidad) {
+    const productoActual = productos.find(
+      (elemento) => elemento.codigo === codigo,
+    );
+
+    if (!permiteCantidad(productoActual, cantidad)) {
+      return;
+    }
+
     const nuevoCarrito = cambiarCantidad(carrito, codigo, cantidad);
     actualizarCarrito(nuevoCarrito);
   }
 
-  // Retira el producto identificado por su código.
+  // Eliminar no requiere stock: siempre se puede retirar un producto.
   function quitarDelCarrito(codigo) {
     const nuevoCarrito = eliminarProducto(carrito, codigo);
     actualizarCarrito(nuevoCarrito);
   }
 
-  // Guarda una lista vacía para que siga vacía al recargar.
+  // Conserva el carrito vacío incluso después de recargar.
   function vaciarCarrito() {
     actualizarCarrito([]);
   }
 
-  // Valores que utilizan el panel y el contador del encabezado.
+  // El panel muestra el total y el encabezado muestra las unidades.
   const total = calcularTotal(carrito);
   const cantidadTotal = contarProductos(carrito);
 
-  // App.jsx comparte estos datos y funciones con los componentes.
   return {
     carrito,
     total,

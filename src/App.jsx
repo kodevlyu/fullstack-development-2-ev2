@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
 
-// Cada hook mantiene una única lista compartida en la aplicación.
+// Mantienen las listas compartidas del catálogo y del carrito.
 import useProductos from "./hooks/useProductos";
 import useCarrito from "./hooks/useCarrito";
 
@@ -9,9 +9,10 @@ import Router from "./router";
 import Carrito from "./components/Carrito";
 
 function App() {
+  // Catálogo compartido con las páginas y la administración.
   const { productos, actualizarProductos } = useProductos();
 
-  // Datos y operaciones que reciben el panel y el catálogo.
+  // Entrega el catálogo al carrito para comprobar el stock actual.
   const {
     carrito,
     total,
@@ -21,9 +22,9 @@ function App() {
     actualizarCantidad,
     quitarDelCarrito,
     vaciarCarrito,
-  } = useCarrito();
+  } = useCarrito(productos);
 
-  // Controla únicamente si el panel lateral está visible.
+  // Controla la apertura y el cierre del panel lateral.
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
 
   function abrirCarrito() {
@@ -36,7 +37,7 @@ function App() {
 
   return (
     <>
-      {/* Router comunica las páginas con los datos de App. */}
+      {/* Conecta las páginas con el catálogo y las acciones del carrito. */}
       <Router
         productos={productos}
         actualizarProductos={actualizarProductos}
@@ -45,8 +46,9 @@ function App() {
         cantidadTotal={cantidadTotal}
       />
 
-      {/* El panel utiliza la misma lista que maneja useCarrito. */}
+      {/* Comparte la lista y las acciones con el panel lateral. */}
       <Carrito
+        productos={productos}
         mostrar={mostrarCarrito}
         cerrar={cerrarCarrito}
         carrito={carrito}

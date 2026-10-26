@@ -1,12 +1,10 @@
 import { Offcanvas } from "react-bootstrap";
-
-// Reutiliza el formato de precios del proyecto.
 import { formatoPrecio } from "../utils/formatoPrecio";
-
-// Estilos exclusivos del panel del carrito.
+import { permiteCantidad } from "../utils/stockCarrito";
 import "./Carrito.css";
 
 function Carrito({
+  productos = [],
   mostrar,
   cerrar,
   carrito,
@@ -24,13 +22,13 @@ function Carrito({
       className="carrito-panel"
       aria-labelledby="titulo-carrito"
     >
-      {/* El botón de cierre llama a la función recibida desde App.jsx. */}
+      {/* App.jsx controla la apertura y el cierre del panel. */}
       <Offcanvas.Header closeButton closeLabel="Cerrar carrito">
         <Offcanvas.Title id="titulo-carrito">Tu carrito</Offcanvas.Title>
       </Offcanvas.Header>
 
       <Offcanvas.Body>
-        {/* Informa si el navegador no permite conservar los cambios. */}
+        {/* Mensaje de useCarrito.js cuando falla el guardado. */}
         {errorGuardado && (
           <p className="carrito-error" role="alert">
             {errorGuardado}
@@ -38,7 +36,6 @@ function Carrito({
         )}
 
         {carrito.length === 0 ? (
-          /* Mensaje inicial cuando todavía no hay productos. */
           <div className="carrito-vacio">
             <p>Tu carrito está vacío.</p>
             <p>Agrega productos desde el catálogo para comenzar.</p>
@@ -48,72 +45,105 @@ function Carrito({
           </div>
         ) : (
           <>
-            {/* Cada entrada representa un producto y su cantidad. */}
+            {/* Comprueba cada cantidad contra el catálogo recibido de App. */}
             <ul className="carrito-lista">
-              {carrito.map((item) => (
-                <li className="carrito-item" key={item.codigo}>
-                  <img
-                    className="carrito-imagen"
-                    src={item.imagen}
-                    alt={item.nombre}
-                  />
+              {carrito.map((item) => {
+                const productoActual = productos.find(
+                  (producto) => producto.codigo === item.codigo,
+                );
 
-                  <div className="carrito-informacion">
-                    <h2>{item.nombre}</h2>
+                const puedeSumar = permiteCantidad(
+                  productoActual,
+                  item.cantidad + 1,
+                );
 
-                    <p>Precio unitario: {formatoPrecio(item.precio)}</p>
+                const puedeRestar = permiteCantidad(
+                  productoActual,
+                  item.cantidad - 1,
+                );
 
-                    {/* Los botones llaman a las funciones de useCarrito.js. */}
-                    <div
-                      className="carrito-cantidad"
-                      role="group"
-                      aria-label={`Cantidad de ${item.nombre}`}
-                    >
+                const cantidadValida = permiteCantidad(
+                  productoActual,
+                  item.cantidad,
+                );
+
+                return (
+                  <li className="carrito-item" key={item.codigo}>
+                    <img
+                      className="carrito-imagen"
+                      src={item.imagen}
+                      alt={item.nombre}
+                    />
+
+                    <div className="carrito-informacion">
+                      <h2>{item.nombre}</h2>
+                      <p>Precio unitario: {formatoPrecio(item.precio)}</p>
+
+                      {/* useCarrito.js valida nuevamente antes de guardar. */}
+                      <div
+                        className="carrito-cantidad"
+                        role="group"
+                        aria-label={`Cantidad de ${item.nombre}`}
+                      >
+                        <button
+                          type="button"
+                          className="carrito-control"
+                          onClick={() =>
+                            actualizarCantidad(item.codigo, item.cantidad - 1)
+                          }
+                          disabled={!puedeRestar}
+                          aria-label={`Restar una unidad de ${item.nombre}`}
+                        >
+                          −
+                        </button>
+
+                        <span aria-live="polite">{item.cantidad}</span>
+
+                        <button
+                          type="button"
+                          className="carrito-control"
+                          onClick={() =>
+                            actualizarCantidad(item.codigo, item.cantidad + 1)
+                          }
+                          disabled={!puedeSumar}
+                          aria-label={`Sumar una unidad de ${item.nombre}`}
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      {/* Avisa si las unidades guardadas ya no están disponibles. */}
+                      {!cantidadValida && (
+                        <p className="carrito-error" role="status">
+                          La cantidad no está disponible o falta confirmar el
+                          stock. Puedes eliminar este producto.
+                        </p>
+                      )}
+
+                      {cantidadValida && !puedeSumar && (
+                        <p role="status">Alcanzaste el stock disponible.</p>
+                      )}
+
+                      <p className="carrito-subtotal">
+                        Subtotal: {formatoPrecio(item.precio * item.cantidad)}
+                      </p>
+
+                      {/* Siempre se puede eliminar, incluso sin stock. */}
                       <button
                         type="button"
-                        className="carrito-control"
-                        onClick={() =>
-                          actualizarCantidad(item.codigo, item.cantidad - 1)
-                        }
-                        disabled={item.cantidad <= 1}
-                        aria-label={`Restar una unidad de ${item.nombre}`}
+                        className="carrito-eliminar"
+                        onClick={() => quitarDelCarrito(item.codigo)}
+                        aria-label={`Eliminar ${item.nombre} del carrito`}
                       >
-                        −
-                      </button>
-
-                      <span aria-live="polite">{item.cantidad}</span>
-
-                      <button
-                        type="button"
-                        className="carrito-control"
-                        onClick={() =>
-                          actualizarCantidad(item.codigo, item.cantidad + 1)
-                        }
-                        aria-label={`Sumar una unidad de ${item.nombre}`}
-                      >
-                        +
+                        Eliminar
                       </button>
                     </div>
-
-                    {/* Subtotal del producto según su cantidad actual. */}
-                    <p className="carrito-subtotal">
-                      Subtotal: {formatoPrecio(item.precio * item.cantidad)}
-                    </p>
-
-                    <button
-                      type="button"
-                      className="carrito-eliminar"
-                      onClick={() => quitarDelCarrito(item.codigo)}
-                      aria-label={`Eliminar ${item.nombre} del carrito`}
-                    >
-                      Eliminar
-                    </button>
-                  </div>
-                </li>
-              ))}
+                  </li>
+                );
+              })}
             </ul>
 
-            {/* Total calculado por useCarrito.js a partir de la lista. */}
+            {/* Muestra el total calculado por useCarrito.js. */}
             <div className="carrito-resumen">
               <p className="carrito-total" aria-live="polite">
                 Total: {formatoPrecio(total)}
@@ -137,7 +167,6 @@ function Carrito({
                 </button>
               </div>
 
-              {/* Aclara el alcance actual del carrito académico. */}
               <p className="carrito-aclaracion">
                 Este carrito no realiza pagos ni confirma pedidos.
               </p>
