@@ -15,18 +15,17 @@ import NoEncontrado from "./pages/NoEncontrado";
 import Productos from "./pages/Productos";
 import DetalleProducto from "./pages/DetalleProducto";
 
-// Inicio del panel y páginas de administración de productos.
+// Páginas administrativas existentes.
 import InicioAdmin from "./pages/admin/InicioAdmin";
 import ProductosAdmin from "./pages/admin/ProductosAdmin";
 import DetalleProductoAdmin from "./pages/admin/DetalleProductoAdmin";
 import NuevoProducto from "./pages/admin/NuevoProducto";
 import EditarProducto from "./pages/admin/EditarProducto";
 
-// Selecciona el menú según la dirección actual.
-function MenuActual() {
+// El botón del carrito aparece únicamente en el menú público.
+function MenuActual({ abrirCarrito, cantidadTotal }) {
   const { pathname } = useLocation();
 
-  // Reconoce /admin y las páginas que comienzan con /admin/.
   const esAdministracion =
     pathname === "/admin" || pathname.startsWith("/admin/");
 
@@ -34,42 +33,43 @@ function MenuActual() {
     return <MenuAdmin />;
   }
 
-  return <Encabezado />;
+  return (
+    <Encabezado abrirCarrito={abrirCarrito} cantidadTotal={cantidadTotal} />
+  );
 }
 
-function Router({ productos }) {
+function Router({ productos, agregarAlCarrito, abrirCarrito, cantidadTotal }) {
   return (
     <BrowserRouter>
-      {/* MenuActual debe estar dentro de BrowserRouter para leer la ruta. */}
-      <MenuActual />
+      {/* Entrega al menú la función para abrir el panel de App.jsx. */}
+      <MenuActual abrirCarrito={abrirCarrito} cantidadTotal={cantidadTotal} />
 
       <main>
         <Routes>
-          {/* Presentación e información de la pastelería. */}
+          {/* Páginas informativas y formulario. */}
           <Route path="/" element={<Inicio />} />
           <Route path="/nosotros" element={<Nosotros />} />
-
-          {/* Listado de artículos y detalle identificado por su id. */}
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<DetalleBlog />} />
-
-          {/* Formulario de contacto. */}
           <Route path="/contacto" element={<Contacto />} />
 
-          {/* Catálogo y detalle reciben la lista desde App.jsx. */}
+          {/* Prepara la función que conectaremos con las tarjetas. */}
           <Route
             path="/productos"
-            element={<Productos productos={productos} />}
+            element={
+              <Productos
+                productos={productos}
+                agregarAlCarrito={agregarAlCarrito}
+              />
+            }
           />
           <Route
             path="/producto/:codigo"
             element={<DetalleProducto productos={productos} />}
           />
 
-          {/* Inicio administrativo creado en pages/admin/InicioAdmin.jsx. */}
+          {/* Conserva las páginas de administración existentes. */}
           <Route path="/admin" element={<InicioAdmin />} />
-
-          {/* Se conservan las rutas de administración de Rimsky. */}
           <Route
             path="/admin/productos"
             element={<ProductosAdmin productos={productos} />}
@@ -87,12 +87,11 @@ function Router({ productos }) {
             element={<EditarProducto productos={productos} />}
           />
 
-          {/* Direcciones que no corresponden a ninguna página. */}
+          {/* Direcciones que no coinciden con ninguna página. */}
           <Route path="*" element={<NoEncontrado />} />
         </Routes>
       </main>
 
-      {/* Conserva el pie de página compartido. */}
       <PiePagina />
     </BrowserRouter>
   );
