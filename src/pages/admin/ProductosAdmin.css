@@ -1,4 +1,8 @@
-/* src/pages/admin/ProductosAdmin.css */
-.productos-admin {
-  padding: 2rem;
-}
+.productos-admin { max-width: 1200px; margin: 1.5rem auto; padding: 1rem; }
+.accion-nuevo { display: inline-block; padding: .6rem 1rem; margin-bottom: 1rem; background: #5d4037; color: white; border-radius: 6px; }
+.tabla-productos-contenedor { width: 100%; overflow-x: auto; }
+.productos-admin table { width: 100%; border-collapse: collapse; }
+.productos-admin th, .productos-admin td { padding: .7rem; border-bottom: 1px solid #ddd; text-align: left; }
+.acciones-producto { display: flex; gap: .65rem; flex-wrap: wrap; }
+.acciones-producto button { cursor: pointer; }
+@media(max-width: 640px) { .productos-admin { padding: .6rem; } .productos-admin th, .productos-admin td { padding: .4rem; } }

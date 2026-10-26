@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
-// Menús y pie de página.
+// Menús y pie de página compartidos.
 import Encabezado from "./components/Encabezado";
 import MenuAdmin from "./components/MenuAdmin";
 import PiePagina from "./components/PiePagina";
@@ -15,14 +15,14 @@ import NoEncontrado from "./pages/NoEncontrado";
 import Productos from "./pages/Productos";
 import DetalleProducto from "./pages/DetalleProducto";
 
-// Páginas administrativas existentes.
+// Inicio administrativo y páginas de productos de Rimsky.
 import InicioAdmin from "./pages/admin/InicioAdmin";
 import ProductosAdmin from "./pages/admin/ProductosAdmin";
 import DetalleProductoAdmin from "./pages/admin/DetalleProductoAdmin";
 import NuevoProducto from "./pages/admin/NuevoProducto";
 import EditarProducto from "./pages/admin/EditarProducto";
 
-// El botón del carrito aparece únicamente en el menú público.
+// Selecciona el menú según la dirección actual.
 function MenuActual({ abrirCarrito, cantidadTotal }) {
   const { pathname } = useLocation();
 
@@ -33,27 +33,34 @@ function MenuActual({ abrirCarrito, cantidadTotal }) {
     return <MenuAdmin />;
   }
 
+  // Conserva el acceso al carrito en el menú público.
   return (
     <Encabezado abrirCarrito={abrirCarrito} cantidadTotal={cantidadTotal} />
   );
 }
 
-function Router({ productos, agregarAlCarrito, abrirCarrito, cantidadTotal }) {
+function Router({
+  productos,
+  actualizarProductos,
+  agregarAlCarrito,
+  abrirCarrito,
+  cantidadTotal,
+}) {
   return (
     <BrowserRouter>
-      {/* Entrega al menú la función para abrir el panel de App.jsx. */}
+      {/* Recibe desde App.jsx la apertura y el contador del carrito. */}
       <MenuActual abrirCarrito={abrirCarrito} cantidadTotal={cantidadTotal} />
 
       <main>
         <Routes>
-          {/* Páginas informativas y formulario. */}
+          {/* Páginas informativas y formulario de contacto. */}
           <Route path="/" element={<Inicio />} />
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<DetalleBlog />} />
           <Route path="/contacto" element={<Contacto />} />
 
-          {/* Prepara la función que conectaremos con las tarjetas. */}
+          {/* Conserva la conexión del catálogo con el carrito. */}
           <Route
             path="/productos"
             element={
@@ -63,31 +70,53 @@ function Router({ productos, agregarAlCarrito, abrirCarrito, cantidadTotal }) {
               />
             }
           />
+
+          {/* El detalle recibe la misma lista compartida de productos. */}
           <Route
             path="/producto/:codigo"
             element={<DetalleProducto productos={productos} />}
           />
 
-          {/* Conserva las páginas de administración existentes. */}
+          {/* Inicio del panel administrativo. */}
           <Route path="/admin" element={<InicioAdmin />} />
+
+          {/* Conserva las conexiones de Rimsky para actualizar productos. */}
           <Route
             path="/admin/productos"
-            element={<ProductosAdmin productos={productos} />}
+            element={
+              <ProductosAdmin
+                productos={productos}
+                actualizarProductos={actualizarProductos}
+              />
+            }
           />
+
           <Route
             path="/admin/producto/nuevo"
-            element={<NuevoProducto productos={productos} />}
+            element={
+              <NuevoProducto
+                productos={productos}
+                actualizarProductos={actualizarProductos}
+              />
+            }
           />
+
           <Route
             path="/admin/producto/:codigo"
             element={<DetalleProductoAdmin productos={productos} />}
           />
+
           <Route
             path="/admin/producto/:codigo/editar"
-            element={<EditarProducto productos={productos} />}
+            element={
+              <EditarProducto
+                productos={productos}
+                actualizarProductos={actualizarProductos}
+              />
+            }
           />
 
-          {/* Direcciones que no coinciden con ninguna página. */}
+          {/* Muestra una explicación cuando ninguna ruta coincide. */}
           <Route path="*" element={<NoEncontrado />} />
         </Routes>
       </main>
