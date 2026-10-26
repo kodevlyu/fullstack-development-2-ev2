@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
-// Menús y pie de página.
+// Menús y pie de página compartidos.
 import Encabezado from "./components/Encabezado";
 import MenuAdmin from "./components/MenuAdmin";
 import PiePagina from "./components/PiePagina";
@@ -15,7 +15,7 @@ import NoEncontrado from "./pages/NoEncontrado";
 import Productos from "./pages/Productos";
 import DetalleProducto from "./pages/DetalleProducto";
 
-// Inicio del panel y páginas de administración de productos.
+// Inicio administrativo y páginas de productos de Rimsky.
 import InicioAdmin from "./pages/admin/InicioAdmin";
 import ProductosAdmin from "./pages/admin/ProductosAdmin";
 import DetalleProductoAdmin from "./pages/admin/DetalleProductoAdmin";
@@ -23,10 +23,9 @@ import NuevoProducto from "./pages/admin/NuevoProducto";
 import EditarProducto from "./pages/admin/EditarProducto";
 
 // Selecciona el menú según la dirección actual.
-function MenuActual() {
+function MenuActual({ abrirCarrito, cantidadTotal }) {
   const { pathname } = useLocation();
 
-  // Reconoce /admin y las páginas que comienzan con /admin/.
   const esAdministracion =
     pathname === "/admin" || pathname.startsWith("/admin/");
 
@@ -34,65 +33,94 @@ function MenuActual() {
     return <MenuAdmin />;
   }
 
-  return <Encabezado />;
+  // Conserva el acceso al carrito en el menú público.
+  return (
+    <Encabezado abrirCarrito={abrirCarrito} cantidadTotal={cantidadTotal} />
+  );
 }
 
-function Router({ productos, actualizarProductos }) {
+function Router({
+  productos,
+  actualizarProductos,
+  agregarAlCarrito,
+  abrirCarrito,
+  cantidadTotal,
+}) {
   return (
     <BrowserRouter>
-      {/* MenuActual debe estar dentro de BrowserRouter para leer la ruta. */}
-      <MenuActual />
+      {/* Recibe desde App.jsx la apertura y el contador del carrito. */}
+      <MenuActual abrirCarrito={abrirCarrito} cantidadTotal={cantidadTotal} />
 
       <main>
         <Routes>
-          {/* Presentación e información de la pastelería. */}
+          {/* Páginas informativas y formulario de contacto. */}
           <Route path="/" element={<Inicio />} />
           <Route path="/nosotros" element={<Nosotros />} />
-
-          {/* Listado de artículos y detalle identificado por su id. */}
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<DetalleBlog />} />
-
-          {/* Formulario de contacto. */}
           <Route path="/contacto" element={<Contacto />} />
 
-          {/* Catálogo y detalle reciben la lista desde App.jsx. */}
+          {/* Conserva la conexión del catálogo con el carrito. */}
           <Route
             path="/productos"
-            element={<Productos productos={productos} />}
+            element={
+              <Productos
+                productos={productos}
+                agregarAlCarrito={agregarAlCarrito}
+              />
+            }
           />
+
+          {/* El detalle recibe la misma lista compartida de productos. */}
           <Route
             path="/producto/:codigo"
             element={<DetalleProducto productos={productos} />}
           />
 
-          {/* Inicio administrativo creado en pages/admin/InicioAdmin.jsx. */}
+          {/* Inicio del panel administrativo. */}
           <Route path="/admin" element={<InicioAdmin />} />
 
-          {/* Se conservan las rutas de administración de Rimsky. */}
+          {/* Conserva las conexiones de Rimsky para actualizar productos. */}
           <Route
             path="/admin/productos"
-            element={<ProductosAdmin productos={productos} actualizarProductos={actualizarProductos} />}
+            element={
+              <ProductosAdmin
+                productos={productos}
+                actualizarProductos={actualizarProductos}
+              />
+            }
           />
+
           <Route
             path="/admin/producto/nuevo"
-            element={<NuevoProducto productos={productos} actualizarProductos={actualizarProductos} />}
+            element={
+              <NuevoProducto
+                productos={productos}
+                actualizarProductos={actualizarProductos}
+              />
+            }
           />
+
           <Route
             path="/admin/producto/:codigo"
             element={<DetalleProductoAdmin productos={productos} />}
           />
+
           <Route
             path="/admin/producto/:codigo/editar"
-            element={<EditarProducto productos={productos} actualizarProductos={actualizarProductos} />}
+            element={
+              <EditarProducto
+                productos={productos}
+                actualizarProductos={actualizarProductos}
+              />
+            }
           />
 
-          {/* Direcciones que no corresponden a ninguna página. */}
+          {/* Muestra una explicación cuando ninguna ruta coincide. */}
           <Route path="*" element={<NoEncontrado />} />
         </Routes>
       </main>
 
-      {/* Conserva el pie de página compartido. */}
       <PiePagina />
     </BrowserRouter>
   );

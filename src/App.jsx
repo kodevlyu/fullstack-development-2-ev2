@@ -1,23 +1,62 @@
-// Estilos generales de la aplicación.
+import { useState } from "react";
 import "./App.css";
 
-// Maneja la lista de productos y su almacenamiento.
+// Cada hook mantiene una única lista compartida en la aplicación.
 import useProductos from "./hooks/useProductos";
+import useCarrito from "./hooks/useCarrito";
 
-// Define las páginas y sus direcciones.
 import Router from "./router";
+import Carrito from "./components/Carrito";
 
 function App() {
-  // Se usa una sola vez para compartir la misma lista entre las páginas.
   const { productos, actualizarProductos } = useProductos();
 
+  // Datos y operaciones que reciben el panel y el catálogo.
+  const {
+    carrito,
+    total,
+    cantidadTotal,
+    errorGuardado,
+    agregarAlCarrito,
+    actualizarCantidad,
+    quitarDelCarrito,
+    vaciarCarrito,
+  } = useCarrito();
+
+  // Controla únicamente si el panel lateral está visible.
+  const [mostrarCarrito, setMostrarCarrito] = useState(false);
+
+  function abrirCarrito() {
+    setMostrarCarrito(true);
+  }
+
+  function cerrarCarrito() {
+    setMostrarCarrito(false);
+  }
+
   return (
-    <Router
-      // Lista actual que reciben el catálogo y las páginas de administración.
-      productos={productos}
-      // Función que Rimsky deberá pasar desde Router a sus páginas.
-      actualizarProductos={actualizarProductos}
-    />
+    <>
+      {/* Router comunica las páginas con los datos de App. */}
+      <Router
+        productos={productos}
+        actualizarProductos={actualizarProductos}
+        agregarAlCarrito={agregarAlCarrito}
+        abrirCarrito={abrirCarrito}
+        cantidadTotal={cantidadTotal}
+      />
+
+      {/* El panel utiliza la misma lista que maneja useCarrito. */}
+      <Carrito
+        mostrar={mostrarCarrito}
+        cerrar={cerrarCarrito}
+        carrito={carrito}
+        total={total}
+        errorGuardado={errorGuardado}
+        actualizarCantidad={actualizarCantidad}
+        quitarDelCarrito={quitarDelCarrito}
+        vaciarCarrito={vaciarCarrito}
+      />
+    </>
   );
 }
 

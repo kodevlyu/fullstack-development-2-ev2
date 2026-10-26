@@ -3,7 +3,8 @@ import { Container, Row, Col } from "react-bootstrap";
 import TarjetaProducto from "./TarjetaProducto";
 import "./Catalogo.css";
 
-function Catalogo({ productos }) {
+function Catalogo({ productos, agregarAlCarrito }) {
+  // Informa cuando el catálogo o el resultado de los filtros está vacío.
   if (!productos || productos.length === 0) {
     return <p className="catalogo-vacio">No hay productos para mostrar.</p>;
   }
@@ -13,10 +14,15 @@ function Catalogo({ productos }) {
       <Container>
         <h2 className="catalogo-titulo">Nuestros productos</h2>
 
+        {/* Conserva la distribución adaptable de las tarjetas. */}
         <Row className="g-4">
           {productos.map((producto) => (
             <Col key={producto.codigo} xs={12} md={6} lg={4}>
-              <TarjetaProducto producto={producto} />
+              {/* Cada tarjeta recibe el producto y la misma función. */}
+              <TarjetaProducto
+                producto={producto}
+                agregarAlCarrito={agregarAlCarrito}
+              />
             </Col>
           ))}
         </Row>

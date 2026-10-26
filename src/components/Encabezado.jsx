@@ -1,10 +1,8 @@
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
-
-// Estilos del encabezado, ubicados en la misma carpeta.
 import "./Encabezado.css";
 
-function Encabezado() {
+function Encabezado({ abrirCarrito, cantidadTotal }) {
   return (
     <Navbar
       className="encabezado"
@@ -13,12 +11,12 @@ function Encabezado() {
       data-bs-theme="dark"
     >
       <Container>
-        {/* La marca permite volver a Inicio sin recargar la aplicación. */}
+        {/* La marca vuelve a Inicio sin recargar la aplicación. */}
         <Navbar.Brand as={Link} to="/" className="encabezado-marca">
           Pastelería Mil Sabores
         </Navbar.Brand>
 
-        {/* Controla el menú desplegable en pantallas pequeñas. */}
+        {/* Controla el menú en pantallas pequeñas. */}
         <Navbar.Toggle
           aria-controls="menu-principal"
           aria-label="Abrir o cerrar menú"
@@ -26,7 +24,7 @@ function Encabezado() {
 
         <Navbar.Collapse id="menu-principal">
           <Nav className="ms-auto">
-            {/* Cada enlace utiliza una dirección definida en router.jsx. */}
+            {/* Enlaces conectados con las páginas de router.jsx. */}
             <Nav.Link as={NavLink} to="/" end eventKey="inicio">
               Inicio
             </Nav.Link>
@@ -43,9 +41,19 @@ function Encabezado() {
               Blogs
             </Nav.Link>
 
-            {/* Abre Contacto.jsx mediante la ruta /contacto. */}
             <Nav.Link as={NavLink} to="/contacto" eventKey="contacto">
               Contacto
+            </Nav.Link>
+
+            {/* Abre el panel de App.jsx y muestra las unidades agregadas. */}
+            <Nav.Link
+              as="button"
+              type="button"
+              eventKey="carrito"
+              onClick={abrirCarrito}
+              aria-label={`Abrir carrito: ${cantidadTotal} unidades`}
+            >
+              Carrito ({cantidadTotal})
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
