@@ -17,8 +17,9 @@ export default function DetalleProducto({ productos = [] }) {
         <p><strong>Descripción:</strong> {producto.descripcion}</p>
         <p><strong>Categoría:</strong> {producto.categoria}</p>
         <p className="precio"><strong>Precio:</strong> {formatoPrecio(producto.precio)}</p>
+        <p><strong>Stock:</strong> {Number.isInteger(producto.stock) && producto.stock >= 0 ? `${producto.stock} unidades` : "Stock pendiente"}</p>
         <p className={producto.disponible ? "estado" : "no-disponible"}>
-          {producto.disponible ? "Disponible" : "No disponible"}
+          {!producto.disponible ? "No disponible" : !Number.isInteger(producto.stock) || producto.stock < 0 ? "Stock pendiente" : producto.stock === 0 ? "Sin stock" : "Disponible"}
         </p>
         <p><strong>Personalizable:</strong> {producto.personalizable ? "Sí" : "No"}</p>
         <Link to="/productos">Volver al catálogo</Link>

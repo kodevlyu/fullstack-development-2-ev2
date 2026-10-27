@@ -4,7 +4,7 @@ import { CATEGORIAS_PRODUCTO, validarDatosProducto } from "../utils/validarDatos
 import "./FormularioProducto.css";
 
 const VACIO = {
-  codigo: "", nombre: "", descripcion: "", categoria: "", precio: "", imagen: "",
+  codigo: "", nombre: "", descripcion: "", categoria: "", precio: "", stock: "", imagen: "",
   disponible: true, personalizable: false,
 };
 
@@ -36,7 +36,7 @@ export default function FormularioProducto({ titulo, inicial = VACIO, productos,
       <input id={`producto-${nombre}`} name={nombre} type={tipo}
         value={formulario[nombre]} onChange={cambiar}
         readOnly={esEdicion && nombre === "codigo"}
-        min={tipo === "number" ? 1 : undefined}
+        min={nombre === "stock" ? 0 : tipo === "number" ? 1 : undefined}
         step={tipo === "number" ? 1 : undefined}
         aria-invalid={Boolean(errores[nombre])}
         aria-describedby={errores[nombre] ? `error-${nombre}` : undefined} />
@@ -65,6 +65,7 @@ export default function FormularioProducto({ titulo, inicial = VACIO, productos,
           {errores.categoria && <small className="error-producto">{errores.categoria}</small>}
         </div>
         {campo("precio", "Precio (CLP)", "number")}
+        {campo("stock", "Stock (unidades)", "number")}
         {campo("imagen", "Imagen (ej.: /img/tc001.jpg)")}
         <label className="opcion-producto"><input name="disponible" type="checkbox" checked={formulario.disponible} onChange={cambiar} /> Disponible</label>
         <label className="opcion-producto"><input name="personalizable" type="checkbox" checked={formulario.personalizable} onChange={cambiar} /> Personalizable</label>

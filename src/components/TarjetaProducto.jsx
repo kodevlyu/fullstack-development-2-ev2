@@ -57,7 +57,7 @@ function TarjetaProducto({ producto, agregarAlCarrito }) {
       <p className="precio">{formatoPrecio(precio)}</p>
       <p className="descripcion">{descripcion}</p>
 
-      {!disponible && <p className="estado">No disponible</p>}
+      <p className="estado">{!disponible ? "No disponible" : !stockValido ? "Stock pendiente" : stock === 0 ? "Sin stock" : `Stock: ${stock} unidades`}</p>
 
       {/* Ver detalle sigue disponible aunque el producto esté agotado. */}
       <div className="acciones">

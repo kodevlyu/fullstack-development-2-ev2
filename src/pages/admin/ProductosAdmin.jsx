@@ -14,11 +14,13 @@ export default function ProductosAdmin({ productos, actualizarProductos }) {
       {productos.length === 0 ? <p>No hay productos registrados.</p> : (
         <div className="tabla-productos-contenedor">
           <table>
-            <thead><tr><th>Código</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <thead><tr><th>Código</th><th>Nombre</th><th>Categoría</th><th>Precio</th><th>Stock</th><th>Estado</th><th>Acciones</th></tr></thead>
             <tbody>{productos.map((p) => (
               <tr key={p.codigo}>
                 <td>{p.codigo}</td><td>{p.nombre}</td><td>{p.categoria}</td>
-                <td>{formatoPrecio(p.precio)}</td><td>{p.disponible ? "Disponible" : "No disponible"}</td>
+                <td>{formatoPrecio(p.precio)}</td>
+                <td>{Number.isInteger(p.stock) && p.stock >= 0 ? p.stock : "Pendiente"}</td>
+                <td>{p.disponible ? "Disponible" : "No disponible"}</td>
                 <td className="acciones-producto">
                   <Link to={`/admin/producto/${p.codigo}`}>Ver</Link>
                   <Link to={`/admin/producto/${p.codigo}/editar`}>Editar</Link>
