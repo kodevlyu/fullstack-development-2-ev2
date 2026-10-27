@@ -45,17 +45,17 @@ function Encabezado({ abrirCarrito, cantidadTotal }) {
               Contacto
             </Nav.Link>
 
-            {/* Abre el panel de App.jsx y muestra las unidades agregadas. */}
-            <Nav.Link
-              as="button"
-              type="button"
-              eventKey="carrito"
-              onClick={abrirCarrito}
-              aria-label={`Abrir carrito: ${cantidadTotal} unidades`}
-            >
-              Carrito ({cantidadTotal})
-            </Nav.Link>
           </Nav>
+          {/* Botón independiente, alineado al extremo derecho como la referencia. */}
+          <button
+            type="button"
+            className="encabezado-carrito"
+            onClick={abrirCarrito}
+            aria-label={`Abrir carrito: ${cantidadTotal} unidades`}
+          >
+            <span aria-hidden="true" className="encabezado-carrito-icono">🛒</span>
+            <span>Carrito ({cantidadTotal})</span>
+          </button>
         </Navbar.Collapse>
       </Container>
     </Navbar>
