@@ -20,3 +20,31 @@
 .encabezado .nav-link:hover {
   color: #ffe2cc;
 }
+/* Acceso destacado al carrito sin cambiar la lógica de apertura. */
+.encabezado .encabezado-carrito {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-left: 1.25rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.18);
+  color: #fff;
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.encabezado .encabezado-carrito:hover,
+.encabezado .encabezado-carrito:focus-visible {
+  background: rgba(0, 0, 0, 0.32);
+  border-color: #fff;
+}
+.encabezado .encabezado-carrito:focus-visible {
+  outline: 2px solid #ffe2cc;
+  outline-offset: 2px;
+}
+@media (max-width: 991.98px) {
+  .encabezado .encabezado-carrito { margin: 0.75rem 0 0; }
+}

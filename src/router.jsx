@@ -54,7 +54,12 @@ function Router({
       <main>
         <Routes>
           {/* Páginas informativas y formulario de contacto. */}
-          <Route path="/" element={<Inicio />} />
+          <Route
+            path="/"
+            element={
+              <Inicio productos={productos} agregarAlCarrito={agregarAlCarrito} />
+            }
+          />
           <Route path="/nosotros" element={<Nosotros />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<DetalleBlog />} />

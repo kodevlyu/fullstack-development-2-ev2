@@ -1,3 +1,4 @@
+
 import { act } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -56,7 +57,7 @@ describe("Navegación", () => {
     });
   }
 
-  // 1. Comprueba la conexión del menú público con Nosotros.
+  // 1. Comprueba la navegación desde Inicio hasta Nosotros.
   it("navega desde Inicio hasta Nosotros", async () => {
     await abrirPagina("/");
 
@@ -68,59 +69,102 @@ describe("Navegación", () => {
     );
   });
 
-  // 2. Comprueba el listado, el primer artículo y el regreso al listado.
-  it("abre un artículo desde Blogs y permite volver", async () => {
+  // 2. Comprueba la portada y el catálogo vacío en Inicio.
+  it("muestra el catálogo en Inicio sin crear otra lista de productos", async () => {
     await abrirPagina("/");
 
-    await pulsarEnlace('a[href="/blogs"]');
-    expect(nodo.querySelector("h1").textContent).toBe(
-      "Historias para disfrutar",
+    // Verifica la portada recuperada del proyecto original.
+    expect(nodo.querySelector(".inicio-hero")).not.toBeNull();
+
+    expect(nodo.querySelector("#inicio-titulo").textContent).toContain(
+      "Momentos inolvidables",
     );
 
-    await pulsarEnlace('a[href="/blogs/1"]');
-    expect(window.location.pathname).toBe("/blogs/1");
-    expect(nodo.querySelector("h1").textContent).toBe(
-      "¿Qué hace que un bizcocho sea esponjoso?",
-    );
-
-    await pulsarEnlace('.detalle-blog-navegacion a[href="/blogs"]');
-    expect(window.location.pathname).toBe("/blogs");
-    expect(nodo.querySelector("h1").textContent).toBe(
-      "Historias para disfrutar",
+    // El Router recibe productos=[], por lo que debe mostrar
+    // el mensaje correspondiente al catálogo sin productos.
+    expect(nodo.textContent).toContain(
+      "No hay productos para mostrar.",
     );
   });
 
-  // 3. Comprueba el acceso a Contacto desde la invitación de Nosotros.
+  // 3. Comprueba la navegación hacia Blogs y sus detalles.
+
+it("abre un artículo desde Blogs y permite volver", async () => {
+  await abrirPagina("/");
+
+  // Navega desde Inicio hasta Blogs.
+  await pulsarEnlace('a[href="/blogs"]');
+
+  expect(window.location.pathname).toBe("/blogs");
+  expect(nodo.querySelector("h1").textContent).toBe(
+    "Historias para disfrutar",
+  );
+
+  // Abre el detalle del artículo.
+  await pulsarEnlace('a[href="/blogs/1"]');
+
+  expect(window.location.pathname).toBe("/blogs/1");
+  expect(nodo.querySelector("h1").textContent).toBe(
+    "¿Qué hace que un bizcocho sea esponjoso?",
+  );
+
+  // Regresa al listado de Blogs.
+  await pulsarEnlace(
+    '.detalle-blog-navegacion a[href="/blogs"]',
+  );
+
+  expect(window.location.pathname).toBe("/blogs");
+  expect(nodo.querySelector("h1").textContent).toBe(
+    "Historias para disfrutar",
+  );
+});
+
+  // 4. Comprueba el acceso a Contacto desde Nosotros.
   it("abre Contacto desde el botón Contáctanos", async () => {
     await abrirPagina("/nosotros");
 
-    await pulsarEnlace('.nosotros-contacto a[href="/contacto"]');
+    await pulsarEnlace(
+      '.nosotros-contacto a[href="/contacto"]',
+    );
 
     expect(window.location.pathname).toBe("/contacto");
-    expect(nodo.querySelector("h1").textContent).toBe("Conversemos");
-    expect(nodo.querySelector("#comentario-contacto")).not.toBeNull();
+
+    expect(nodo.querySelector("h1").textContent).toBe(
+      "Conversemos",
+    );
+
+    expect(
+      nodo.querySelector("#comentario-contacto"),
+    ).not.toBeNull();
   });
 
-  // 4. Comprueba una dirección incorrecta y la recuperación hacia Inicio.
+  // 5. Comprueba la página 404 y el regreso a Inicio.
   it("muestra NoEncontrado y permite regresar al inicio", async () => {
     await abrirPagina("/direccion-de-prueba-inexistente");
 
-    expect(nodo.querySelector("h1").textContent).toBe("Página no encontrada");
+    expect(nodo.querySelector("h1").textContent).toBe(
+      "Página no encontrada",
+    );
 
-    await pulsarEnlace('.no-encontrado-acciones a[href="/"]');
+    await pulsarEnlace(
+      '.no-encontrado-acciones a[href="/"]',
+    );
 
     expect(window.location.pathname).toBe("/");
+
     expect(nodo.querySelector(".no-encontrado")).toBeNull();
+
     expect(nodo.querySelector("h1").textContent).toContain(
-      "Pastelería Mil Sabores",
+      "Momentos inolvidables",
     );
   });
 
-  // 5. Comprueba el cambio entre el menú administrativo y el público.
+  // 6. Comprueba el cambio entre administración y tienda.
   it("vuelve desde administración a la tienda y cambia el menú", async () => {
     await abrirPagina("/admin");
 
     expect(nodo.querySelector(".menu-admin")).not.toBeNull();
+
     expect(nodo.querySelector("h1").textContent).toBe(
       "Bienvenido al área de gestión",
     );
@@ -128,7 +172,9 @@ describe("Navegación", () => {
     await pulsarEnlace('.admin-grid a[href="/"]');
 
     expect(window.location.pathname).toBe("/");
+
     expect(nodo.querySelector(".menu-admin")).toBeNull();
+
     expect(nodo.querySelector(".encabezado")).not.toBeNull();
   });
 });
