@@ -15,6 +15,8 @@ export function validarDatosProducto(datos, productos = [], codigoOriginal = nul
   const imagen = String(datos.imagen ?? "").trim();
   const precioTexto = String(datos.precio ?? "").trim();
   const precio = Number(precioTexto);
+  const stockTexto = String(datos.stock ?? "").trim();
+  const stock = Number(stockTexto);
 
   if (!codigo) errores.codigo = "Ingresa un código.";
   else if (!/^[A-Z0-9_-]+$/.test(codigo)) errores.codigo = "Usa letras, números, guion o guion bajo.";
@@ -27,11 +29,14 @@ export function validarDatosProducto(datos, productos = [], codigoOriginal = nul
   if (!precioTexto || !Number.isFinite(precio) || precio <= 0 || !Number.isInteger(precio)) {
     errores.precio = "Ingresa un precio entero mayor que cero.";
   }
+  if (!stockTexto || !/^\d+$/.test(stockTexto) || !Number.isSafeInteger(stock) || stock < 0) {
+    errores.stock = "Ingresa un stock entero desde cero.";
+  }
   if (imagen && !imagen.startsWith("/img/") && !/^https?:\/\//i.test(imagen)) {
     errores.imagen = "Usa una imagen de /img/ o una dirección http(s).";
   }
   return { errores, valido: Object.keys(errores).length === 0, producto: {
-    codigo, nombre, descripcion, categoria, precio, imagen,
+    codigo, nombre, descripcion, categoria, precio, stock, imagen,
     disponible: Boolean(datos.disponible), personalizable: Boolean(datos.personalizable),
   }};
 }

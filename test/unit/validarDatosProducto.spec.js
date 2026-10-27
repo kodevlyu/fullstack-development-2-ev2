@@ -1,5 +1,5 @@
 import { validarDatosProducto } from "../../src/utils/validarDatosProducto";
-const valido = { codigo: "TC999", nombre: "Torta prueba", descripcion: "Descripción de prueba", categoria: "Tortas Cuadradas", precio: "10000", imagen: "/img/tc001.jpg", disponible: true, personalizable: false };
+const valido = { codigo: "TC999", nombre: "Torta prueba", descripcion: "Descripción de prueba", categoria: "Tortas Cuadradas", precio: "10000", stock: "10", imagen: "/img/tc001.jpg", disponible: true, personalizable: false };
 describe("validarDatosProducto", () => {
   it("normaliza código y precio", () => {
     const r = validarDatosProducto({ ...valido, codigo: " tc999 " });

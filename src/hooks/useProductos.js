@@ -25,6 +25,8 @@ function obtenerProductosIniciales() {
     }
 
     // Respeta una lista vacía si se eliminaron todos los productos.
+    // No inventar inventario en registros antiguos: sin stock = pendiente.
+    // El administrador puede asignar cantidades mediante Editar producto.
     return productosGuardados;
   } catch (error) {
     // Permite mostrar el catálogo si el navegador bloquea el almacenamiento.
