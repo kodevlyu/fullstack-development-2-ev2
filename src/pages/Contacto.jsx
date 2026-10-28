@@ -1,15 +1,17 @@
 import { useState } from "react";
+import { validarContacto } from "../utils/validarContacto";
 import "./Contacto.css";
 
 function Contacto() {
-  // Guarda lo que escribe el usuario en los tres campos.
   const [datos, setDatos] = useState({
     nombre: "",
     correo: "",
     comentario: "",
   });
 
-  // Actualiza el campo que cambió y conserva los demás.
+  const [errores, setErrores] = useState({});
+  const [mensajeExito, setMensajeExito] = useState("");
+
   function actualizarCampo(evento) {
     const { name, value } = evento.target;
 
@@ -17,16 +19,37 @@ function Contacto() {
       ...datos,
       [name]: value,
     });
+
+    if (errores[name]) {
+      setErrores({
+        ...errores,
+        [name]: "",
+      });
+    }
   }
 
-  // Evita recargar la página. Aquí conectaremos la validación de Lucía.
   function manejarFormulario(evento) {
     evento.preventDefault();
+    setMensajeExito("");
+
+    const resultado = validarContacto(datos);
+
+    if (!resultado.valido) {
+      setErrores(resultado.errores);
+      return;
+    }
+
+    setErrores({});
+    setMensajeExito("¡Consulta validada con éxito! Tu mensaje ha sido registrado.");
+    setDatos({
+      nombre: "",
+      correo: "",
+      comentario: "",
+    });
   }
 
   return (
     <section className="contacto" aria-labelledby="titulo-contacto">
-      {/* Presentación conservada del formulario original. */}
       <header className="contacto-presentacion">
         <h1 id="titulo-contacto">Conversemos</h1>
         <p>
@@ -35,9 +58,13 @@ function Contacto() {
         </p>
       </header>
 
-      {/* Los campos están conectados con el estado datos. */}
+      {mensajeExito && (
+        <div className="contacto-exito" role="alert" style={{ padding: "1rem", marginBottom: "1rem", backgroundColor: "#d4edda", color: "#155724", borderRadius: "4px" }}>
+          {mensajeExito}
+        </div>
+      )}
+
       <form className="contacto-formulario" onSubmit={manejarFormulario}>
-        {/* Nombre: obligatorio y con un máximo de 100 caracteres. */}
         <div className="contacto-campo">
           <label htmlFor="nombre-contacto">Nombre</label>
           <input
@@ -50,9 +77,9 @@ function Contacto() {
             onChange={actualizarCampo}
             required
           />
+          {errores.nombre && <span className="contacto-error" style={{ color: "red", fontSize: "0.85rem" }}>{errores.nombre}</span>}
         </div>
 
-        {/* La validación de Lucía comprobará los dominios permitidos. */}
         <div className="contacto-campo">
           <label htmlFor="correo-contacto">Correo electrónico</label>
           <input
@@ -69,9 +96,9 @@ function Contacto() {
           <small id="ayuda-correo-contacto">
             Usa un correo @duoc.cl, @profesor.duoc.cl o @gmail.com.
           </small>
+          {errores.correo && <span className="contacto-error" style={{ color: "red", fontSize: "0.85rem", display: "block" }}>{errores.correo}</span>}
         </div>
 
-        {/* Comentario con contador conectado al texto ingresado. */}
         <div className="contacto-campo">
           <label htmlFor="comentario-contacto">Comentario</label>
           <textarea
@@ -87,9 +114,9 @@ function Contacto() {
           <small id="contador-comentario">
             {datos.comentario.length} de 500 caracteres
           </small>
+          {errores.comentario && <span className="contacto-error" style={{ color: "red", fontSize: "0.85rem", display: "block" }}>{errores.comentario}</span>}
         </div>
 
-        {/* Se habilitará al conectar las funciones de validación de Lucía. */}
         <button
           type="submit"
           className="contacto-boton"
@@ -103,7 +130,6 @@ function Contacto() {
           Validación pendiente de integración.
         </p>
 
-        {/* Esta versión no realiza envíos ni almacena datos personales. */}
         <p className="contacto-aclaracion">
           Formulario de demostración: la consulta no se envía ni se guarda.
         </p>
