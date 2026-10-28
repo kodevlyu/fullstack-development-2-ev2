@@ -39,19 +39,9 @@ function InicioAdmin() {
             Accede al listado de usuarios y a sus opciones de administración.
           </p>
 
-          {/* Se conectará cuando esté integrada la página de Lucía. */}
-          <button
-            type="button"
-            className="admin-boton"
-            aria-describedby="admin-usuarios-pendiente"
-            disabled
-          >
+          <Link to="/admin/usuarios" className="admin-boton">
             Administrar usuarios
-          </button>
-
-          <small id="admin-usuarios-pendiente">
-            Módulo pendiente de integración.
-          </small>
+          </Link>
         </article>
 
         <article className="admin-tarjeta">

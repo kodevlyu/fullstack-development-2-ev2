@@ -83,11 +83,10 @@ describe("Contacto", () => {
     expect(contador.textContent).toContain("0 de 500 caracteres");
   });
 
-  // 4. Documenta el estado temporal hasta integrar la validación de Lucía.
-  it("mantiene la validación deshabilitada mientras está pendiente", () => {
+  // 4. La validación de Lucía habilita la comprobación del formulario.
+  it("permite validar consultas", () => {
     const boton = nodo.querySelector('button[type="submit"]');
-
-    expect(boton.disabled).toBe(true);
-    expect(nodo.textContent).toContain("Validación pendiente de integración.");
+    expect(boton.disabled).toBe(false);
+    expect(nodo.textContent).toContain("Formulario de demostración");
   });
 });

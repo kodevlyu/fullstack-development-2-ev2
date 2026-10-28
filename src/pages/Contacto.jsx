@@ -1,32 +1,58 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ContextoUsuarios } from "../context/contextoUsuarios.js";
+import { validarContacto } from "../utils/validarContacto";
 import "./Contacto.css";
 
 function Contacto() {
-  // Guarda lo que escribe el usuario en los tres campos.
+  const { sesion = null } = useContext(ContextoUsuarios) ?? {};
+
   const [datos, setDatos] = useState({
     nombre: "",
     correo: "",
     comentario: "",
   });
 
-  // Actualiza el campo que cambió y conserva los demás.
+  const [mensaje, setMensaje] = useState("");
+  const [errores, setErrores] = useState({});
+
+  const autenticado = Boolean(sesion);
+
+  const datosFormulario = {
+    nombre: autenticado ? sesion.nombre : datos.nombre,
+    correo: autenticado ? sesion.correo : datos.correo,
+    comentario: datos.comentario,
+  };
+
   function actualizarCampo(evento) {
     const { name, value } = evento.target;
 
-    setDatos({
-      ...datos,
+    setDatos(anterior => ({
+      ...anterior,
       [name]: value,
-    });
+    }));
+
+    setMensaje("");
+    setErrores(anterior => ({
+      ...anterior,
+      [name]: undefined,
+    }));
   }
 
-  // Evita recargar la página. Aquí conectaremos la validación de Lucía.
   function manejarFormulario(evento) {
     evento.preventDefault();
+
+    const resultado = validarContacto(datosFormulario, sesion);
+
+    setErrores(resultado.errores);
+    setMensaje(
+      resultado.valido
+        ? "Consulta validada correctamente (demostración, no enviada)."
+        : "Revisa los datos del formulario."
+    );
   }
 
   return (
     <section className="contacto" aria-labelledby="titulo-contacto">
-      {/* Presentación conservada del formulario original. */}
       <header className="contacto-presentacion">
         <h1 id="titulo-contacto">Conversemos</h1>
         <p>
@@ -35,9 +61,7 @@ function Contacto() {
         </p>
       </header>
 
-      {/* Los campos están conectados con el estado datos. */}
       <form className="contacto-formulario" onSubmit={manejarFormulario}>
-        {/* Nombre: obligatorio y con un máximo de 100 caracteres. */}
         <div className="contacto-campo">
           <label htmlFor="nombre-contacto">Nombre</label>
           <input
@@ -46,13 +70,13 @@ function Contacto() {
             type="text"
             maxLength={100}
             autoComplete="name"
-            value={datos.nombre}
+            value={datosFormulario.nombre}
             onChange={actualizarCampo}
+            readOnly={autenticado}
             required
           />
         </div>
 
-        {/* La validación de Lucía comprobará los dominios permitidos. */}
         <div className="contacto-campo">
           <label htmlFor="correo-contacto">Correo electrónico</label>
           <input
@@ -62,16 +86,18 @@ function Contacto() {
             maxLength={100}
             autoComplete="email"
             aria-describedby="ayuda-correo-contacto"
-            value={datos.correo}
+            value={datosFormulario.correo}
             onChange={actualizarCampo}
+            readOnly={autenticado}
             required
           />
           <small id="ayuda-correo-contacto">
-            Usa un correo @duoc.cl, @profesor.duoc.cl o @gmail.com.
+            {autenticado
+              ? "Correo asociado a tu sesión."
+              : "Usa un correo @duoc.cl, @profesor.duoc.cl o @gmail.com."}
           </small>
         </div>
 
-        {/* Comentario con contador conectado al texto ingresado. */}
         <div className="contacto-campo">
           <label htmlFor="comentario-contacto">Comentario</label>
           <textarea
@@ -89,21 +115,24 @@ function Contacto() {
           </small>
         </div>
 
-        {/* Se habilitará al conectar las funciones de validación de Lucía. */}
-        <button
-          type="submit"
-          className="contacto-boton"
-          aria-describedby="contacto-pendiente"
-          disabled
-        >
+        <button type="submit" className="contacto-boton">
           Validar consulta
         </button>
 
-        <p id="contacto-pendiente" className="contacto-aviso">
-          Validación pendiente de integración.
-        </p>
+        {mensaje && (
+          <p role="status" className="contacto-aviso">
+            {mensaje}
+          </p>
+        )}
 
-        {/* Esta versión no realiza envíos ni almacena datos personales. */}
+        {Object.entries(errores).map(([campo, error]) =>
+          error ? (
+            <p key={campo} role="alert">
+              {error}
+            </p>
+          ) : null
+        )}
+
         <p className="contacto-aclaracion">
           Formulario de demostración: la consulta no se envía ni se guarda.
         </p>

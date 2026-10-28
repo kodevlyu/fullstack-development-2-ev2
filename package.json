@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-      "lint": "oxlint --ignore-pattern '.karma-tests/**'",
+      "lint": "oxlint src test",
     "preview": "vite preview",
     "test" : "node scripts/build-tests.mjs && karma start karma.conf.cjs"
 

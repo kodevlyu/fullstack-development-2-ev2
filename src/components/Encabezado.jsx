@@ -2,7 +2,7 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
 import "./Encabezado.css";
 
-function Encabezado({ abrirCarrito, cantidadTotal }) {
+function Encabezado({ abrirCarrito, cantidadTotal, sesion = null, onCerrarSesion }) {
   return (
     <Navbar
       className="encabezado"
@@ -44,6 +44,41 @@ function Encabezado({ abrirCarrito, cantidadTotal }) {
             <Nav.Link as={NavLink} to="/contacto" eventKey="contacto">
               Contacto
             </Nav.Link>
+            {sesion?.rol === "admin" && (
+              <Nav.Link
+                as={NavLink}
+                to="/admin/usuarios"
+                eventKey="administracion"
+              >
+                Administración
+              </Nav.Link>
+            )}
+
+            {!sesion && (
+              <Nav.Link as={NavLink} to="/registro" eventKey="registro">
+                Registro
+              </Nav.Link>
+            )}
+
+            {sesion && (
+              <Navbar.Text className="mx-2">
+                Hola, {sesion.nombre}
+              </Navbar.Text>
+            )}
+
+            <Nav.Link as={NavLink} to="/login" eventKey="login">
+              Ingresar
+            </Nav.Link>
+
+            {sesion && (
+              <button
+                type="button"
+                className="btn btn-outline-light btn-sm mx-2"
+                onClick={onCerrarSesion}
+              >
+                Cerrar sesión
+              </button>
+            )}
 
           </Nav>
           {/* Botón independiente, alineado al extremo derecho como la referencia. */}

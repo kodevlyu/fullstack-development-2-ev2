@@ -7,6 +7,15 @@ import useCarrito from "./hooks/useCarrito";
 
 import Router from "./router";
 import Carrito from "./components/Carrito";
+import { UsuariosProvider } from "./hooks/useUsuarios.jsx";
+import { useUsuarios } from "./hooks/useUsuarios.js";
+
+
+// Consulta la sesión dentro del proveedor de usuarios.
+function RouterConSesion(props) {
+  const { sesion, salir } = useUsuarios();
+  return <Router {...props} sesion={sesion} onCerrarSesion={salir} />;
+}
 
 function App() {
   // Catálogo compartido con las páginas y la administración.
@@ -36,9 +45,9 @@ function App() {
   }
 
   return (
-    <>
+    <UsuariosProvider>
       {/* Conecta las páginas con el catálogo y las acciones del carrito. */}
-      <Router
+      <RouterConSesion
         productos={productos}
         actualizarProductos={actualizarProductos}
         agregarAlCarrito={agregarAlCarrito}
@@ -58,7 +67,7 @@ function App() {
         quitarDelCarrito={quitarDelCarrito}
         vaciarCarrito={vaciarCarrito}
       />
-    </>
+    </UsuariosProvider>
   );
 }
 

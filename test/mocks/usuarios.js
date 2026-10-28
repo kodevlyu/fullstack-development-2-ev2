@@ -1,0 +1,1 @@
+export const usuarioMock = { id: "demo1", nombre: "Persona", apellidos: "Ejemplo", run: "123456785", direccion: "Calle de prueba 123", confirmacion: "Demo1234", correo: "demo@gmail.com", region: "Región Metropolitana de Santiago", comuna: "Melipilla", rol: "cliente", clave: "Demo1234" };
