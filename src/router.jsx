@@ -21,6 +21,7 @@ import ProductosAdmin from "./pages/admin/ProductosAdmin";
 import DetalleProductoAdmin from "./pages/admin/DetalleProductoAdmin";
 import NuevoProducto from "./pages/admin/NuevoProducto";
 import EditarProducto from "./pages/admin/EditarProducto";
+import UsuariosAdmin from "./pages/admin/UsuariosAdmin";
 
 // Selecciona el menú según la dirección actual.
 function MenuActual({ abrirCarrito, cantidadTotal }) {
@@ -120,6 +121,9 @@ function Router({
               />
             }
           />
+
+          {/* Administración de Usuarios */}
+          <Route path="/admin/usuarios" element={<UsuariosAdmin />} />
 
           {/* Muestra una explicación cuando ninguna ruta coincide. */}
           <Route path="*" element={<NoEncontrado />} />
