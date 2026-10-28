@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 
 // Usa las rutas reales de la aplicación.
 import Router from "../../src/router";
+import { UsuariosProvider } from "../../src/hooks/useUsuarios.jsx";
 
 describe("Navegación", () => {
   let nodo;
@@ -35,13 +36,16 @@ describe("Navegación", () => {
 
     await act(async () => {
       raiz.render(
-        <Router
+        <UsuariosProvider>
+          <Router
           productos={[]}
           actualizarProductos={jasmine.createSpy("actualizarProductos")}
           agregarAlCarrito={jasmine.createSpy("agregarAlCarrito")}
           abrirCarrito={jasmine.createSpy("abrirCarrito")}
           cantidadTotal={0}
-        />,
+          sesion={direccion.startsWith("/admin") ? { correo: "admin@pasteleria.cl", rol: "admin" } : null}
+        />
+        </UsuariosProvider>,
       );
     });
   }

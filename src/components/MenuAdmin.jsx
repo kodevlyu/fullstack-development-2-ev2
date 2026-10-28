@@ -42,7 +42,7 @@ function MenuAdmin() {
             </Nav.Link>
 
             {/* Se habilitará al integrar la página de usuarios de Lucía. */}
-            <Nav.Link disabled>Usuarios (pendiente)</Nav.Link>
+            <Nav.Link as={NavLink} to="/admin/usuarios" eventKey="usuarios-admin">Usuarios</Nav.Link>
 
             {/* Regresa al sitio público mediante la ruta de Inicio. */}
             <Nav.Link as={Link} to="/" eventKey="tienda">
