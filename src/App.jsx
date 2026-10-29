@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import "./App.css";
 
@@ -10,11 +11,17 @@ import Carrito from "./components/Carrito";
 import { UsuariosProvider } from "./hooks/useUsuarios.jsx";
 import { useUsuarios } from "./hooks/useUsuarios.js";
 
-
 // Consulta la sesión dentro del proveedor de usuarios.
 function RouterConSesion(props) {
   const { sesion, salir } = useUsuarios();
-  return <Router {...props} sesion={sesion} onCerrarSesion={salir} />;
+
+  return (
+    <Router
+      {...props}
+      sesion={sesion}
+      onCerrarSesion={salir}
+    />
+  );
 }
 
 function App() {
@@ -24,9 +31,16 @@ function App() {
   // Entrega el catálogo al carrito para comprobar el stock actual.
   const {
     carrito,
+    subtotal,
+    descuento,
     total,
     cantidadTotal,
     errorGuardado,
+    codigoCupon,
+    mensajeCupon,
+    resultadoCupon,
+    aplicarCupon,
+    quitarCupon,
     agregarAlCarrito,
     actualizarCantidad,
     quitarDelCarrito,
@@ -61,7 +75,14 @@ function App() {
         mostrar={mostrarCarrito}
         cerrar={cerrarCarrito}
         carrito={carrito}
+        subtotal={subtotal}
+        descuento={descuento}
         total={total}
+        codigoCupon={codigoCupon}
+        mensajeCupon={mensajeCupon}
+        resultadoCupon={resultadoCupon}
+        aplicarCupon={aplicarCupon}
+        quitarCupon={quitarCupon}
         errorGuardado={errorGuardado}
         actualizarCantidad={actualizarCantidad}
         quitarDelCarrito={quitarDelCarrito}

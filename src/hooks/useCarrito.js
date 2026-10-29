@@ -1,6 +1,6 @@
+
 import { useState } from "react";
 
-// Operaciones que construyen la nueva lista y calculan sus totales.
 import {
   agregarProducto,
   cambiarCantidad,
@@ -9,18 +9,16 @@ import {
   contarProductos,
 } from "../utils/operacionesCarrito";
 
-// Comprueban las cantidades contra el stock actual del catálogo.
 import { permiteAgregar, permiteCantidad } from "../utils/stockCarrito";
-
-// Recupera y guarda el carrito en el navegador.
 import { cargarCarrito, guardarCarrito } from "../utils/guardarCarrito";
+import { validarCupon } from "../utils/validarCupon";
 
 function useCarrito(productos) {
-  // Recupera las compras guardadas al iniciar la aplicación.
   const [carrito, setCarrito] = useState(cargarCarrito);
   const [errorGuardado, setErrorGuardado] = useState("");
+  const [codigoCupon, setCodigoCupon] = useState("");
+  const [mensajeCupon, setMensajeCupon] = useState("");
 
-  // Actualiza la pantalla y conserva la lista en el navegador.
   function actualizarCarrito(nuevoCarrito) {
     setCarrito(nuevoCarrito);
 
@@ -35,59 +33,88 @@ function useCarrito(productos) {
     }
   }
 
-  // Consulta el catálogo recibido desde App, no un stock guardado antiguo.
   function agregarAlCarrito(producto) {
-    if (!producto) {
-      return;
-    }
+    if (!producto) return;
 
     const productoActual = productos.find(
       (elemento) => elemento.codigo === producto.codigo,
     );
 
-    // Considera también las unidades que ya existen en el carrito.
-    if (!permiteAgregar(carrito, productoActual)) {
-      return;
-    }
+    if (!permiteAgregar(carrito, productoActual)) return;
 
-    const nuevoCarrito = agregarProducto(carrito, productoActual);
-    actualizarCarrito(nuevoCarrito);
+    actualizarCarrito(agregarProducto(carrito, productoActual));
   }
 
-  // Valida el stock antes de aceptar una nueva cantidad.
   function actualizarCantidad(codigo, cantidad) {
     const productoActual = productos.find(
       (elemento) => elemento.codigo === codigo,
     );
 
-    if (!permiteCantidad(productoActual, cantidad)) {
-      return;
-    }
+    if (!permiteCantidad(productoActual, cantidad)) return;
 
-    const nuevoCarrito = cambiarCantidad(carrito, codigo, cantidad);
-    actualizarCarrito(nuevoCarrito);
+    actualizarCarrito(cambiarCantidad(carrito, codigo, cantidad));
   }
 
-  // Eliminar no requiere stock: siempre se puede retirar un producto.
   function quitarDelCarrito(codigo) {
     const nuevoCarrito = eliminarProducto(carrito, codigo);
     actualizarCarrito(nuevoCarrito);
+
+    if (nuevoCarrito.length === 0) {
+      setCodigoCupon("");
+      setMensajeCupon("");
+    }
   }
 
-  // Conserva el carrito vacío incluso después de recargar.
   function vaciarCarrito() {
     actualizarCarrito([]);
+    setCodigoCupon("");
+    setMensajeCupon("");
   }
 
-  // El panel muestra el total y el encabezado muestra las unidades.
-  const total = calcularTotal(carrito);
+  const subtotal = calcularTotal(carrito);
   const cantidadTotal = contarProductos(carrito);
+
+  // Revalida el cupón cada vez que cambia el subtotal.
+  const resultadoCupon = codigoCupon
+    ? validarCupon(codigoCupon, subtotal)
+    : null;
+
+  const descuento = resultadoCupon?.valido
+    ? resultadoCupon.descuento
+    : 0;
+
+  const total = Math.max(0, subtotal - descuento);
+
+  function aplicarCupon(codigo) {
+    const resultado = validarCupon(codigo, subtotal);
+
+    if (!resultado.valido) {
+      setMensajeCupon(resultado.mensaje);
+      return false;
+    }
+
+    setCodigoCupon(resultado.codigo);
+    setMensajeCupon(resultado.mensaje);
+    return true;
+  }
+
+  function quitarCupon() {
+    setCodigoCupon("");
+    setMensajeCupon("");
+  }
 
   return {
     carrito,
+    subtotal,
+    descuento,
     total,
     cantidadTotal,
     errorGuardado,
+    codigoCupon,
+    mensajeCupon,
+    resultadoCupon,
+    aplicarCupon,
+    quitarCupon,
     agregarAlCarrito,
     actualizarCantidad,
     quitarDelCarrito,
