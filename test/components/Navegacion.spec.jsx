@@ -1,6 +1,7 @@
 
 import { act } from "react";
 import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
 
 // Usa las rutas reales de la aplicación.
 import Router from "../../src/router";
@@ -36,7 +37,8 @@ describe("Navegación", () => {
 
     await act(async () => {
       raiz.render(
-        <UsuariosProvider>
+        <BrowserRouter>
+          <UsuariosProvider>
           <Router
           productos={[]}
           actualizarProductos={jasmine.createSpy("actualizarProductos")}
@@ -45,7 +47,8 @@ describe("Navegación", () => {
           cantidadTotal={0}
           sesion={direccion.startsWith("/admin") ? { correo: "admin@pasteleria.cl", rol: "admin" } : null}
         />
-        </UsuariosProvider>,
+          </UsuariosProvider>
+        </BrowserRouter>,
       );
     });
   }

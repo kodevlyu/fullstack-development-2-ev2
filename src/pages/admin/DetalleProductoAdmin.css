@@ -1,4 +1,232 @@
-/* src/pages/admin/DetalleProductoAdmin.css */
+/* Página de detalle administrativo */
 .detalle-producto-admin {
-  padding: 2rem;
+  width: 100%;
+  padding: 40px 20px;
+}
+
+.detalle-admin-tarjeta {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 32px;
+  background: #ffffff;
+  border: 1px solid #eadbd5;
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* Encabezado */
+.detalle-admin-encabezado {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.detalle-admin-etiqueta {
+  margin-bottom: 8px;
+  color: #854a37;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detalle-admin-encabezado h1 {
+  margin: 0 0 8px;
+  color: #854a37;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.detalle-admin-codigo {
+  margin: 0;
+  color: #666666;
+}
+
+/* Indicador de disponibilidad */
+.detalle-admin-estado {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.detalle-admin-estado.disponible {
+  background: #e5f4e9;
+  color: #176239;
+}
+
+.detalle-admin-estado.no-disponible {
+  background: #fff0ed;
+  color: #b42318;
+}
+
+/* Fotografía e información */
+.detalle-admin-contenido {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.detalle-admin-imagen-contenedor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  padding: 16px;
+  background: #fcf8f6;
+  border: 1px solid #f0e4df;
+  border-radius: 12px;
+}
+
+.detalle-admin-imagen {
+  display: block;
+  width: 100%;
+  max-height: 380px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.detalle-admin-sin-imagen {
+  color: #777777;
+  text-align: center;
+}
+
+.detalle-admin-informacion {
+  display: grid;
+  gap: 24px;
+}
+
+.detalle-admin-precio {
+  display: grid;
+  gap: 6px;
+  padding: 20px;
+  background: #fcf8f6;
+  border-radius: 10px;
+}
+
+.detalle-admin-precio span {
+  color: #666666;
+  font-size: 0.9rem;
+}
+
+.detalle-admin-precio strong {
+  color: #854a37;
+  font-size: 2rem;
+}
+
+/* Datos del producto */
+.detalle-admin-datos {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+}
+
+.detalle-admin-datos > div {
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.detalle-admin-datos dt {
+  margin-bottom: 4px;
+  color: #666666;
+  font-size: 0.85rem;
+}
+
+.detalle-admin-datos dd {
+  margin: 0;
+  color: #333333;
+  font-weight: 600;
+}
+
+/* Descripción */
+.detalle-admin-descripcion {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid #eeeeee;
+}
+
+.detalle-admin-descripcion h2 {
+  margin-bottom: 12px;
+  color: #854a37;
+  font-size: 1.2rem;
+}
+
+.detalle-admin-descripcion p {
+  margin-bottom: 0;
+  line-height: 1.7;
+}
+
+/* Botones */
+.detalle-admin-acciones {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.detalle-admin-boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 11px 18px;
+  border: 1px solid #793f56;
+  border-radius: 6px;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+}
+
+.detalle-admin-editar {
+  background: #793f56;
+  color: #ffffff;
+}
+
+.detalle-admin-editar:hover {
+  background: #603047;
+  color: #ffffff;
+}
+
+.detalle-admin-volver {
+  background: #ffffff;
+  color: #793f56;
+}
+
+.detalle-admin-volver:hover {
+  background: #f7edf1;
+  color: #793f56;
+}
+
+.detalle-admin-boton:focus-visible {
+  outline: 3px solid #a66c85;
+  outline-offset: 3px;
+}
+
+/* Adaptación a dispositivos móviles */
+@media (max-width: 700px) {
+  .detalle-producto-admin {
+    padding: 24px 12px;
+  }
+
+  .detalle-admin-tarjeta {
+    padding: 20px;
+  }
+
+  .detalle-admin-contenido {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .detalle-admin-imagen-contenedor {
+    min-height: 220px;
+  }
+
+  .detalle-admin-acciones {
+    grid-template-columns: 1fr;
+  }
 }

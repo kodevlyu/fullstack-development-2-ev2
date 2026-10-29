@@ -1,1 +1,90 @@
 @import "../UsuarioFormulario.css";
+
+/* Detalle del usuario */
+.detalle-usuario-admin {
+  max-width: 850px;
+}
+
+.detalle-usuario-admin h1 {
+  margin-bottom: 24px;
+  color: #854a37;
+  font-weight: 700;
+}
+
+.detalle-usuario-informacion {
+  display: grid;
+  gap: 12px;
+}
+
+.detalle-usuario-informacion p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.detalle-usuario-informacion strong {
+  color: #3d2920;
+}
+
+/* Grupo de acciones */
+.detalle-usuario-acciones {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+  padding-top: 22px;
+  border-top: 1px solid #eee3dd;
+}
+
+.detalle-usuario-boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 11px 20px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+/* Acción principal */
+.detalle-usuario-editar {
+  background-color: #854a37;
+  color: #ffffff;
+}
+
+.detalle-usuario-editar:hover {
+  background-color: #683725;
+  color: #ffffff;
+}
+
+/* Acción secundaria */
+.detalle-usuario-volver {
+  background-color: #ffffff;
+  border-color: #d7b9a9;
+  color: #854a37;
+}
+
+.detalle-usuario-volver:hover {
+  background-color: #f8eee8;
+  color: #683725;
+}
+
+.detalle-usuario-boton:focus-visible {
+  outline: 3px solid #b8754f;
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .detalle-usuario-acciones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .detalle-usuario-boton {
+    width: 100%;
+  }
+}

@@ -5,7 +5,110 @@
 .campo-producto input, .campo-producto textarea, .campo-producto select { width: 100%; padding: .65rem; border: 1px solid #aaa; border-radius: 6px; background: white; color: #222; }
 .campo-producto [aria-invalid="true"] { border: 2px solid #b42318; }
 .error-producto { color: #b42318; }
-.opcion-producto { display: flex; align-items: center; gap: .5rem; }
-.acciones-formulario { display: flex; flex-wrap: wrap; gap: .75rem; }
-.acciones-formulario button { padding: .65rem 1rem; cursor: pointer; }
+/* Opciones de disponibilidad y personalización */
+.opciones-producto {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 16px;
+  border: 1px solid #e6d6d0;
+  border-radius: 10px;
+  background-color: #fcf8f6;
+}
+
+.opciones-producto legend {
+  float: none;
+  width: auto;
+  margin-bottom: 8px;
+  padding: 0 6px;
+  color: #854a37;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.opcion-producto {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #eadbd5;
+  border-radius: 8px;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.opcion-producto input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: #793f56;
+  cursor: pointer;
+}
+
+.opcion-producto span {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.opcion-producto strong {
+  color: #3d2920;
+}
+
+.opcion-producto small {
+  color: #666666;
+  font-size: 0.8rem;
+}
+
+.opcion-producto:focus-within {
+  outline: 2px solid #a66c85;
+  outline-offset: 2px;
+}
+
+/* Botones principales del formulario */
+.acciones-formulario {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.acciones-formulario button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 18px;
+  border-radius: 6px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.producto-boton-guardar {
+  border: 1px solid #793f56;
+  background-color: #793f56;
+  color: #ffffff;
+}
+
+.producto-boton-guardar:hover {
+  background-color: #603047;
+}
+
+.producto-boton-cancelar {
+  border: 1px solid #793f56;
+  background-color: #ffffff;
+  color: #793f56;
+}
+
+.producto-boton-cancelar:hover {
+  background-color: #f7edf1;
+}
+
+.acciones-formulario button:focus-visible {
+  outline: 3px solid #a66c85;
+  outline-offset: 3px;
+}
 @media(max-width: 600px) { .formulario-producto-pagina { padding: 1rem; } }

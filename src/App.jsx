@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import "./App.css";
 
 // Mantienen las listas compartidas del catálogo y del carrito.
@@ -24,7 +25,8 @@ function RouterConSesion(props) {
   );
 }
 
-function App() {
+function AppContenido() {
+  const navegar = useNavigate();
   // Catálogo compartido con las páginas y la administración.
   const { productos, actualizarProductos } = useProductos();
 
@@ -58,6 +60,11 @@ function App() {
     setMostrarCarrito(false);
   }
 
+  function irAlCheckout() {
+    setMostrarCarrito(false);
+    navegar("/checkout");
+  }
+
   return (
     <UsuariosProvider>
       {/* Conecta las páginas con el catálogo y las acciones del carrito. */}
@@ -67,6 +74,12 @@ function App() {
         agregarAlCarrito={agregarAlCarrito}
         abrirCarrito={abrirCarrito}
         cantidadTotal={cantidadTotal}
+        carrito={carrito}
+        subtotal={subtotal}
+        descuento={descuento}
+        total={total}
+        codigoCupon={codigoCupon}
+        vaciarCarrito={vaciarCarrito}
       />
 
       {/* Comparte la lista y las acciones con el panel lateral. */}
@@ -74,6 +87,7 @@ function App() {
         productos={productos}
         mostrar={mostrarCarrito}
         cerrar={cerrarCarrito}
+        irAlCheckout={irAlCheckout}
         carrito={carrito}
         subtotal={subtotal}
         descuento={descuento}
@@ -89,6 +103,14 @@ function App() {
         vaciarCarrito={vaciarCarrito}
       />
     </UsuariosProvider>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContenido />
+    </BrowserRouter>
   );
 }
 

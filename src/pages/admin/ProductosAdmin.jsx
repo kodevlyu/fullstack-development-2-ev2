@@ -21,10 +21,31 @@ export default function ProductosAdmin({ productos, actualizarProductos }) {
                 <td>{formatoPrecio(p.precio)}</td>
                 <td>{Number.isInteger(p.stock) && p.stock >= 0 ? p.stock : "Pendiente"}</td>
                 <td>{p.disponible ? "Disponible" : "No disponible"}</td>
-                <td className="acciones-producto">
-                  <Link to={`/admin/producto/${p.codigo}`}>Ver</Link>
-                  <Link to={`/admin/producto/${p.codigo}/editar`}>Editar</Link>
-                  <button type="button" onClick={() => eliminar(p.codigo)} aria-label={`Eliminar ${p.nombre}`}>Eliminar</button>
+                <td>
+                  <div className="acciones-producto">
+                    <Link
+                      to={`/admin/producto/${p.codigo}`}
+                      className="accion-producto-boton"
+                    >
+                      Ver
+                    </Link>
+
+                    <Link
+                      to={`/admin/producto/${p.codigo}/editar`}
+                      className="accion-producto-boton"
+                    >
+                      Editar
+                    </Link>
+
+                    <button
+                      type="button"
+                      className="accion-producto-boton accion-producto-eliminar"
+                      onClick={() => eliminar(p.codigo)}
+                      aria-label={`Eliminar ${p.nombre}`}
+                    >
+                      Eliminar
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}</tbody>

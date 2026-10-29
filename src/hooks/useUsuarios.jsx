@@ -3,6 +3,7 @@ import { ContextoUsuarios } from "../context/contextoUsuarios.js";
 import { cargarUsuarios, guardarUsuarios } from "../utils/guardarUsuarios";
 import { leerSesion, guardarSesion, cerrarSesion } from "../utils/sesion";
 import { validarUsuario } from "../utils/validarUsuario";
+import { prepararActualizacionPerfil } from "../utils/actualizarPerfil";
 
 
 const idNuevo = () => globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`;
@@ -32,6 +33,44 @@ export function UsuariosProvider({ children }) {
     if (sesion?.id === id) { guardarSesion(nuevo); setSesion(({ id: sid }) => ({ id: sid, nombre: nuevo.nombre, correo: nuevo.correo, rol: nuevo.rol })); }
     return { ok: true };
   }
+  function actualizarMiPerfil(datos) {
+    if (!sesion || sesion.rol !== "cliente") {
+      return { ok: false, mensaje: "Debes iniciar sesión como cliente." };
+    }
+
+    const usuario = usuarios.find(u => u.id === sesion.id);
+
+    const resultado = prepararActualizacionPerfil(
+      usuario,
+      datos,
+      usuarios
+    );
+
+    if (!resultado.ok) return resultado;
+
+    const actualizado = resultado.usuario;
+
+    if (!guardarSesion(actualizado)) {
+      return { ok: false, mensaje: "No se pudo actualizar la sesión." };
+    }
+
+    if (!persistir(
+      usuarios.map(u => u.id === sesion.id ? actualizado : u)
+    )) {
+      guardarSesion(usuario);
+      return { ok: false, mensaje: "No se pudieron guardar los cambios." };
+    }
+
+    setSesion({
+      id: actualizado.id,
+      nombre: `${actualizado.nombre} ${actualizado.apellidos}`.trim(),
+      correo: actualizado.correo,
+      rol: actualizado.rol,
+    });
+
+    return { ok: true };
+  }
+
   function eliminar(id) {
     if (!usuarios.some(u => u.id === id)) return false;
     if (!persistir(usuarios.filter(u => u.id !== id))) return false;
@@ -46,5 +85,5 @@ export function UsuariosProvider({ children }) {
     return { ok: true, usuario };
   }
   function salir() { cerrarSesion(); setSesion(null); }
-  return <ContextoUsuarios.Provider value={{ usuarios, sesion, errorPersistencia, crear, actualizar, eliminar, ingresar, salir }}>{children}</ContextoUsuarios.Provider>;
+  return <ContextoUsuarios.Provider value={{ usuarios, sesion, errorPersistencia, crear, actualizar, actualizarMiPerfil, eliminar, ingresar, salir }}>{children}</ContextoUsuarios.Provider>;
 }

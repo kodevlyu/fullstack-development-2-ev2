@@ -53,3 +53,77 @@
   border-color: #d35400;
   box-shadow: 0 0 4px rgba(211, 84, 0, 0.4);
 }
+
+/* Distribución renovada del catálogo */
+.pagina-productos {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 42px 24px 64px;
+}
+
+.productos-contenedor {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.productos-encabezado {
+  margin-bottom: 24px;
+}
+
+.productos-encabezado h1 {
+  margin: 0 0 8px;
+  color: #874b38;
+  font-size: clamp(1.8rem, 3vw, 2.3rem);
+  font-weight: 700;
+}
+
+.productos-encabezado p {
+  margin: 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+.pagina-productos .filtros {
+  display: flex;
+  align-items: end;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+  margin: 0 0 24px;
+  background: #fff;
+  border: 1px solid #ece5e1;
+  border-radius: 12px;
+}
+
+.pagina-productos .filtros > * {
+  flex: 1 1 240px;
+  min-width: 0;
+  max-width: 420px;
+}
+
+.pagina-productos .filtros input,
+.pagina-productos .filtros select {
+  width: 100%;
+  min-height: 42px;
+  border-radius: 8px;
+}
+
+@media (max-width: 767px) {
+  .pagina-productos {
+    padding: 24px 16px 40px;
+  }
+
+  .pagina-productos .filtros {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .pagina-productos .filtros > * {
+    flex-basis: 100%;
+    max-width: none;
+  }
+}

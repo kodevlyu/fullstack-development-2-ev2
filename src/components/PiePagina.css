@@ -1,17 +1,139 @@
 .pie-pagina {
-  background-color: #854a37;
-  color: white;
-  padding: 24px 0;
+  background: #39231e;
+  color: #ead3c8;
+  padding: 75px 0 28px;
+  text-align: left;
+}
+
+.pie-pagina .container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 30px;
+}
+
+/* Distribución vertical de la referencia */
+.pie-pagina-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  padding-bottom: 55px;
+}
+
+/* Marca */
+.pie-pagina-marca {
+  width: 100%;
+}
+
+.pie-pagina-logo {
+  display: inline-block;
+  margin-bottom: 22px;
+  color: #ffc0cb;
+  font-family: "Pacifico", cursive;
+  font-size: 1.65rem;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.pie-pagina-logo:hover {
+  color: #ffffff;
+}
+
+.pie-pagina-marca p {
+  max-width: 520px;
+  margin: 0 auto;
+  color: #ead3c8;
+  font-size: 1.15rem;
+  line-height: 1.8;
   text-align: center;
 }
 
-.pie-pagina-nombre {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 8px;
+/* Títulos */
+.pie-pagina h2 {
+  margin: 0 0 26px;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
-.pie-pagina-texto {
-  font-size: 16px;
-  margin-bottom: 0;
+/* Explora */
+.pie-pagina-navegacion ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pie-pagina-navegacion li {
+  margin-bottom: 14px;
+}
+
+.pie-pagina-enlace {
+  display: inline-block;
+  color: #ead3c8;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.pie-pagina-enlace:hover,
+.pie-pagina-enlace-activo {
+  color: #ffc0cb;
+}
+
+/* Proyecto académico */
+.pie-pagina-proyecto p {
+  margin: 0;
+  color: #ead3c8;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* Copyright */
+.pie-pagina-inferior {
+  padding-top: 26px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+.pie-pagina-inferior p {
+  margin: 0;
+  color: #d7bdb2;
+  font-size: 1rem;
+}
+
+/* Accesibilidad */
+.pie-pagina a:focus-visible {
+  outline: 2px solid #ffc0cb;
+  outline-offset: 4px;
+}
+
+/* Adaptación móvil */
+@media (max-width: 575px) {
+  .pie-pagina {
+    padding: 50px 0 22px;
+  }
+
+  .pie-pagina .container {
+    padding: 0 20px;
+  }
+
+  .pie-pagina-contenido {
+    gap: 36px;
+    padding-bottom: 40px;
+  }
+
+  .pie-pagina-logo {
+    font-size: 1.4rem;
+  }
+
+  .pie-pagina-marca p,
+  .pie-pagina-proyecto p {
+    font-size: 0.95rem;
+  }
+
+  .pie-pagina-inferior p {
+    font-size: 0.85rem;
+  }
 }

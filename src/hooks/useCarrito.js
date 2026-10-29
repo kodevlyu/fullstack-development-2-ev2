@@ -12,11 +12,12 @@ import {
 import { permiteAgregar, permiteCantidad } from "../utils/stockCarrito";
 import { cargarCarrito, guardarCarrito } from "../utils/guardarCarrito";
 import { validarCupon } from "../utils/validarCupon";
+import { cargarCupon, guardarCupon } from "../utils/guardarCupon";
 
 function useCarrito(productos) {
   const [carrito, setCarrito] = useState(cargarCarrito);
   const [errorGuardado, setErrorGuardado] = useState("");
-  const [codigoCupon, setCodigoCupon] = useState("");
+  const [codigoCupon, setCodigoCupon] = useState(cargarCupon);
   const [mensajeCupon, setMensajeCupon] = useState("");
 
   function actualizarCarrito(nuevoCarrito) {
@@ -61,6 +62,7 @@ function useCarrito(productos) {
 
     if (nuevoCarrito.length === 0) {
       setCodigoCupon("");
+      guardarCupon("");
       setMensajeCupon("");
     }
   }
@@ -68,6 +70,7 @@ function useCarrito(productos) {
   function vaciarCarrito() {
     actualizarCarrito([]);
     setCodigoCupon("");
+    guardarCupon("");
     setMensajeCupon("");
   }
 
@@ -94,12 +97,14 @@ function useCarrito(productos) {
     }
 
     setCodigoCupon(resultado.codigo);
+    guardarCupon(resultado.codigo);
     setMensajeCupon(resultado.mensaje);
     return true;
   }
 
   function quitarCupon() {
     setCodigoCupon("");
+    guardarCupon("");
     setMensajeCupon("");
   }
 

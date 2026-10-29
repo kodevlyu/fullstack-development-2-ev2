@@ -1,4 +1,4 @@
-import { regionesComunas } from "../data/regionesComunas";
+import { regionesComunas, normalizarRegion, comunasDeRegion } from "../data/regionesComunas";
 export const DOMINIOS_PERMITIDOS = ["gmail.com", "duoc.cl", "profesor.duoc.cl"];
 export function correoValido(correo) {
   const valor = String(correo ?? "").trim().toLowerCase();
@@ -38,7 +38,7 @@ export function validarUsuario(datos, usuarios = [], originalId = null, { exigir
     errores.clave = "La contraseña debe tener entre 8 y 10 caracteres, con letras y números obligatorios.";
   if ((exigirClave || clave) && confirmacion !== clave) errores.confirmacion = "La confirmación debe coincidir con la contraseña.";
   if (!direccion || direccion.length > 300) errores.direccion = "La dirección es obligatoria y admite hasta 300 caracteres.";
-  if (!regionesComunas[region]) errores.region = "Selecciona una región válida.";
-  if (!regionesComunas[region]?.includes(comuna)) errores.comuna = "Selecciona una comuna de la región.";
+  if (!regionesComunas[normalizarRegion(region)]) errores.region = "Selecciona una región válida.";
+  if (!comunasDeRegion(region).includes(comuna)) errores.comuna = "Selecciona una comuna de la región.";
   return { valido: Object.keys(errores).length === 0, errores, usuario: { run, nombre, apellidos, direccion, correo, region, comuna } };
 }

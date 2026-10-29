@@ -1,5 +1,4 @@
 import {
-  BrowserRouter,
   Routes,
   Route,
   Navigate,
@@ -22,6 +21,7 @@ import Productos from "./pages/Productos";
 import DetalleProducto from "./pages/DetalleProducto";
 import Registro from "./pages/Registro";
 import Login from "./pages/Login";
+import Perfil from "./pages/Perfil";
 import Checkout from "./pages/Checkout";
 
 // Administración de usuarios.
@@ -63,6 +63,24 @@ function MenuActual({
   );
 }
 
+// Exige una sesión de cliente para finalizar la compra.
+function SoloCliente({ sesion, children, destino = "/checkout" }) {
+  if (sesion?.rol !== "cliente") {
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{
+          from: destino,
+          aviso: "Inicia sesión como cliente para finalizar tu compra.",
+        }}
+      />
+    );
+  }
+
+  return children;
+}
+
 // Protege las rutas administrativas.
 function SoloAdmin({ sesion, children }) {
   if (sesion?.rol !== "admin") {
@@ -90,11 +108,13 @@ function Router({
   subtotal,
   descuento,
   total,
+  codigoCupon,
+  vaciarCarrito,
   sesion = null,
   onCerrarSesion,
 }) {
   return (
-    <BrowserRouter>
+    <div className="estructura-aplicacion">
       {/* Menú público o administrativo. */}
       <MenuActual
         abrirCarrito={abrirCarrito}
@@ -103,7 +123,7 @@ function Router({
         onCerrarSesion={onCerrarSesion}
       />
 
-      <main>
+      <main className="contenido-principal">
         <Routes>
           {/* Páginas públicas. */}
           <Route
@@ -122,6 +142,14 @@ function Router({
           <Route path="/contacto" element={<Contacto />} />
           <Route path="/registro" element={<Registro />} />
           <Route path="/login" element={<Login />} />
+          <Route
+            path="/perfil"
+            element={
+              <SoloCliente sesion={sesion} destino="/perfil">
+                <Perfil />
+              </SoloCliente>
+            }
+          />
 
           {/* Catálogo de productos. */}
           <Route
@@ -145,12 +173,19 @@ function Router({
           <Route
             path="/checkout"
             element={
-              <Checkout
-                carrito={carrito}
-                subtotal={subtotal}
-                descuento={descuento}
-                total={total}
-              />
+              <SoloCliente sesion={sesion}>
+                <Checkout
+                  sesion={sesion}
+                  productos={productos}
+                  actualizarProductos={actualizarProductos}
+                  codigoCupon={codigoCupon}
+                  vaciarCarrito={vaciarCarrito}
+                  carrito={carrito}
+                  subtotal={subtotal}
+                  descuento={descuento}
+                  total={total}
+                />
+              </SoloCliente>
             }
           />
 
@@ -258,7 +293,7 @@ function Router({
       </main>
 
       <PiePagina />
-    </BrowserRouter>
+    </div>
   );
 }
 
