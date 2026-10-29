@@ -1,4 +1,4 @@
-import { act, useContext } from "react";
+import { act, useContext, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { UsuariosProvider } from "../../src/hooks/useUsuarios.jsx";
 import { ContextoUsuarios } from "../../src/context/contextoUsuarios.js";
@@ -25,7 +25,12 @@ describe("UsuariosProvider - operaciones CRUD", () => {
   };
 
   function Consumidor() {
-    contexto = useContext(ContextoUsuarios);
+    const valor = useContext(ContextoUsuarios);
+
+    useEffect(() => {
+      contexto = valor;
+    }, [valor]);
+
     return null;
   }
 
