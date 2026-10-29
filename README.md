@@ -433,3 +433,7 @@ Proyecto desarrollado por:
 
 **Asignatura:** Desarrollo Fullstack II · DSY1104
 **Evaluación:** EA2 — Migración a React + Pruebas Unitarias con Jasmine/Karma
+
+## Estado de pruebas EA2
+
+132/132 pruebas aprobadas. Cobertura medida con Karma e Istanbul.
