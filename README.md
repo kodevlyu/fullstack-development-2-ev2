@@ -1,54 +1,59 @@
 # Pastelería 1000 Sabores — React + Vite
 
-**Desarrollo Fullstack II · DSY1104**
+**Desarrollo Fullstack II · DSY1104**  
 **EA2 — Migración a React + Pruebas Unitarias con Jasmine/Karma**
 
 ---
 
-## Descripción del proyecto
+## 1. Descripción del proyecto
 
-**Pastelería 1000 Sabores** es una aplicación web desarrollada originalmente en **HTML, CSS y JavaScript** durante EA1.
+**Pastelería 1000 Sabores** es una aplicación web de comercio electrónico desarrollada originalmente en **HTML, CSS y JavaScript** durante EA1.
 
-En EA2, el proyecto se encuentra en **proceso de migración a React + Vite**, manteniendo:
+En EA2, el proyecto se encuentra en proceso de migración a **React + Vite**, manteniendo y adaptando las funcionalidades de la versión original:
 
-* La estructura modular trabajada durante el curso.
-* Las reglas de validación originales.
-* El diseño responsivo.
-* La administración de productos y usuarios.
-* La lógica del carrito.
-* La separación de responsabilidades mediante componentes, páginas, hooks y utilidades.
+- Catálogo de productos.
+- Búsqueda y filtrado por categorías.
+- Visualización del detalle de productos.
+- Carrito de compras.
+- Registro e inicio de sesión.
+- Administración de productos y usuarios.
+- Persistencia de información mediante LocalStorage.
+- Formularios y reglas de validación.
+- Diseño responsivo.
+- Navegación entre páginas.
 
-EA2 incorpora además:
+La arquitectura se organiza mediante componentes, páginas, hooks, utilidades y módulos de datos para facilitar el mantenimiento, la reutilización y las pruebas.
 
-* Pruebas unitarias con **Jasmine + Karma**.
-* Pruebas de lógica, comportamiento y DOM.
-* Documentación técnica.
-* Revisión de compatibilidad móvil.
-* Trabajo mediante ramas Git.
-* Integración entre los módulos desarrollados por cada integrante.
+EA2 incorpora también pruebas automatizadas con **Jasmine y Karma**, medición de cobertura mediante **Istanbul**, documentación técnica y trabajo colaborativo mediante Git y GitHub.
 
-> **Estado del proyecto:** la migración a React no se encuentra declarada como completa. El desarrollo se realiza progresivamente de acuerdo con la guía y los requisitos de EA2.
-
----
-
-## Tecnologías utilizadas
-
-| Tecnología          | Uso                                     |
-| ------------------- | --------------------------------------- |
-| **React**           | Desarrollo de la interfaz y componentes |
-| **Vite**            | Herramienta de desarrollo y build       |
-| **React Bootstrap** | Componentes y estructura visual         |
-| **JavaScript ES6+** | Lógica de aplicación                    |
-| **Jasmine**         | Framework de pruebas                    |
-| **Karma**           | Ejecución de pruebas                    |
-| **ChromeHeadless**  | Ejecución automatizada de pruebas       |
-| **LocalStorage**    | Persistencia local de datos             |
-| **CSS**             | Estilos por componente                  |
-| **Oxlint**          | Análisis y revisión del código          |
+> **Estado del proyecto:** migración e integración progresiva a React. La ejecución de pruebas es satisfactoria, pero la cobertura global todavía no alcanza el objetivo del 80%.
 
 ---
 
-## Estructura del proyecto
+## 2. Tecnologías utilizadas
+
+| Tecnología | Uso |
+|---|---|
+| React | Desarrollo de interfaces y componentes |
+| Vite | Servidor de desarrollo y compilación |
+| React Bootstrap | Componentes y estructura visual |
+| JavaScript ES6+ | Lógica de aplicación |
+| Jasmine | Framework de pruebas automatizadas |
+| Karma | Ejecución de pruebas |
+| EdgeHeadless | Navegador utilizado en la ejecución validada |
+| Istanbul | Instrumentación y medición de cobertura |
+| karma-coverage | Generación de informes de cobertura |
+| Babel | Instrumentación del código fuente |
+| LocalStorage | Persistencia local de datos |
+| CSS | Estilos de componentes y páginas |
+| Oxlint | Análisis estático del código |
+| Git y GitHub | Control de versiones y colaboración |
+
+---
+
+## 3. Estructura del proyecto
+
+La aplicación utiliza una estructura modular. El siguiente árbol presenta los principales directorios y archivos del proyecto, incluyendo los componentes de cobertura incorporados en EA2.
 
 ```text
 tienda-react/
@@ -57,13 +62,15 @@ tienda-react/
 ├── package.json
 ├── package-lock.json
 ├── vite.config.js
-├── .oxlintrc.json
 ├── .gitignore
 ├── README.md
 ├── karma.conf.cjs
 │
 ├── public/
 │   └── img/
+│
+├── scripts/
+│   └── build-tests.mjs
 │
 ├── src/
 │   ├── main.jsx
@@ -76,65 +83,37 @@ tienda-react/
 │   │
 │   ├── components/
 │   │   ├── Encabezado.jsx
-│   │   ├── Encabezado.css
 │   │   ├── Portada.jsx
-│   │   ├── Portada.css
 │   │   ├── PiePagina.jsx
-│   │   ├── PiePagina.css
 │   │   ├── Catalogo.jsx
-│   │   ├── Catalogo.css
 │   │   ├── TarjetaProducto.jsx
-│   │   ├── TarjetaProducto.css
 │   │   ├── Buscador.jsx
-│   │   ├── Buscador.css
 │   │   ├── FiltroCategoria.jsx
-│   │   ├── FiltroCategoria.css
 │   │   ├── Carrito.jsx
-│   │   ├── Carrito.css
-│   │   ├── MenuAdmin.jsx
-│   │   └── MenuAdmin.css
+│   │   └── MenuAdmin.jsx
 │   │
 │   ├── pages/
 │   │   ├── Inicio.jsx
-│   │   ├── Inicio.css
 │   │   ├── Nosotros.jsx
-│   │   ├── Nosotros.css
 │   │   ├── Blogs.jsx
-│   │   ├── Blogs.css
 │   │   ├── DetalleBlog.jsx
-│   │   ├── DetalleBlog.css
 │   │   ├── Contacto.jsx
-│   │   ├── Contacto.css
 │   │   ├── Productos.jsx
-│   │   ├── Productos.css
 │   │   ├── DetalleProducto.jsx
-│   │   ├── DetalleProducto.css
 │   │   ├── Registro.jsx
-│   │   ├── Registro.css
 │   │   ├── Login.jsx
-│   │   ├── Login.css
 │   │   ├── NoEncontrado.jsx
-│   │   └── NoEncontrado.css
-│   │
-│   ├── pages/admin/
-│   │   ├── InicioAdmin.jsx
-│   │   ├── InicioAdmin.css
-│   │   ├── ProductosAdmin.jsx
-│   │   ├── ProductosAdmin.css
-│   │   ├── DetalleProductoAdmin.jsx
-│   │   ├── DetalleProductoAdmin.css
-│   │   ├── NuevoProducto.jsx
-│   │   ├── NuevoProducto.css
-│   │   ├── EditarProducto.jsx
-│   │   ├── EditarProducto.css
-│   │   ├── UsuariosAdmin.jsx
-│   │   ├── UsuariosAdmin.css
-│   │   ├── DetalleUsuarioAdmin.jsx
-│   │   ├── DetalleUsuarioAdmin.css
-│   │   ├── NuevoUsuario.jsx
-│   │   ├── NuevoUsuario.css
-│   │   ├── EditarUsuario.jsx
-│   │   └── EditarUsuario.css
+│   │   │
+│   │   └── admin/
+│   │       ├── InicioAdmin.jsx
+│   │       ├── ProductosAdmin.jsx
+│   │       ├── DetalleProductoAdmin.jsx
+│   │       ├── NuevoProducto.jsx
+│   │       ├── EditarProducto.jsx
+│   │       ├── UsuariosAdmin.jsx
+│   │       ├── DetalleUsuarioAdmin.jsx
+│   │       ├── NuevoUsuario.jsx
+│   │       └── EditarUsuario.jsx
 │   │
 │   ├── hooks/
 │   │   ├── useCarrito.js
@@ -162,7 +141,14 @@ tienda-react/
 │   ├── setup.js
 │   ├── unit/
 │   ├── components/
+│   │   ├── useUsuarios.spec.jsx
+│   │   └── useUsuariosCRUD.spec.jsx
 │   └── mocks/
+│
+├── coverage/                 # Generado automáticamente
+│   ├── html/
+│   │   └── index.html
+│   └── coverage-summary.json
 │
 └── docs/
     ├── reparto.md
@@ -171,247 +157,408 @@ tienda-react/
     └── evidencias/
 ```
 
+**Nota:** el árbol es una representación resumida basada en la estructura documentada del proyecto. Debe contrastarse con el repositorio para verificar la existencia y ubicación de todos los archivos.
+
 ---
 
-## Reglas de validación
+## 4. Funcionalidades principales
 
-Las reglas de validación implementadas durante EA1 se mantienen y se integran progresivamente en la migración a React.
+### Catálogo de productos
+
+- Visualización de productos disponibles.
+- Búsqueda por nombre.
+- Filtrado por categorías.
+- Acceso al detalle de cada producto.
+
+### Carrito de compras
+
+- Incorporación de productos.
+- Modificación de cantidades.
+- Eliminación de productos.
+- Cálculo de totales.
+- Persistencia local.
+
+### Autenticación y usuarios
+
+- Registro de usuarios.
+- Validación de formularios.
+- Inicio y cierre de sesión.
+- Administración de usuarios.
+- Operaciones CRUD.
+
+### Administración de productos
+
+- Listado de productos.
+- Creación de productos.
+- Edición de productos.
+- Eliminación de productos.
+- Validación de datos.
+- Persistencia de cambios.
+
+Las funcionalidades se integran progresivamente durante EA2. Su inclusión en esta descripción no implica que todos los flujos estén completamente validados de extremo a extremo.
+
+---
+
+## 5. Reglas de validación
+
+Las reglas de validación definidas durante EA1 se mantienen como referencia para su implementación en React.
 
 ### Inicio de sesión
 
-* Correo obligatorio.
-* Máximo 100 caracteres.
-* Dominios permitidos:
-
-  * `@duoc.cl`
-  * `@profesor.duoc.cl`
-  * `@gmail.com`
-* Contraseña obligatoria.
-* Entre 4 y 10 caracteres.
+- Correo obligatorio.
+- Máximo 100 caracteres.
+- Dominios permitidos: `@duoc.cl`, `@profesor.duoc.cl` y `@gmail.com`.
+- Contraseña obligatoria.
+- Contraseña entre 4 y 10 caracteres.
 
 ### Contacto
 
-* Nombre obligatorio.
-* Nombre con máximo 100 caracteres.
-* Correo obligatorio.
-* Correo con máximo 100 caracteres.
-* Dominios permitidos:
+- Nombre obligatorio, máximo 100 caracteres.
+- Correo obligatorio, máximo 100 caracteres.
+- Dominios permitidos: `@duoc.cl`, `@profesor.duoc.cl` y `@gmail.com`.
+- Comentario obligatorio, máximo 500 caracteres.
 
-  * `@duoc.cl`
-  * `@profesor.duoc.cl`
-  * `@gmail.com`
-* Comentario obligatorio.
-* Comentario con máximo 500 caracteres.
+### Registro y administración de usuarios
 
-### Registro / Mantenedor de usuarios
+- RUN validado mediante dígito verificador.
+- RUN entre 7 y 9 caracteres, sin puntos ni guion.
+- Nombre con máximo 50 caracteres.
+- Apellidos con máximo 100 caracteres.
+- Correo con máximo 100 caracteres.
+- Dominios permitidos: `@duoc.cl`, `@profesor.duoc.cl` y `@gmail.com`.
+- Contraseña entre 4 y 10 caracteres.
+- Confirmación de contraseña obligatoria.
+- Dirección con máximo 300 caracteres.
 
-* RUN validado mediante dígito verificador.
-* Entre 7 y 9 caracteres.
-* Sin puntos ni guion.
-* Nombre con máximo 50 caracteres.
-* Apellidos con máximo 100 caracteres.
-* Correo con máximo 100 caracteres.
-* Dominios permitidos:
+### Administración de productos
 
-  * `@duoc.cl`
-  * `@profesor.duoc.cl`
-  * `@gmail.com`
-* Contraseña entre 4 y 10 caracteres.
-* Confirmación de contraseña obligatoria.
-* Dirección con máximo 300 caracteres.
-
-### Mantenedor de productos
-
-* Código con mínimo 3 caracteres.
-* Nombre con máximo 100 caracteres.
-* Descripción opcional, máximo 500 caracteres.
-* Precio mínimo `0`.
-* El precio permite valores decimales.
-* Stock entero, mínimo `0`.
-* Categoría obligatoria.
+- Código con mínimo 3 caracteres.
+- Nombre con máximo 100 caracteres.
+- Descripción opcional, máximo 500 caracteres.
+- Precio mínimo de `0`.
+- Precio con valores decimales permitidos.
+- Stock entero, mínimo `0`.
+- Categoría obligatoria.
 
 ---
 
-## Responsabilidades por integrante
+## 6. Pruebas automatizadas
 
-### Christian Quiroz Roa
+El proyecto utiliza **Jasmine + Karma** para ejecutar pruebas automatizadas sobre lógica de negocio, utilidades, componentes y comportamientos de la aplicación.
 
-* Inicio.
-* Nosotros.
-* Blogs.
-* DetalleBlog.
-* Contacto.
-* Encabezado.
-* Portada.
-* PiePagina.
-* Carrito.
-* Navegación general.
-* Pruebas de sus componentes.
-* CSS de sus módulos.
+La configuración de cobertura permite identificar qué partes del código se ejecutan durante las pruebas y cuáles requieren mayor validación.
 
-### Rimsky Farías Soto
+### Herramientas de pruebas
 
-* Catálogo.
-* DetalleProducto.
-* Buscador y filtros.
-* Administración de productos (CRUD).
-* Persistencia del catálogo.
-* Router.
-* Pruebas de catálogo y administración.
-* CSS de sus módulos.
+| Herramienta | Función |
+|---|---|
+| Jasmine | Definición de suites, expectativas y casos de prueba |
+| Karma | Ejecución de pruebas en navegador |
+| EdgeHeadless | Ejecución automatizada sin interfaz gráfica |
+| Istanbul | Instrumentación del código |
+| karma-coverage | Recopilación y generación de reportes |
+| Babel | Integración de la instrumentación con la compilación de pruebas |
 
-### Lucía Salazar Delgado
+### Ejecución de pruebas
 
-* Registro.
-* Login.
-* Administración de usuarios (CRUD).
-* Validaciones compartidas.
-* Gestión de sesión local.
-* Pruebas de validaciones, sesión y usuarios.
-* CSS de sus módulos.
-
----
-
-## Flujo de trabajo con Git
-
-El proyecto utiliza ramas independientes para facilitar el desarrollo e integración de los módulos.
-
-### Ramas principales
-
-```text
-main
-├── christian-front
-├── rimsky-admin
-└── lucia-usuarios
-```
-
-### Crear una rama
-
-```bash
-git checkout -b rimsky-admin
-```
-
-### Registrar y subir cambios
-
-```bash
-git add .
-git commit -m "feat: módulo admin productos"
-git push origin rimsky-admin
-```
-
-### Integrar cambios a `main`
-
-La integración se realiza una vez revisados y aprobados los cambios correspondientes.
-
-```bash
-git checkout main
-git pull
-git merge rimsky-admin
-git push origin main
-```
-
----
-
-## 🧪 Pruebas unitarias
-
-EA2 incorpora pruebas unitarias utilizando **Jasmine + Karma**.
-
-### Configuración
-
-* **Jasmine:** framework de pruebas.
-* **Karma:** test runner.
-* **ChromeHeadless:** navegador utilizado para ejecución automatizada.
-* `karma.conf.cjs`: configuración del entorno de pruebas.
-
-### Distribución del trabajo
-
-* **Rimsky:** configuración inicial del entorno de pruebas.
-* **Christian:** configuración y ejecución de Karma.
-* **Lucía:** limpieza de datos y cobertura.
-* **Cada integrante:** desarrollo de pruebas correspondientes a sus módulos.
-
-### Ejecutar las pruebas
+Para ejecutar las pruebas configuradas en el proyecto:
 
 ```bash
 npm test
 ```
 
----
-
-## 📱 Revisión responsive
-
-La aplicación se revisa mediante:
-
-* Chrome DevTools en modo dispositivo móvil.
-* iPhone SE.
-* iPhone 12.
-* Google Pixel.
-* Samsung Galaxy.
-* Dispositivo móvil físico conectado a la misma red, cuando corresponda.
-
-### Elementos revisados
-
-* Catálogo.
-* Detalle de producto.
-* Carrito.
-* Formularios.
-* Administración.
-* Navegación.
-* Adaptación de componentes.
-* Ausencia de scroll horizontal no deseado.
-
----
-
-## Instalación y ejecución
-
-### 1. Clonar el repositorio
+Para ejecutar las pruebas con instrumentación y generar los informes de cobertura:
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
-cd tienda-react
+npm run test:coverage
 ```
 
-### 2. Instalar dependencias
+El comando de cobertura ejecuta la construcción de pruebas instrumentadas mediante `scripts/build-tests.mjs` y posteriormente inicia Karma.
+
+### Resultados de la ejecución
+
+**Fecha de referencia: 29 de octubre de 2026.**
+
+| Indicador | Resultado |
+|---|---:|
+| Archivos de pruebas | 31 |
+| Pruebas ejecutadas | 132 |
+| Pruebas aprobadas | 132 |
+| Pruebas fallidas | 0 |
+| Porcentaje de aprobación | 100% |
+
+**Resultado:** la totalidad de los casos ejecutados finalizó satisfactoriamente.
+
+Esto confirma el resultado de las pruebas ejecutadas, pero no garantiza por sí solo la ausencia de defectos ni la cobertura completa del sistema.
+
+---
+
+## 7. Cobertura de código
+
+La cobertura se obtiene mediante la instrumentación de código con Istanbul y la ejecución de las pruebas a través de Karma.
+
+### Resultados globales
+
+| Métrica | Elementos cubiertos | Cobertura | Objetivo |
+|---|---:|---:|---:|
+| Statements | 404 / 686 | 58,89% | 80% |
+| Branches | 409 / 752 | 54,38% | 80% |
+| Functions | 114 / 191 | 59,68% | 80% |
+| Lines | 352 / 577 | 61,00% | 80% |
+
+**Estado:** ninguna de las cuatro métricas globales alcanza todavía el objetivo del 80%.
+
+### Cobertura por directorio
+
+| Directorio | Statements | Branches | Functions | Lines |
+|---|---:|---:|---:|---:|
+| `src/` | 66,66% | 46,15% | 75,00% | 66,66% |
+| `src/components/` | 43,24% | 48,53% | 40,42% | 47,42% |
+| `src/context/` | 100,00% | 100,00% | 100,00% | 100,00% |
+| `src/data/` | 100,00% | 80,00% | 100,00% | 100,00% |
+| `src/hooks/` | 65,78% | 53,57% | 85,00% | 72,91% |
+| `src/pages/` | 30,87% | 15,21% | 40,90% | 28,88% |
+| `src/pages/admin/` | 17,54% | 13,72% | 32,00% | 23,68% |
+| `src/utils/` | 85,71% | 81,13% | 95,91% | 86,61% |
+
+### Interpretación
+
+Los resultados permiten identificar diferencias entre módulos:
+
+- **Utilidades:** presentan una cobertura superior al 80% en las cuatro métricas.
+- **Hooks:** presentan buena cobertura de funciones, pero requieren más pruebas de sentencias, ramas y líneas.
+- **Componentes:** requieren ampliar los escenarios de interacción y validación.
+- **Páginas:** presentan una cobertura reducida, especialmente en decisiones y flujos alternativos.
+- **Administración:** constituye una de las áreas prioritarias para incorporar nuevas pruebas.
+
+### Limitaciones de la medición
+
+Los porcentajes corresponden al conjunto de módulos instrumentados e incluidos en la ejecución de pruebas.
+
+Para afirmar que representan la totalidad del código fuente, es necesario verificar adicionalmente que todos los archivos pertinentes de `src/` estén incluidos en el proceso de instrumentación.
+
+### Informes generados
+
+El reporte HTML puede consultarse en:
+
+```text
+coverage/html/index.html
+```
+
+El resumen en formato JSON se genera en:
+
+```text
+coverage/coverage-summary.json
+```
+
+Estos archivos son resultados generados automáticamente y no forman parte del código fuente que debe mantenerse versionado.
+
+---
+
+## 8. Mejoras de cobertura pendientes
+
+Para avanzar hacia el objetivo del 80%, se prioriza:
+
+1. Incorporar pruebas de páginas administrativas y formularios.
+2. Ampliar los casos de autenticación, validación y gestión de sesiones.
+3. Probar escenarios de error y flujos alternativos.
+4. Verificar operaciones CRUD con datos válidos e inválidos.
+5. Revisar las ramas de código no ejecutadas.
+6. Comprobar que todos los módulos pertinentes estén incluidos en el reporte.
+
+Las pruebas deben verificar comportamientos y resultados esperados, no limitarse a ejecutar código para incrementar artificialmente los porcentajes.
+
+---
+
+## 9. Instalación y ejecución
+
+### Requisitos
+
+- Node.js y npm.
+- Git.
+- Navegador compatible con la configuración de Karma.
+- Visual Studio Code u otro editor de desarrollo.
+
+### Clonar el repositorio
 
 ```bash
-npm install
+git clone https://github.com/kodevlyu/fullstack-development-2-ev2.git
+cd fullstack-development-2-ev2
 ```
 
-### 3. Ejecutar en modo desarrollo
+### Instalar dependencias
+
+```bash
+npm ci
+```
+
+`npm ci` utiliza las versiones registradas en `package-lock.json`, lo que facilita la reproducción del entorno de trabajo.
+
+### Ejecutar la aplicación
 
 ```bash
 npm run dev
 ```
 
-### 4. Generar build de producción
+### Generar la compilación de producción
 
 ```bash
 npm run build
 ```
 
-### 5. Ejecutar pruebas
+### Ejecutar el análisis estático
 
 ```bash
-npm test
+npm run lint
+```
+
+### Ejecutar pruebas con cobertura
+
+```bash
+npm run test:coverage
+```
+
+### Consultar el informe
+
+Abrir el siguiente archivo en un navegador después de ejecutar las pruebas:
+
+```text
+coverage/html/index.html
 ```
 
 ---
 
-## 📄 Consideraciones del proyecto
+## 10. Trabajo colaborativo con Git
 
-* La migración desde HTML, CSS y JavaScript hacia React se encuentra **en proceso**.
-* Las reglas de validación originales de EA1 se mantienen durante la migración.
-* Los estilos se organizan por componente y página.
-* Jasmine + Karma forman parte del sistema de pruebas de EA2.
-* El proyecto no utiliza Jest ni Testing Library.
-* Se evita incorporar componentes o interfaces personalizados que no sean necesarios para los requisitos del proyecto.
-* La implementación relacionada con AWS se contempla para **EA3**.
+El proyecto utiliza Git y GitHub para administrar versiones, desarrollar funcionalidades en ramas independientes y revisar cambios antes de incorporarlos a la rama principal.
+
+### Flujo de trabajo
+
+```text
+main
+│
+├── feature/<funcionalidad>
+│
+└── feature/cobertura-pruebas
+    └── 9526da1
+```
+
+Las ramas de funcionalidades se integran mediante Pull Requests, previa revisión del equipo.
+
+### Crear una rama
+
+```bash
+git switch main
+git pull origin main
+git switch -c feature/nueva-funcionalidad
+```
+
+### Revisar modificaciones
+
+```bash
+git status
+git diff
+```
+
+### Preparar archivos
+
+```bash
+git add ruta/del/archivo
+```
+
+Se recomienda seleccionar explícitamente los archivos que correspondan a cada cambio, evitando incorporar reportes generados o archivos temporales.
+
+### Registrar cambios
+
+```bash
+git commit -m "feat: describir funcionalidad implementada"
+```
+
+### Publicar una rama
+
+```bash
+git push -u origin feature/nueva-funcionalidad
+```
+
+### Integración
+
+La integración a `main` debe realizarse después de revisar los cambios y validar las pruebas correspondientes.
 
 ---
 
-## Documentación
+## 11. Responsabilidades por integrante
 
-La carpeta `docs/` contiene documentación complementaria del proyecto:
+### Christian Quiroz Roa
+
+- Inicio.
+- Nosotros.
+- Blogs y detalle de blog.
+- Contacto.
+- Encabezado.
+- Portada.
+- Pie de página.
+- Carrito.
+- Navegación general.
+- Pruebas de sus componentes.
+- CSS de sus módulos.
+
+### Rimsky Farías Soto
+
+- Catálogo de productos.
+- Detalle de producto.
+- Buscador y filtros.
+- Administración de productos (CRUD).
+- Persistencia del catálogo.
+- Integración del router.
+- Pruebas de catálogo y administración.
+- CSS de sus módulos.
+- Configuración e incorporación de medición de cobertura mediante Karma/Istanbul.
+- Pruebas adicionales de autenticación y CRUD de usuarios.
+
+### Lucía Salazar Delgado
+
+- Registro.
+- Login.
+- Administración de usuarios (CRUD).
+- Validaciones compartidas.
+- Gestión de sesión local.
+- Pruebas de validaciones, sesión y usuarios.
+- CSS de sus módulos.
+
+Esta distribución corresponde a las responsabilidades del equipo y puede complementarse con los commits y Pull Requests para identificar contribuciones concretas.
+
+---
+
+## 12. Revisión responsive
+
+La aplicación contempla revisiones de adaptación a distintos tamaños de pantalla mediante las herramientas de desarrollo del navegador.
+
+### Dispositivos de referencia
+
+- iPhone SE.
+- iPhone 12.
+- Google Pixel.
+- Samsung Galaxy.
+- Dispositivos móviles físicos, cuando corresponda.
+
+### Elementos por verificar
+
+- Navegación general.
+- Catálogo de productos.
+- Detalle de producto.
+- Carrito de compras.
+- Formularios.
+- Administración.
+- Distribución de componentes.
+- Ausencia de desplazamiento horizontal no deseado.
+
+Estas verificaciones deben respaldarse con evidencias de ejecución cuando se declaren completadas.
+
+---
+
+## 13. Documentación
+
+La documentación complementaria del proyecto se organiza en el directorio `docs/`, según la estructura definida para EA2.
 
 ```text
 docs/
@@ -421,15 +568,40 @@ docs/
 └── evidencias/
 ```
 
+También se dispone de un informe de pruebas y cobertura correspondiente a la ejecución del 29 de octubre de 2026, con resultados, análisis y evidencias.
+
 ---
 
-## Créditos
+## 14. Consideraciones del proyecto
 
-Proyecto desarrollado por:
+- La migración de HTML, CSS y JavaScript a React se desarrolla progresivamente.
+- Se mantienen las reglas de validación establecidas durante EA1.
+- La aplicación utiliza componentes, páginas, hooks y utilidades.
+- Las pruebas automatizadas se implementan mediante Jasmine y Karma.
+- La medición de cobertura se realiza con Istanbul y karma-coverage.
+- El proyecto no utiliza Jest ni Testing Library.
+- Los reportes de cobertura son artefactos generados, no archivos fuente.
+- Las 132 pruebas ejecutadas aprobaron satisfactoriamente.
+- La cobertura global permanece por debajo del 80%.
+- La integración de cambios a `main` requiere revisión.
+- La implementación relacionada con AWS se contempla para EA3.
 
-* **Christian Quiroz Roa**
-* **Lucía Salazar Delgado**
-* **Rimsky Farías Soto**
+---
 
-**Asignatura:** Desarrollo Fullstack II · DSY1104
-**Evaluación:** EA2 — Migración a React + Pruebas Unitarias con Jasmine/Karma
+## 15. Créditos
+
+Proyecto académico desarrollado por:
+
+- **Christian Quiroz Roa**
+- **Lucía Salazar Delgado**
+- **Rimsky Farías Soto**
+
+**Institución:** Duoc UC — Sede Melipilla  
+**Asignatura:** Desarrollo Fullstack II  
+**Código:** DSY1104  
+**Evaluación:** EA2 — Migración a React y Pruebas Unitarias con Jasmine/Karma  
+**Última actualización documental:** 29 de octubre de 2026
+
+---
+
+**Estado general:** pruebas automatizadas satisfactorias (132/132), cobertura de código implementada y disponible para análisis, con mejoras pendientes para alcanzar el objetivo del 80%.
