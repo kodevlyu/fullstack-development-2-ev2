@@ -1,1 +1,33 @@
 @import "../UsuarioFormulario.css";
+
+/* Botón secundario de navegación */
+.nuevo-usuario-acciones {
+  margin-top: 12px;
+}
+
+.nuevo-usuario-volver {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 18px;
+  border: 1px solid #793f56;
+  border-radius: 6px;
+  background-color: #ffffff;
+  color: #793f56;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.nuevo-usuario-volver:hover {
+  background-color: #f7edf1;
+  color: #793f56;
+}
+
+.nuevo-usuario-volver:focus-visible {
+  outline: 3px solid #a66c85;
+  outline-offset: 3px;
+}

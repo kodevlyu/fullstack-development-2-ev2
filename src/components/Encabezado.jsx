@@ -1,9 +1,19 @@
+import { useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { Link, NavLink } from "react-router-dom";
+import ConfirmarCerrarSesion from "./ConfirmarCerrarSesion";
 import "./Encabezado.css";
 
 function Encabezado({ abrirCarrito, cantidadTotal, sesion = null, onCerrarSesion }) {
+  const [confirmacionAbierta, setConfirmacionAbierta] = useState(false);
+
+  function confirmarSalida() {
+    setConfirmacionAbierta(false);
+    onCerrarSesion?.();
+  }
+
   return (
+    <>
     <Navbar
       className="encabezado"
       expand="lg"
@@ -25,28 +35,28 @@ function Encabezado({ abrirCarrito, cantidadTotal, sesion = null, onCerrarSesion
         <Navbar.Collapse id="menu-principal">
           <Nav className="ms-auto">
             {/* Enlaces conectados con las páginas de router.jsx. */}
-            <Nav.Link as={NavLink} to="/" end eventKey="inicio">
+            <Nav.Link as={NavLink} className="encabezado-enlace" to="/" end eventKey="inicio">
               Inicio
             </Nav.Link>
 
-            <Nav.Link as={NavLink} to="/productos" eventKey="productos">
+            <Nav.Link as={NavLink} className="encabezado-enlace" to="/productos" eventKey="productos">
               Productos
             </Nav.Link>
 
-            <Nav.Link as={NavLink} to="/nosotros" eventKey="nosotros">
+            <Nav.Link as={NavLink} className="encabezado-enlace" to="/nosotros" eventKey="nosotros">
               Nosotros
             </Nav.Link>
 
-            <Nav.Link as={NavLink} to="/blogs" eventKey="blogs">
+            <Nav.Link as={NavLink} className="encabezado-enlace" to="/blogs" eventKey="blogs">
               Blogs
             </Nav.Link>
 
-            <Nav.Link as={NavLink} to="/contacto" eventKey="contacto">
+            <Nav.Link as={NavLink} className="encabezado-enlace" to="/contacto" eventKey="contacto">
               Contacto
             </Nav.Link>
             {sesion?.rol === "admin" && (
               <Nav.Link
-                as={NavLink}
+                as={NavLink} className="encabezado-enlace"
                 to="/admin/usuarios"
                 eventKey="administracion"
               >
@@ -55,7 +65,7 @@ function Encabezado({ abrirCarrito, cantidadTotal, sesion = null, onCerrarSesion
             )}
 
             {!sesion && (
-              <Nav.Link as={NavLink} to="/registro" eventKey="registro">
+              <Nav.Link as={NavLink} className="encabezado-enlace" to="/registro" eventKey="registro">
                 Registro
               </Nav.Link>
             )}
@@ -66,15 +76,19 @@ function Encabezado({ abrirCarrito, cantidadTotal, sesion = null, onCerrarSesion
               </Navbar.Text>
             )}
 
-            <Nav.Link as={NavLink} to="/login" eventKey="login">
-              Ingresar
+            <Nav.Link
+              as={NavLink} className="encabezado-enlace"
+              to={sesion?.rol === "cliente" ? "/perfil" : sesion?.rol === "admin" ? "/admin/usuarios" : "/login"}
+              eventKey="login"
+            >
+              {sesion?.rol === "cliente" ? "Mi perfil" : sesion?.rol === "admin" ? "Administración" : "Ingresar"}
             </Nav.Link>
 
             {sesion && (
               <button
                 type="button"
                 className="btn btn-outline-light btn-sm mx-2"
-                onClick={onCerrarSesion}
+                onClick={() => setConfirmacionAbierta(true)}
               >
                 Cerrar sesión
               </button>
@@ -94,6 +108,13 @@ function Encabezado({ abrirCarrito, cantidadTotal, sesion = null, onCerrarSesion
         </Navbar.Collapse>
       </Container>
     </Navbar>
+
+    <ConfirmarCerrarSesion
+      abierto={confirmacionAbierta}
+      cancelar={() => setConfirmacionAbierta(false)}
+      confirmar={confirmarSalida}
+    />
+    </>
   );
 }
 

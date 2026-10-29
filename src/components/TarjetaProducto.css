@@ -1,75 +1,180 @@
-/* Contenedor utilizado por TarjetaProducto.jsx. */
+/* Tarjetas del catálogo */
 .tarjeta-producto {
-  background: #fff;
-  border-radius: 10px;
-  padding: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  text-align: center;
-}
-
-/* Conserva el tamaño y presentación actuales de las imágenes. */
-.tarjeta-producto img {
   width: 100%;
-  height: 200px;
+  height: 100%;
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid #eee6e1;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(65, 40, 30, 0.07);
+  text-align: center;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta-producto:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(65, 40, 30, 0.12);
+}
+
+/* Imagen uniforme */
+.tarjeta-producto > img {
+  display: block;
+  width: 100%;
+  height: 210px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
-/* Información del producto. */
+/* Nombre del producto */
 .tarjeta-producto h3 {
-  margin: 1rem 0 0.5rem;
-  font-size: 1.2rem;
-}
-
-.tarjeta-producto .categoria {
-  font-size: 0.9rem;
-  color: #777;
-}
-
-.tarjeta-producto .precio {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  min-height: 48px;
+  margin: 16px 0 4px;
+  color: #4b3028;
   font-size: 1.1rem;
-  font-weight: bold;
-  margin: 0.5rem 0;
+  font-weight: 650;
+  line-height: 1.4;
 }
 
+/* Categoría */
+.tarjeta-producto .categoria {
+  margin: 0 0 12px;
+  color: #88756e;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+/* Precio destacado */
+.tarjeta-producto .precio {
+  margin: 0 0 10px;
+  color: #854a37;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* Descripción con altura uniforme */
 .tarjeta-producto .descripcion {
-  font-size: 0.9rem;
-  color: #555;
-  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  min-height: 40px;
+  margin: 0 0 12px;
+  color: #66615e;
+  font-size: 0.88rem;
+  line-height: 1.45;
 }
 
-/* Mantiene los botones alineados al final de la tarjeta. */
+/* Información de disponibilidad */
+.tarjeta-producto .estado {
+  margin: 0 0 16px;
+  color: #467458;
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.tarjeta-producto.no-disponible .estado {
+  color: #a94442;
+}
+
+/* Acciones al fondo de la tarjeta */
 .tarjeta-producto .acciones {
   display: flex;
-  justify-content: space-between;
+  align-items: stretch;
+  gap: 10px;
   margin-top: auto;
 }
 
-.tarjeta-producto button {
-  flex: 1;
-  margin: 0 0.3rem;
-  padding: 0.6rem;
-  border: none;
-  border-radius: 6px;
-  background: #ff4081;
-  color: white;
+/* Estilo compartido de botones */
+.tarjeta-producto .acciones button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 44px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #854a37;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.3;
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Solo cambia el color al pasar sobre un botón habilitado. */
-.tarjeta-producto button:hover:not(:disabled) {
-  background: #e73370;
+/* Ver detalle: botón secundario */
+.tarjeta-producto .acciones button:first-child {
+  background: #ffffff;
+  color: #854a37;
 }
 
-/* Hace visible el bloqueo que establece TarjetaProducto.jsx. */
-.tarjeta-producto button:disabled {
-  opacity: 0.5;
+.tarjeta-producto .acciones button:first-child:hover {
+  background: #f7eee9;
+}
+
+/* Agregar al carrito: acción principal */
+.tarjeta-producto .acciones button:last-child {
+  background: #854a37;
+  color: #ffffff;
+}
+
+.tarjeta-producto .acciones button:last-child:hover:not(:disabled) {
+  background: #653725;
+}
+
+.tarjeta-producto .acciones button:focus-visible {
+  outline: 3px solid #c99c87;
+  outline-offset: 3px;
+}
+
+/* Producto sin stock o no disponible */
+.tarjeta-producto .acciones button:disabled {
+  background: #e5e1de;
+  border-color: #d6d0cc;
+  color: #777;
   cursor: not-allowed;
 }
 
-/* Conserva el estilo existente para productos no disponibles. */
 .tarjeta-producto.no-disponible {
-  opacity: 0.6;
+  opacity: 0.75;
+}
+
+/* Adaptación a pantallas pequeñas */
+@media (max-width: 575px) {
+  .tarjeta-producto {
+    padding: 14px;
+  }
+
+  .tarjeta-producto > img {
+    height: 220px;
+  }
+
+  .tarjeta-producto h3 {
+    min-height: 0;
+  }
+
+  .tarjeta-producto .descripcion {
+    min-height: 0;
+  }
+
+  .tarjeta-producto .acciones {
+    flex-wrap: wrap;
+  }
+
+  .tarjeta-producto .acciones button {
+    flex-basis: 140px;
+  }
 }

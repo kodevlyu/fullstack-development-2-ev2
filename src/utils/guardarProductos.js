@@ -3,8 +3,10 @@ const CLAVE = "productos";
 export function guardarProductos(productos) {
   try {
     localStorage.setItem(CLAVE, JSON.stringify(productos));
+    return true;
   } catch (e) {
     console.error("Error al guardar productos en localStorage", e);
+    return false;
   }
 }
 

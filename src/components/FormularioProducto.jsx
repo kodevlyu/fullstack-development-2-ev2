@@ -67,11 +67,51 @@ export default function FormularioProducto({ titulo, inicial = VACIO, productos,
         {campo("precio", "Precio (CLP)", "number")}
         {campo("stock", "Stock (unidades)", "number")}
         {campo("imagen", "Imagen (ej.: /img/tc001.jpg)")}
-        <label className="opcion-producto"><input name="disponible" type="checkbox" checked={formulario.disponible} onChange={cambiar} /> Disponible</label>
-        <label className="opcion-producto"><input name="personalizable" type="checkbox" checked={formulario.personalizable} onChange={cambiar} /> Personalizable</label>
+        <fieldset className="opciones-producto">
+          <legend>Opciones del producto</legend>
+
+          <label className="opcion-producto">
+            <input
+              name="disponible"
+              type="checkbox"
+              checked={formulario.disponible}
+              onChange={cambiar}
+            />
+            <span>
+              <strong>Disponible</strong>
+              <small>Producto habilitado en el catálogo</small>
+            </span>
+          </label>
+
+          <label className="opcion-producto">
+            <input
+              name="personalizable"
+              type="checkbox"
+              checked={formulario.personalizable}
+              onChange={cambiar}
+            />
+            <span>
+              <strong>Personalizable</strong>
+              <small>Producto que admite personalización</small>
+            </span>
+          </label>
+        </fieldset>
+
         <div className="acciones-formulario">
-          <button type="submit">{esEdicion ? "Guardar cambios" : "Crear producto"}</button>
-          <button type="button" onClick={() => navigate("/admin/productos")}>Cancelar</button>
+          <button
+            type="submit"
+            className="producto-boton-guardar"
+          >
+            {esEdicion ? "Guardar cambios" : "Crear producto"}
+          </button>
+
+          <button
+            type="button"
+            className="producto-boton-cancelar"
+            onClick={() => navigate("/admin/productos")}
+          >
+            ← Cancelar
+          </button>
         </div>
       </form>
     </main>

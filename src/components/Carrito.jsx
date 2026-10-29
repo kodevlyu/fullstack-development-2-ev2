@@ -11,6 +11,7 @@ function Carrito({
   productos = [],
   mostrar,
   cerrar,
+  irAlCheckout,
   carrito,
   subtotal = 0,
   descuento = 0,
@@ -338,6 +339,17 @@ function Carrito({
                   antes de continuar.
                 </p>
               )}
+
+              {/* Navegación al checkout. */}
+              <Button
+                type="button"
+                variant="success"
+                className="w-100 mb-3"
+                onClick={irAlCheckout}
+                disabled={!stockValido}
+              >
+                Finalizar compra
+              </Button>
 
               {/* Acciones originales del carrito. */}
               <div className="carrito-acciones">

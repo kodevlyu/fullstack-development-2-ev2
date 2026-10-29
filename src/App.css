@@ -15,7 +15,9 @@ main {
 }
 
 /* Encabezado y pie de página coherentes */
-header, footer {
+/* Evita aplicar fondos y sombras a encabezados internos. */
+body > #root > header,
+body > #root > footer {
   background-color: #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
@@ -31,3 +33,44 @@ a {
   box-sizing: border-box;
 }
 /* Aquí agregaremos los estilos de distribución general de la aplicación. */
+
+
+/* Estructura general: mantiene el footer al final de la página. */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Contenedor compartido de todas las rutas. */
+.contenido-principal {
+  flex: 1 0 auto;
+  width: 100%;
+  min-height: 0;
+}
+
+/* El footer conserva su diseño y queda después del contenido. */
+.pie-pagina {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/* Distribución del contenido y footer compartido */
+.estructura-aplicacion {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  width: 100%;
+}
+
+.estructura-aplicacion > .contenido-principal {
+  flex: 1 0 auto;
+  min-height: 0;
+}
+
+.estructura-aplicacion > .pie-pagina {
+  flex-shrink: 0;
+  width: 100%;
+}

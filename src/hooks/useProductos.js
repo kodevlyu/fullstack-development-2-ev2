@@ -44,14 +44,17 @@ function useProductos() {
   function actualizarProductos(nuevaLista) {
     if (!Array.isArray(nuevaLista)) {
       console.error("Los productos deben entregarse como una lista.");
-      return;
+      return false;
     }
 
     // Actualiza lo que muestran los componentes conectados a este estado.
-    setProductos(nuevaLista);
+    // Solo actualizar React si el guardado fue exitoso.
+    if (!guardarProductos(nuevaLista)) {
+      return false;
+    }
 
-    // Guarda la misma lista para conservarla al recargar la página.
-    guardarProductos(nuevaLista);
+    setProductos(nuevaLista);
+    return true;
   }
 
   // App.jsx podrá compartir estos valores mediante router.jsx.

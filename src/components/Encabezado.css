@@ -1,50 +1,152 @@
+/* Contenedor exterior */
 .encabezado {
-  background-color: #854a37;
-  padding: 16px 0;
+  background: #fff4df;
+  padding: 20px 0;
 }
 
+/* Barra principal */
+.encabezado .container {
+  max-width: 1500px;
+  padding: 16px 24px;
+  background: #ffffff;
+  border: 1px solid #eee6df;
+  border-radius: 28px;
+  box-shadow: 0 12px 32px rgba(75, 48, 40, 0.08);
+}
+
+/* Marca */
 .encabezado .encabezado-marca {
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
+  color: #8b4513;
+  font-family: "Pacifico", cursive;
+  font-size: clamp(1.3rem, 2vw, 2rem);
+  font-weight: 400;
   white-space: normal;
 }
 
 .encabezado .encabezado-marca:hover {
-  color: #ffe2cc;
-}
-.encabezado .nav-link {
-  color: white;
+  color: #653725;
 }
 
-.encabezado .nav-link:hover {
-  color: #ffe2cc;
+/* Navegación */
+.encabezado .navbar-nav {
+  align-items: center;
+  gap: 5px;
 }
-/* Acceso destacado al carrito sin cambiar la lógica de apertura. */
+
+.encabezado .navbar-nav .encabezado-enlace {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 10px 15px;
+  border-radius: 14px;
+  color: #60453b;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+/* Página actual */
+.encabezado .navbar-nav .encabezado-enlace.active {
+  background: #ffc0cb;
+  color: #633d32;
+}
+
+/* Cursor sobre cualquier enlace */
+.encabezado .navbar-nav .encabezado-enlace:hover {
+  background: #8b4513;
+  color: #ffffff;
+}
+
+/* La opción activa también responde al hover */
+.encabezado .navbar-nav .encabezado-enlace.active:hover {
+  background: #8b4513;
+  color: #ffffff;
+}
+
+/* Nombre del usuario autenticado */
+.encabezado .navbar-text {
+  color: #60453b;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+/* Botón de cierre de sesión */
+.encabezado .btn-outline-light {
+  border: 1px solid #854a37;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #854a37;
+  white-space: nowrap;
+}
+
+.encabezado .btn-outline-light:hover {
+  border-color: #854a37;
+  background: #854a37;
+  color: #ffffff;
+}
+
+/* Carrito */
 .encabezado .encabezado-carrito {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  margin-left: 1.25rem;
-  padding: 0.45rem 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  border-radius: 6px;
-  background: rgba(0, 0, 0, 0.18);
-  color: #fff;
+  min-height: 44px;
+  margin-left: 12px;
+  padding: 9px 14px;
+  border: 1px solid #854a37;
+  border-radius: 10px;
+  background: #854a37;
+  color: #ffffff;
   font: inherit;
+  font-size: 0.9rem;
   white-space: nowrap;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
-.encabezado .encabezado-carrito:hover,
-.encabezado .encabezado-carrito:focus-visible {
-  background: rgba(0, 0, 0, 0.32);
-  border-color: #fff;
+
+.encabezado .encabezado-carrito:hover {
+  background: #653725;
 }
-.encabezado .encabezado-carrito:focus-visible {
-  outline: 2px solid #ffe2cc;
-  outline-offset: 2px;
+
+/* Accesibilidad */
+.encabezado a:focus-visible,
+.encabezado button:focus-visible {
+  outline: 3px solid #c99c87;
+  outline-offset: 3px;
 }
+
+/* Menú móvil */
 @media (max-width: 991.98px) {
-  .encabezado .encabezado-carrito { margin: 0.75rem 0 0; }
+  .encabezado .container {
+    margin: 0 12px;
+    padding: 14px 18px;
+    border-radius: 18px;
+  }
+
+  .encabezado .navbar-toggler {
+    border-color: #854a37;
+    background: #854a37;
+  }
+
+  .encabezado .navbar-collapse {
+    margin-top: 14px;
+  }
+
+  .encabezado .navbar-nav {
+    align-items: stretch;
+  }
+
+  .encabezado .navbar-nav .encabezado-enlace {
+    justify-content: flex-start;
+  }
+
+  .encabezado .encabezado-carrito {
+    margin: 12px 0 0;
+  }
 }

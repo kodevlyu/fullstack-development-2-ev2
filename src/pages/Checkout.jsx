@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Container,
   Row,
@@ -10,16 +10,25 @@ import {
 } from "react-bootstrap";
 
 import { formatoPrecio } from "../utils/formatoPrecio";
+import { regionesComunas } from "../data/regionesComunas";
+import { validarPedido } from "../utils/validarPedido";
+import { guardarPedido } from "../utils/guardarPedido";
+import { descontarStockPedido } from "../utils/descontarStockPedido";
 
 function Checkout({
+  sesion = null,
+  productos = [],
+  actualizarProductos = () => false,
+  codigoCupon = "",
+  vaciarCarrito = () => {},
   carrito = [],
   subtotal = 0,
   descuento = 0,
   total = 0,
 }) {
   const [datos, setDatos] = useState({
-    nombre: "",
-    correo: "",
+    nombre: sesion?.nombre ?? "",
+    correo: sesion?.correo ?? "",
     telefono: "",
     direccion: "",
     numero: "",
@@ -30,6 +39,9 @@ function Checkout({
 
   const [validado, setValidado] = useState(false);
   const [datosConfirmados, setDatosConfirmados] = useState(false);
+  const [pedidoConfirmado, setPedidoConfirmado] = useState(null);
+  const [errorPedido, setErrorPedido] = useState("");
+  const procesandoCompra = useRef(false);
 
   function actualizarCampo(evento) {
     const { name, value } = evento.target;
@@ -37,6 +49,7 @@ function Checkout({
     setDatos((anteriores) => ({
       ...anteriores,
       [name]: value,
+      ...(name === "region" ? { comuna: "" } : {}),
     }));
 
     setDatosConfirmados(false);
@@ -53,6 +66,100 @@ function Checkout({
     }
 
     setDatosConfirmados(true);
+  }
+
+  function confirmarCompra() {
+    if (procesandoCompra.current || pedidoConfirmado) return;
+    setErrorPedido("");
+
+    if (!datosConfirmados || sesion?.rol !== "cliente") {
+      setErrorPedido("Debes validar tus datos e iniciar sesión como cliente.");
+      return;
+    }
+
+    const validacion = validarPedido(carrito, productos, codigoCupon);
+
+    if (!validacion.valido) {
+      setErrorPedido(validacion.mensaje);
+      return;
+    }
+
+    if (validacion.mensaje) {
+      setErrorPedido(validacion.mensaje);
+      return;
+    }
+
+    const pedido = {
+      id: globalThis.crypto?.randomUUID?.() ?? String(Date.now()),
+      fecha: new Date().toISOString(),
+      clienteId: sesion.id,
+      cliente: {
+        nombre: sesion.nombre,
+        correo: sesion.correo,
+      },
+      entrega: {
+        telefono: datos.telefono,
+        direccion: datos.direccion,
+        numero: datos.numero,
+        region: datos.region,
+        comuna: datos.comuna,
+        observaciones: datos.observaciones,
+      },
+      items: validacion.items,
+      subtotal: validacion.subtotal,
+      descuento: validacion.descuento,
+      total: validacion.total,
+      codigoCupon: validacion.codigoCupon,
+      estado: "confirmado",
+      pago: "simulado",
+    };
+
+    const nuevosProductos = descontarStockPedido(
+      productos,
+      validacion.items
+    );
+
+    if (!nuevosProductos) {
+      setErrorPedido("No se pudo actualizar el inventario.");
+      return;
+    }
+
+    procesandoCompra.current = true;
+
+    // Guardar el inventario antes de confirmar el pedido.
+    if (!actualizarProductos(nuevosProductos)) {
+      procesandoCompra.current = false;
+      setErrorPedido("No se pudo guardar el inventario.");
+      return;
+    }
+
+    if (!guardarPedido(pedido)) {
+      // Restaurar inventario si el pedido no pudo guardarse.
+      const restaurado = actualizarProductos(productos);
+      procesandoCompra.current = false;
+      setErrorPedido(
+        restaurado
+          ? "No se pudo guardar el pedido. Inténtalo nuevamente."
+          : "Error de almacenamiento. Revisa el inventario antes de reintentar."
+      );
+      return;
+    }
+
+    setPedidoConfirmado(pedido);
+    vaciarCarrito();
+  }
+
+  if (pedidoConfirmado) {
+    return (
+      <Container className="py-5">
+        <Alert variant="success" role="status">
+          <h1>Compra simulada confirmada</h1>
+          <p>Número de pedido: {pedidoConfirmado.id}</p>
+          <p>Total: {formatoPrecio(pedidoConfirmado.total)}</p>
+          <p>No se realizó ningún cobro real.</p>
+        </Alert>
+      </Container>
+    );
   }
 
   if (carrito.length === 0) {
@@ -89,6 +196,7 @@ function Checkout({
                   <Form.Control
                     required
                     name="nombre"
+                    readOnly
                     value={datos.nombre}
                     onChange={actualizarCampo}
                     maxLength={100}
@@ -107,6 +215,7 @@ function Checkout({
                     required
                     type="email"
                     name="correo"
+                    readOnly
                     value={datos.correo}
                     onChange={actualizarCampo}
                     maxLength={150}
@@ -191,15 +300,11 @@ function Checkout({
                         <option value="">
                           Selecciona una región
                         </option>
-                        <option value="Metropolitana">
-                          Metropolitana
-                        </option>
-                        <option value="Valparaiso">
-                          Valparaíso
-                        </option>
-                        <option value="OHiggins">
-                          O'Higgins
-                        </option>
+                        {Object.keys(regionesComunas).map((region) => (
+                          <option key={region} value={region}>
+                            {region}
+                          </option>
+                        ))}
                       </Form.Select>
                       <Form.Control.Feedback type="invalid">
                         Selecciona una región.
@@ -213,14 +318,24 @@ function Checkout({
                       controlId="checkout-comuna"
                     >
                       <Form.Label>Comuna</Form.Label>
-                      <Form.Control
+                      <Form.Select
                         required
                         name="comuna"
                         value={datos.comuna}
                         onChange={actualizarCampo}
-                        maxLength={80}
-                        placeholder="Ejemplo: Melipilla"
-                      />
+                        disabled={!datos.region}
+                      >
+                        <option value="">
+                          {datos.region
+                            ? "Selecciona una comuna"
+                            : "Selecciona una región primero"}
+                        </option>
+                        {(regionesComunas[datos.region] ?? []).map((comuna) => (
+                          <option key={comuna} value={comuna}>
+                            {comuna}
+                          </option>
+                        ))}
+                      </Form.Select>
                       <Form.Control.Feedback type="invalid">
                         Ingresa tu comuna.
                       </Form.Control.Feedback>
@@ -258,6 +373,23 @@ function Checkout({
                 >
                   Datos de entrega validados. El siguiente
                   paso será continuar al pago simulado.
+                </Alert>
+              )}
+
+              {datosConfirmados && (
+                <Button
+                  type="button"
+                  variant="success"
+                  className="mt-3"
+                  onClick={confirmarCompra}
+                >
+                  Confirmar compra simulada
+                </Button>
+              )}
+
+              {errorPedido && (
+                <Alert variant="danger" role="alert" className="mt-3">
+                  {errorPedido}
                 </Alert>
               )}
             </Card.Body>

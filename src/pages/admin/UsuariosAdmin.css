@@ -1,1 +1,469 @@
 @import "../UsuarioFormulario.css";
+
+/* ==========================================
+   Administración de usuarios - Diseño visual
+   ========================================== */
+
+.usuarios-admin {
+  width: min(100% - 32px, 1120px);
+  max-width: 1120px;
+  margin: 48px auto;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(60, 35, 25, 0.07);
+}
+
+.usuarios-admin-encabezado {
+  margin-bottom: 28px;
+}
+
+.usuarios-admin-encabezado h1 {
+  margin: 0 0 8px;
+  color: #854a37;
+  font-size: clamp(1.7rem, 3vw, 2.1rem);
+  font-weight: 700;
+}
+
+.usuarios-admin-encabezado p {
+  margin-bottom: 22px;
+  color: #68564d;
+}
+
+.usuarios-admin-crear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 11px 18px;
+  background: #854a37;
+  color: #ffffff;
+  border-radius: 9px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.usuarios-admin-crear:hover {
+  background: #683725;
+  color: #ffffff;
+}
+
+.usuarios-admin-tabla-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.usuarios-admin-tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usuarios-admin-tabla th {
+  padding: 16px 14px;
+  color: #3d2920;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.usuarios-admin-tabla td {
+  padding: 18px 14px;
+  vertical-align: middle;
+  border-bottom: 1px solid #eee3dd;
+}
+
+.usuarios-admin-tabla tbody tr:hover {
+  background: #fffaf7;
+}
+
+.usuarios-admin-rol {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #f5e7df;
+  color: #75402e;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Tarjeta horizontal con tres acciones */
+.usuarios-admin-acciones {
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  background: #fcf6f2;
+  border: 1px solid #ead4c8;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.usuarios-admin-accion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 9px 13px;
+  border: 0;
+  border-right: 1px solid #ead4c8;
+  background: transparent;
+  color: #70402f;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.usuarios-admin-accion:last-child {
+  border-right: 0;
+}
+
+.usuarios-admin-accion:hover {
+  background: #f3e4da;
+  color: #512a1d;
+}
+
+.usuarios-admin-accion:focus-visible,
+.usuarios-admin-crear:focus-visible {
+  outline: 3px solid #b8754f;
+  outline-offset: 2px;
+}
+
+.usuarios-admin-eliminar {
+  color: #b42318;
+}
+
+.usuarios-admin-eliminar:hover {
+  background: #fff0ed;
+  color: #931b12;
+}
+
+@media (max-width: 767px) {
+  .usuarios-admin {
+    width: calc(100% - 24px);
+    margin: 24px auto;
+    padding: 20px 14px;
+  }
+
+  .usuarios-admin-tabla {
+    min-width: 760px;
+  }
+
+  .usuarios-admin-tabla td,
+  .usuarios-admin-tabla th {
+    padding: 12px 10px;
+  }
+}
+
+/* ==========================================
+   Administración de usuarios - Diseño visual
+   ========================================== */
+
+.usuarios-admin {
+  width: min(100% - 32px, 1120px);
+  max-width: 1120px;
+  margin: 48px auto;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(60, 35, 25, 0.07);
+}
+
+.usuarios-admin-encabezado {
+  margin-bottom: 28px;
+}
+
+.usuarios-admin-encabezado h1 {
+  margin: 0 0 8px;
+  color: #854a37;
+  font-size: clamp(1.7rem, 3vw, 2.1rem);
+  font-weight: 700;
+}
+
+.usuarios-admin-encabezado p {
+  margin-bottom: 22px;
+  color: #68564d;
+}
+
+.usuarios-admin-crear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 11px 18px;
+  background: #854a37;
+  color: #ffffff;
+  border-radius: 9px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.usuarios-admin-crear:hover {
+  background: #683725;
+  color: #ffffff;
+}
+
+.usuarios-admin-tabla-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.usuarios-admin-tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usuarios-admin-tabla th {
+  padding: 16px 14px;
+  color: #3d2920;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.usuarios-admin-tabla td {
+  padding: 18px 14px;
+  vertical-align: middle;
+  border-bottom: 1px solid #eee3dd;
+}
+
+.usuarios-admin-tabla tbody tr:hover {
+  background: #fffaf7;
+}
+
+.usuarios-admin-rol {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #f5e7df;
+  color: #75402e;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Tarjeta horizontal con tres acciones */
+.usuarios-admin-acciones {
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  background: #fcf6f2;
+  border: 1px solid #ead4c8;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.usuarios-admin-accion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 9px 13px;
+  border: 0;
+  border-right: 1px solid #ead4c8;
+  background: transparent;
+  color: #70402f;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.usuarios-admin-accion:last-child {
+  border-right: 0;
+}
+
+.usuarios-admin-accion:hover {
+  background: #f3e4da;
+  color: #512a1d;
+}
+
+.usuarios-admin-accion:focus-visible,
+.usuarios-admin-crear:focus-visible {
+  outline: 3px solid #b8754f;
+  outline-offset: 2px;
+}
+
+.usuarios-admin-eliminar {
+  color: #b42318;
+}
+
+.usuarios-admin-eliminar:hover {
+  background: #fff0ed;
+  color: #931b12;
+}
+
+@media (max-width: 767px) {
+  .usuarios-admin {
+    width: calc(100% - 24px);
+    margin: 24px auto;
+    padding: 20px 14px;
+  }
+
+  .usuarios-admin-tabla {
+    min-width: 760px;
+  }
+
+  .usuarios-admin-tabla td,
+  .usuarios-admin-tabla th {
+    padding: 12px 10px;
+  }
+}
+
+/* ==========================================
+   Administración de usuarios - Diseño visual
+   ========================================== */
+
+.usuarios-admin {
+  width: min(100% - 32px, 1120px);
+  max-width: 1120px;
+  margin: 48px auto;
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(60, 35, 25, 0.07);
+}
+
+.usuarios-admin-encabezado {
+  margin-bottom: 28px;
+}
+
+.usuarios-admin-encabezado h1 {
+  margin: 0 0 8px;
+  color: #854a37;
+  font-size: clamp(1.7rem, 3vw, 2.1rem);
+  font-weight: 700;
+}
+
+.usuarios-admin-encabezado p {
+  margin-bottom: 22px;
+  color: #68564d;
+}
+
+.usuarios-admin-crear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 11px 18px;
+  background: #854a37;
+  color: #ffffff;
+  border-radius: 9px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.usuarios-admin-crear:hover {
+  background: #683725;
+  color: #ffffff;
+}
+
+.usuarios-admin-tabla-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.usuarios-admin-tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usuarios-admin-tabla th {
+  padding: 16px 14px;
+  color: #3d2920;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.usuarios-admin-tabla td {
+  padding: 18px 14px;
+  vertical-align: middle;
+  border-bottom: 1px solid #eee3dd;
+}
+
+.usuarios-admin-tabla tbody tr:hover {
+  background: #fffaf7;
+}
+
+.usuarios-admin-rol {
+  display: inline-block;
+  padding: 6px 12px;
+  background: #f5e7df;
+  color: #75402e;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Tarjeta horizontal con tres acciones */
+.usuarios-admin-acciones {
+  display: inline-flex;
+  align-items: stretch;
+  overflow: hidden;
+  background: #fcf6f2;
+  border: 1px solid #ead4c8;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.usuarios-admin-accion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 42px;
+  padding: 9px 13px;
+  border: 0;
+  border-right: 1px solid #ead4c8;
+  background: transparent;
+  color: #70402f;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.usuarios-admin-accion:last-child {
+  border-right: 0;
+}
+
+.usuarios-admin-accion:hover {
+  background: #f3e4da;
+  color: #512a1d;
+}
+
+.usuarios-admin-accion:focus-visible,
+.usuarios-admin-crear:focus-visible {
+  outline: 3px solid #b8754f;
+  outline-offset: 2px;
+}
+
+.usuarios-admin-eliminar {
+  color: #b42318;
+}
+
+.usuarios-admin-eliminar:hover {
+  background: #fff0ed;
+  color: #931b12;
+}
+
+@media (max-width: 767px) {
+  .usuarios-admin {
+    width: calc(100% - 24px);
+    margin: 24px auto;
+    padding: 20px 14px;
+  }
+
+  .usuarios-admin-tabla {
+    min-width: 760px;
+  }
+
+  .usuarios-admin-tabla td,
+  .usuarios-admin-tabla th {
+    padding: 12px 10px;
+  }
+}

@@ -129,3 +129,33 @@
     padding: 20px;
   }
 }
+
+/* Encabezado limpio, sin recuadro blanco */
+.blogs .blogs-presentacion {
+  width: 100%;
+  max-width: 780px;
+  margin: 0 auto 36px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-align: center;
+}
+
+.blogs .blogs-etiqueta {
+  margin-bottom: 12px;
+}
+
+.blogs .blogs-presentacion h1 {
+  margin: 0 0 14px;
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  font-weight: 700;
+}
+
+.blogs .blogs-presentacion > p:last-child {
+  max-width: 680px;
+  margin: 0 auto;
+  color: #68564d;
+  line-height: 1.7;
+}

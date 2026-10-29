@@ -8,3 +8,43 @@
   text-align: center;
   margin-bottom: 24px;
 }
+
+/* Ajustes visuales del catálogo */
+.pagina-productos .catalogo {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.pagina-productos .catalogo > .container {
+  max-width: 1140px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.pagina-productos .catalogo-titulo {
+  margin: 0 0 22px;
+  text-align: left;
+  color: #874b38;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.pagina-productos .catalogo .row > [class*="col"] {
+  display: flex;
+}
+
+.pagina-productos .catalogo .row > [class*="col"] > * {
+  width: 100%;
+}
+
+.pagina-productos .catalogo-vacio {
+  margin: 24px 0;
+  text-align: center;
+}
+
+@media (max-width: 767px) {
+  .pagina-productos .catalogo-titulo {
+    font-size: 1.3rem;
+  }
+}

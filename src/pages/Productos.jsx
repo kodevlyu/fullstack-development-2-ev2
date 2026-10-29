@@ -18,13 +18,18 @@ function Productos({ productos, agregarAlCarrito }) {
 
   return (
     <main className="pagina-productos">
-      <h1>Catálogo de productos</h1>
+      <div className="productos-contenedor">
+        <div className="productos-encabezado">
+          <h1>Catálogo de productos</h1>
+          <p>Encuentra la torta perfecta para cada celebración.</p>
+        </div>
 
-      {/* Controles existentes del catálogo. */}
-      <section className="filtros">
-        <Buscador valor={texto} onBuscar={setTexto} />
-        <FiltroCategoria valor={categoria} onFiltrar={setCategoria} />
-      </section>
+        {/* Controles existentes del catálogo. */}
+        <section className="filtros" aria-label="Filtros de productos">
+          <Buscador valor={texto} onBuscar={setTexto} />
+          <FiltroCategoria valor={categoria} onFiltrar={setCategoria} />
+        </section>
+      </div>
 
       {/* Entrega la lista filtrada y la función del carrito a Catalogo. */}
       <Catalogo productos={listaFiltrada} agregarAlCarrito={agregarAlCarrito} />
