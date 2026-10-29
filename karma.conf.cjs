@@ -44,7 +44,20 @@ module.exports = function (config) {
     // Ejecuta una vez y termina mostrando los resultados.
     singleRun: true,
     autoWatch: false,
-    reporters: ["progress"],
+    reporters: ["progress", "coverage"],
+
+    coverageReporter: {
+      dir: "coverage",
+      reporters: [
+        { type: "html", subdir: "html" },
+        { type: "text-summary" },
+        {
+          type: "json-summary",
+          subdir: ".",
+          file: "coverage-summary.json",
+        },
+      ],
+    },
 
     client: {
       clearContext: false,
